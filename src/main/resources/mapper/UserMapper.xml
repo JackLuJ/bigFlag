@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackluan.bigflag.domain.user.component.dao.IUserDao">
+    <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.user.component.dataobject.UserDo">
+        <result column="id" property="id"/>
+        <result column="app_open_id" property="appOpenId"/>
+        <result column="oa_open_id" property="oaOpenId"/>
+        <result column="union_id" property="uniqueId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="mobile" property="mobile"/>
+        <result column="status" property="status"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modify_date" property="modifyDate"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, app_open_id, oa_open_id, union_id, file_id, mobile, status, is_delete, create_date, modify_date
+    </sql>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null ">and id = #{id}</if>
+            <if test="appOpenId != null ">and app_open_id = #{appOpenId}</if>
+            <if test="oaOpenId != null ">and oa_open_id = #{oaOpenId}</if>
+            <if test="uniqueId != null ">and union_id = #{uniqueId}</if>
+            <if test="fileId != null ">and file_id = #{fileId}</if>
+            <if test="mobile != null ">and mobile = #{mobile}</if>
+            <if test="status != null ">and status = #{status}</if>
+            <if test="isDelete != null ">and is_delete = #{isDelete}</if>
+            <if test="createDate != null ">and create_date = #{createDate}</if>
+            <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
+            and is_deleted='N'
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (app_open_id, oa_open_id, union_id, file_id, mobile, status, is_delete, create_date,
+        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{uniqueId}, #{fileId}, #{mobile}, #{status}, 'N',
+        now(), now());
+    </insert>
+
+    <delete id="delete" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo">
+        update user set is_deleted='Y'
+        <include refid="Example_Where_Clause"/>
+    </delete>
+
+    <update id="update" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo">
+        UPDATE user
+        <set>
+            <if test="appOpenId != null">app_open_id = #{appOpenId},</if>
+            <if test="oaOpenId != null">oa_open_id = #{oaOpenId},</if>
+            <if test="uniqueId != null">union_id = #{uniqueId},</if>
+            <if test="fileId != null">file_id = #{fileId},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            <if test="createDate != null">create_date = #{createDate},</if>
+            modify_date = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="select" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <select id="count" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo"
+            resultType="java.lang.Integer">
+        select count(*) from user
+        <include refid="Example_Where_Clause"/>
+    </select>
+</mapper>

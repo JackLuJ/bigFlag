@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace="com.jackluan.bigflag.domain.file.component.dao.IFileDao" > 
+  <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
+        <result column="id" property="id" /> 
+        <result column="store_type" property="storeType" /> 
+        <result column="file_path" property="filePath" /> 
+        <result column="file_name" property="fileName" /> 
+        <result column="is_delete" property="isDelete" /> 
+        <result column="create_date" property="createDate" /> 
+        <result column="modify_date" property="modifyDate" /> 
+  </resultMap> 
+  <sql id="Example_Where_Clause" > 
+    <where > 
+		    1=1  
+        <if test="id != null "> and id = #{id} </if> 
+        <if test="storeType != null "> and store_type = #{storeType} </if> 
+        <if test="filePath != null  and filePath != ''"> and file_path = #{filePath} </if> 
+        <if test="fileName != null  and fileName != ''"> and file_name = #{fileName} </if> 
+        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
+        <if test="createDate != null "> and create_date = #{createDate} </if> 
+        <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
+        and is_deleted='N' 
+        <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
+    </where> 
+  </sql> 
+  <sql id="Base_Column_List" > 
+    	id,store_type,file_path,file_name,is_delete,create_date,modify_date 
+  </sql> 
+  <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
+    select 
+    <include refid="Base_Column_List" /> 
+    from file 
+      <include refid="Example_Where_Clause" /> 
+  </select> 
+  <delete id="delete" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
+    update file set  is_deleted='Y' 
+      <include refid="Example_Where_Clause" /> 
+  </delete> 
+  <insert id="insert" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo"  useGeneratedKeys="true" keyProperty="id">
+    insert into file 
+     ( store_type,file_path,file_name,is_delete,create_date,modify_date )
+    values 
+    ( #{storeType},#{filePath},#{fileName},#{isDelete},#{createDate},#{modifyDate} )
+  </insert> 
+  <select id="count" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" resultType="java.lang.Integer" > 
+    select count(*) from file 
+      <include refid="Example_Where_Clause" /> 
+  </select> 
+  <update id="update" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
+    update file 
+    <set > 
+     	  <if test="storeType != null"> store_type = #{storeType},</if> 
+        <if test="filePath != null"> file_path = #{filePath},</if> 
+        <if test="fileName != null"> file_name = #{fileName},</if> 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
+        <if test="createDate != null"> create_date = #{createDate},</if> 
+        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
+        gmt_modified = now() 
+    </set> 
+       where id = #{id,jdbcType=BIGINT}  
+  </update> 
+</mapper> 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace="com.jackluan.bigflag.domain.user.component.dao.IUserOpinionDao" > 
+  <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" > 
+        <result column="id" property="id" /> 
+        <result column="user_id" property="userId" /> 
+        <result column="description" property="description" /> 
+        <result column="mobile" property="mobile" /> 
+        <result column="xw_name" property="xwName" /> 
+        <result column="qq_no" property="qqNo" /> 
+        <result column="is_delete" property="isDelete" /> 
+        <result column="create_date" property="createDate" /> 
+        <result column="modify_date" property="modifyDate" /> 
+  </resultMap> 
+  <sql id="Example_Where_Clause" > 
+    <where > 
+		    1=1  
+        <if test="id != null "> and id = #{id} </if> 
+        <if test="userId != null "> and user_id = #{userId} </if> 
+        <if test="description != null  and description != ''"> and description = #{description} </if> 
+        <if test="mobile != null  and mobile != ''"> and mobile = #{mobile} </if> 
+        <if test="xwName != null  and xwName != ''"> and xw_name = #{xwName} </if> 
+        <if test="qqNo != null  and qqNo != ''"> and qq_no = #{qqNo} </if> 
+        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
+        <if test="createDate != null "> and create_date = #{createDate} </if> 
+        <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
+        and is_deleted='N' 
+        <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
+    </where> 
+  </sql> 
+  <sql id="Base_Column_List" > 
+    	id,user_id,description,mobile,xw_name,qq_no,is_delete,create_date,modify_date 
+  </sql> 
+  <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" > 
+    select 
+    <include refid="Base_Column_List" /> 
+    from user_opinion 
+      <include refid="Example_Where_Clause" /> 
+  </select> 
+  <delete id="delete" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" > 
+    update user_opinion set  is_deleted='Y' 
+      <include refid="Example_Where_Clause" /> 
+  </delete> 
+  <insert id="insert" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo"  useGeneratedKeys="true" keyProperty="id">
+    insert into user_opinion 
+     ( user_id,description,mobile,xw_name,qq_no,is_delete,create_date,modify_date )
+    values 
+    ( #{userId},#{description},#{mobile},#{xwName},#{qqNo},#{isDelete},#{createDate},#{modifyDate} )
+  </insert> 
+  <select id="count" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" resultType="java.lang.Integer" > 
+    select count(*) from user_opinion 
+      <include refid="Example_Where_Clause" /> 
+  </select> 
+  <update id="update" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" > 
+    update user_opinion 
+    <set > 
+     	  <if test="userId != null"> user_id = #{userId},</if> 
+        <if test="description != null"> description = #{description},</if> 
+        <if test="mobile != null"> mobile = #{mobile},</if> 
+        <if test="xwName != null"> xw_name = #{xwName},</if> 
+        <if test="qqNo != null"> qq_no = #{qqNo},</if> 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
+        <if test="createDate != null"> create_date = #{createDate},</if> 
+        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
+        gmt_modified = now() 
+    </set> 
+       where id = #{id,jdbcType=BIGINT}  
+  </update> 
+</mapper> 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace="com.jackluan.bigflag.domain.notice.component.dao.INoticeConfigDao" >
+  <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" > 
+        <result column="id" property="id" /> 
+        <result column="notice_type" property="noticeType" /> 
+        <result column="frequency_type" property="frequencyType" /> 
+        <result column="notice_date" property="noticeDate" /> 
+        <result column="is_delete" property="isDelete" /> 
+        <result column="create_date" property="createDate" /> 
+        <result column="modify_date" property="modifyDate" /> 
+  </resultMap> 
+  <sql id="Example_Where_Clause" > 
+    <where > 
+		    1=1  
+        <if test="id != null "> and id = #{id} </if> 
+        <if test="noticeType != null "> and notice_type = #{noticeType} </if> 
+        <if test="frequencyType != null "> and frequency_type = #{frequencyType} </if> 
+        <if test="noticeDate != null "> and notice_date = #{noticeDate} </if> 
+        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
+        <if test="createDate != null "> and create_date = #{createDate} </if> 
+        <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
+        and is_deleted='N' 
+        <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
+    </where> 
+  </sql> 
+  <sql id="Base_Column_List" > 
+    	id,notice_type,frequency_type,notice_date,is_delete,create_date,modify_date 
+  </sql> 
+  <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" > 
+    select 
+    <include refid="Base_Column_List" /> 
+    from notice_config 
+      <include refid="Example_Where_Clause" /> 
+  </select> 
+  <delete id="delete" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" > 
+    update notice_config set  is_deleted='Y' 
+      <include refid="Example_Where_Clause" /> 
+  </delete> 
+  <insert id="insert" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo"  useGeneratedKeys="true" keyProperty="id">
+    insert into notice_config 
+     ( notice_type,frequency_type,notice_date,is_delete,create_date,modify_date )
+    values 
+    ( #{noticeType},#{frequencyType},#{noticeDate},#{isDelete},#{createDate},#{modifyDate} )
+  </insert> 
+  <select id="count" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" resultType="java.lang.Integer" > 
+    select count(*) from notice_config 
+      <include refid="Example_Where_Clause" /> 
+  </select> 
+  <update id="update" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" > 
+    update notice_config 
+    <set > 
+     	  <if test="noticeType != null"> notice_type = #{noticeType},</if> 
+        <if test="frequencyType != null"> frequency_type = #{frequencyType},</if> 
+        <if test="noticeDate != null"> notice_date = #{noticeDate},</if> 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
+        <if test="createDate != null"> create_date = #{createDate},</if> 
+        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
+        gmt_modified = now() 
+    </set> 
+       where id = #{id,jdbcType=BIGINT}  
+  </update> 
+</mapper> 

@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bigflag?serverTimezone=UTC
+    username: root
+    password: root
+mybatis:
+  type-aliases-package: com.jackluan.bigflag.domain.*.component.dataobject
+  mapper-locations: classpath:mapper/*.xml
