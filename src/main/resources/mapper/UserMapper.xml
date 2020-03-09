@@ -42,7 +42,7 @@
     </insert>
 
     <delete id="delete" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo">
-        update user set is_deleted='Y'
+        update user set is_delete='Y'
         <include refid="Example_Where_Clause"/>
     </delete>
 
@@ -56,7 +56,6 @@
             <if test="mobile != null">mobile = #{mobile},</if>
             <if test="status != null">status = #{status},</if>
             <if test="isDelete != null">is_delete = #{isDelete},</if>
-            <if test="createDate != null">create_date = #{createDate},</if>
             modify_date = now()
         </set>
         where id = #{id}

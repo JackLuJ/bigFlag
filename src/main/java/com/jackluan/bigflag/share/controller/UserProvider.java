@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 2020/3/3 19:57
  */
 @RestController
-public class UserController implements IUserShareService {
+public class UserProvider implements IUserShareService {
 
     @Autowired
     private IUserService userService;

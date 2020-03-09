@@ -1,5 +1,6 @@
 package com.jackluan.bigflag.common.base;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 
 /**
@@ -31,9 +32,30 @@ public class ResultBase<T> {
         return this;
     }
 
+    public ResultBase<T> failed(BigFlagRuntimeException e) {
+        this.isSuccess = false;
+        this.code = e.getCode();
+        this.msg = e.getMsg();
+        return this;
+    }
+
+    public ResultBase<T> failed(ResultBase resultBase) {
+        this.isSuccess = false;
+        this.code = resultBase.getCode();
+        this.msg = resultBase.getMsg();
+        return this;
+    }
+
     public ResultBase<T> failed(String code) {
         this.isSuccess = false;
         this.code = code;
+        return this;
+    }
+
+    public ResultBase<T> failed(String code, T t) {
+        this.isSuccess = false;
+        this.code = code;
+        this.value = t;
         return this;
     }
 
@@ -50,5 +72,27 @@ public class ResultBase<T> {
         this.msg = msg;
         this.value = t;
         return this;
+    }
+
+    public boolean isSuccess(){
+        return this.isSuccess;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        JsonConverter jsonConverter = new JsonConverter();
+        return jsonConverter.objToJson(this);
     }
 }

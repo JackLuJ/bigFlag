@@ -32,14 +32,14 @@
       <include refid="Example_Where_Clause" />
   </select>
   <delete id="delete" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.AchieveConfigDo" >
-    update achieve_config set  is_deleted='Y'
+    update achieve_config set  is_delete='Y'
       <include refid="Example_Where_Clause" />
   </delete>
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.AchieveConfigDo" useGeneratedKeys="true" keyProperty="id">
     insert into achieve_config
      ( achieve_way_type,threshold_calculation_type,is_delete,create_date,modify_date )
     values
-    ( #{achieveWayType},#{thresholdCalculationType},#{isDelete},#{createDate},#{modifyDate} )
+    ( #{achieveWayType},#{thresholdCalculationType},'N',now(),now() )
   </insert>
   <select id="count" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.AchieveConfigDo" resultType="java.lang.Integer" >
     select count(*) from achieve_config
@@ -51,9 +51,7 @@
      	  <if test="achieveWayType != null"> achieve_way_type = #{achieveWayType},</if>
         <if test="thresholdCalculationType != null"> threshold_calculation_type = #{thresholdCalculationType},</if>
         <if test="isDelete != null"> is_delete = #{isDelete},</if>
-        <if test="createDate != null"> create_date = #{createDate},</if>
-        <if test="modifyDate != null"> modify_date = #{modifyDate},</if>
-        gmt_modified = now()
+        modify_date = now()
     </set>
        where id = #{id,jdbcType=BIGINT}
   </update>

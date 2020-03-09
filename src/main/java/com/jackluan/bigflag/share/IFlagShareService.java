@@ -1,7 +1,9 @@
 package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.ResultBase;
-import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
+import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
+import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,9 +16,9 @@ public interface IFlagShareService {
 
     /**
      * 创建Flag
-     * @param flagShareRequestDto
+     * @param flagCreateShareRequestDto
      * @return
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    ResultBase<Void> createFlag(FlagShareRequestDto flagShareRequestDto);
+    ResultBase<FlagResponseDto> createFlag(@RequestBody FlagCreateShareRequestDto flagCreateShareRequestDto);
 }

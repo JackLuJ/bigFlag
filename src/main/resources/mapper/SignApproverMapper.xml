@@ -40,14 +40,14 @@
       <include refid="Example_Where_Clause" /> 
   </select> 
   <delete id="delete" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" > 
-    update sign_approver set  is_deleted='Y' 
+    update sign_approver set  is_delete='Y'
       <include refid="Example_Where_Clause" /> 
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo"  useGeneratedKeys="true" keyProperty="id">
     insert into sign_approver 
      ( sign_id,approver_id,approver_user_id,score,result_type,description,is_delete,create_date,modify_date )
     values 
-    ( #{signId},#{approverId},#{approverUserId},#{score},#{resultType},#{description},#{isDelete},#{createDate},#{modifyDate} )
+    ( #{signId},#{approverId},#{approverUserId},#{score},#{resultType},#{description},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" resultType="java.lang.Integer" > 
     select count(*) from sign_approver 
@@ -62,10 +62,8 @@
         <if test="score != null"> score = #{score},</if> 
         <if test="resultType != null"> result_type = #{resultType},</if> 
         <if test="description != null"> description = #{description},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
-        <if test="createDate != null"> create_date = #{createDate},</if> 
-        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
-        gmt_modified = now() 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if>
+        modify_date = now()
     </set> 
        where id = #{id,jdbcType=BIGINT}  
   </update> 

@@ -20,5 +20,5 @@ public class NoticeConfigDo extends BaseDo {
 
     private Integer frequencyType;
 
-    private Date noticeDate;
+    private String noticeDate;
 }

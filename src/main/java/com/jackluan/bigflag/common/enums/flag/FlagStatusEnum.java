@@ -44,11 +44,11 @@ public enum FlagStatusEnum implements KeyValueEnum<Integer> {
 
     @Override
     public Integer getCode() {
-        return null;
+        return code;
     }
 
     @Override
     public String getDesc() {
-        return null;
+        return desc;
     }
 }

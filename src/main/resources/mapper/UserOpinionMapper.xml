@@ -38,14 +38,14 @@
       <include refid="Example_Where_Clause" /> 
   </select> 
   <delete id="delete" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" > 
-    update user_opinion set  is_deleted='Y' 
+    update user_opinion set  is_delete='Y'
       <include refid="Example_Where_Clause" /> 
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo"  useGeneratedKeys="true" keyProperty="id">
     insert into user_opinion 
      ( user_id,description,mobile,xw_name,qq_no,is_delete,create_date,modify_date )
     values 
-    ( #{userId},#{description},#{mobile},#{xwName},#{qqNo},#{isDelete},#{createDate},#{modifyDate} )
+    ( #{userId},#{description},#{mobile},#{xwName},#{qqNo},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo" resultType="java.lang.Integer" > 
     select count(*) from user_opinion 
@@ -60,9 +60,7 @@
         <if test="xwName != null"> xw_name = #{xwName},</if> 
         <if test="qqNo != null"> qq_no = #{qqNo},</if> 
         <if test="isDelete != null"> is_delete = #{isDelete},</if> 
-        <if test="createDate != null"> create_date = #{createDate},</if> 
-        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
-        gmt_modified = now() 
+        modify_date = now()
     </set> 
        where id = #{id,jdbcType=BIGINT}  
   </update> 

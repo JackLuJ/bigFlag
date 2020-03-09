@@ -34,14 +34,14 @@
       <include refid="Example_Where_Clause" /> 
   </select> 
   <delete id="delete" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" > 
-    update notice_config set  is_deleted='Y' 
+    update notice_config set  is_delete='Y'
       <include refid="Example_Where_Clause" /> 
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo"  useGeneratedKeys="true" keyProperty="id">
     insert into notice_config 
      ( notice_type,frequency_type,notice_date,is_delete,create_date,modify_date )
     values 
-    ( #{noticeType},#{frequencyType},#{noticeDate},#{isDelete},#{createDate},#{modifyDate} )
+    ( #{noticeType},#{frequencyType},#{noticeDate},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeConfigDo" resultType="java.lang.Integer" > 
     select count(*) from notice_config 
@@ -53,10 +53,8 @@
      	  <if test="noticeType != null"> notice_type = #{noticeType},</if> 
         <if test="frequencyType != null"> frequency_type = #{frequencyType},</if> 
         <if test="noticeDate != null"> notice_date = #{noticeDate},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
-        <if test="createDate != null"> create_date = #{createDate},</if> 
-        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
-        gmt_modified = now() 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if>
+        modify_date = now()
     </set> 
        where id = #{id,jdbcType=BIGINT}  
   </update> 

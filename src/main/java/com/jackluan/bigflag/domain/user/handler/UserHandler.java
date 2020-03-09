@@ -1,5 +1,8 @@
 package com.jackluan.bigflag.domain.user.handler;
 
+import com.jackluan.bigflag.common.base.BigFlagRuntimeException;
+import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.domain.user.component.dataobject.UserDo;
 import com.jackluan.bigflag.domain.user.convert.UserConvert;
 import com.jackluan.bigflag.domain.user.dto.request.UserRequestDto;
@@ -18,9 +21,12 @@ public class UserHandler {
     @Autowired
     private UserLogic userLogic;
 
-    public Long createUserHandler(UserRequestDto userRequestDto){
-        UserDo requestDo = UserConvert.INSTANCE.convertToDo(userRequestDto);
-        return userLogic.createUser(requestDo);
+    public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto) throws BigFlagRuntimeException{
+        Long id = userLogic.createUser(userRequestDto);
+        if (null == id || id < 1) {
+            throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_USER_FAILED);
+        }
+        return new ResultBase<Void>().success();
     }
 
 }

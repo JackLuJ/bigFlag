@@ -48,14 +48,14 @@
       <include refid="Example_Where_Clause" /> 
   </select> 
   <delete id="delete" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" > 
-    update sign set  is_deleted='Y' 
+    update sign set  is_delete='Y'
       <include refid="Example_Where_Clause" /> 
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo"  useGeneratedKeys="true" keyProperty="id">
     insert into sign 
      ( user_id,flag_id,description,file_group_id,achieve_way_type,threshold_calculation_type,threshold,achieve_date,deadline,status,is_delete,create_date,modify_date )
     values 
-    ( #{userId},#{flagId},#{description},#{fileGroupId},#{achieveWayType},#{thresholdCalculationType},#{threshold},#{achieveDate},#{deadline},#{status},#{isDelete},#{createDate},#{modifyDate} )
+    ( #{userId},#{flagId},#{description},#{fileGroupId},#{achieveWayType},#{thresholdCalculationType},#{threshold},#{achieveDate},#{deadline},#{status},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" resultType="java.lang.Integer" > 
     select count(*) from sign 
@@ -74,10 +74,8 @@
         <if test="achieveDate != null"> achieve_date = #{achieveDate},</if> 
         <if test="deadline != null"> deadline = #{deadline},</if> 
         <if test="status != null"> status = #{status},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
-        <if test="createDate != null"> create_date = #{createDate},</if> 
-        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
-        gmt_modified = now() 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if>
+        modify_date = now()
     </set> 
        where id = #{id,jdbcType=BIGINT}  
   </update> 

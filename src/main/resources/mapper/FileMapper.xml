@@ -34,14 +34,14 @@
       <include refid="Example_Where_Clause" /> 
   </select> 
   <delete id="delete" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
-    update file set  is_deleted='Y' 
+    update file set  is_delete='Y'
       <include refid="Example_Where_Clause" /> 
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo"  useGeneratedKeys="true" keyProperty="id">
     insert into file 
      ( store_type,file_path,file_name,is_delete,create_date,modify_date )
     values 
-    ( #{storeType},#{filePath},#{fileName},#{isDelete},#{createDate},#{modifyDate} )
+    ( #{storeType},#{filePath},#{fileName},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" resultType="java.lang.Integer" > 
     select count(*) from file 
@@ -53,10 +53,8 @@
      	  <if test="storeType != null"> store_type = #{storeType},</if> 
         <if test="filePath != null"> file_path = #{filePath},</if> 
         <if test="fileName != null"> file_name = #{fileName},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if> 
-        <if test="createDate != null"> create_date = #{createDate},</if> 
-        <if test="modifyDate != null"> modify_date = #{modifyDate},</if> 
-        gmt_modified = now() 
+        <if test="isDelete != null"> is_delete = #{isDelete},</if>
+        modify_date = now()
     </set> 
        where id = #{id,jdbcType=BIGINT}  
   </update> 

@@ -18,9 +18,9 @@ public class FlagDo extends BaseDo {
 
     private Long userId;
 
-    private Long achieveConfigId;
-
     private Long noticeConfigId;
+
+    private Integer achieveConfigType;
 
     private String title;
 
