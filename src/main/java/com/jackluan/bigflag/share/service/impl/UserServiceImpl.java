@@ -11,12 +11,14 @@ import com.jackluan.bigflag.share.dto.request.UserShareRequestDto;
 import com.jackluan.bigflag.share.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author: jack.luan
  * @Date: 2020/3/3 23:18
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements IUserService {
 
     @Autowired

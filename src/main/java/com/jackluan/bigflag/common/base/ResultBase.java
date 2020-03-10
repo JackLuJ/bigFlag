@@ -78,6 +78,10 @@ public class ResultBase<T> {
         return this.isSuccess;
     }
 
+    public boolean isEmptyValue(){
+        return this.value == null;
+    }
+
     public String getCode() {
         return code;
     }

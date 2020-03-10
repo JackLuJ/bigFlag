@@ -18,6 +18,10 @@ public class ResultCodeConstant {
 
     public static final String CREATE_FLAG_TRACE_FAILED = "FLAG00002";
 
+    public static final String CREATE_APPROVER_TRACE_FAILED = "FLAG00003";
+
+    public static final String FLAG_NOT_EXIST_FAILED = "FLAG00004";
+
 
     public static final String CREATE_NOTICE_CONFIG_FAILED = "NOTICE00001";
 

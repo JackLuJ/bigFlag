@@ -15,4 +15,8 @@ public class BaseDto {
     private Date createDate;
 
     private Date modifyDate;
+
+    private Integer start;
+
+    private Integer limit;
 }

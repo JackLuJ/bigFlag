@@ -4,8 +4,11 @@ import com.jackluan.bigflag.domain.flag.component.dao.IFlagDao;
 import com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo;
 import com.jackluan.bigflag.domain.flag.convert.FlagConvert;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
+import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: jack.luan
@@ -20,5 +23,11 @@ public class FlagLogic {
     public long createFlag(FlagRequestDto flagRequestDto) {
         FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
         return flagDao.insert(flagDo);
+    }
+
+    public List<FlagResponseDto> queryFlagList(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        List<FlagDo> resultList = flagDao.list(flagDo);
+        return FlagConvert.INSTANCE.convertDtoList(resultList);
     }
 }

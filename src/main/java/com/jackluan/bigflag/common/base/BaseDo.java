@@ -13,4 +13,8 @@ public class BaseDo {
     private Date createDate;
 
     private Date modifyDate;
+
+    private Integer start;
+
+    private Integer limit;
 }

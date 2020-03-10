@@ -14,8 +14,6 @@ public interface IBaseDao<T> {
 
     int update(T t);
 
-    T queryOf(T t);
-
     List<T> list(T t);
 
     int count(T t);

@@ -4,32 +4,25 @@ import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
  * @Author: jack.luan
- * @Date: 2020/3/8 16:23
+ * @Date: 2020/3/10 22:21
  */
-public enum AchieveWayTypeEnum implements KeyValueEnum<Integer> {
+public enum ApproverTypeEnum implements KeyValueEnum<Integer> {
 
     /**
-     * greater than
+     * 普通审核人
      */
-    GREATER_THAN(1, "greater than"),
-
-    /**
-     * equal to
-     */
-    EQUAL_TO(2, "equal to"),
-
-    /**
-     * less than
-     */
-    LESS_THAN(3, "less than");
+    NORMAL(1, "normal", "1");
 
     private Integer code;
 
     private String desc;
 
-    AchieveWayTypeEnum(Integer code, String desc) {
+    private String score;
+
+    ApproverTypeEnum(Integer code, String desc, String score) {
         this.code = code;
         this.desc = desc;
+        this.score = score;
     }
 
     @Override
@@ -40,5 +33,9 @@ public enum AchieveWayTypeEnum implements KeyValueEnum<Integer> {
     @Override
     public String getDesc() {
         return desc;
+    }
+
+    public String getScore() {
+        return score;
     }
 }

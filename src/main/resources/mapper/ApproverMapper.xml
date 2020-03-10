@@ -5,8 +5,9 @@
         <result column="id" property="id" /> 
         <result column="user_id" property="userId" /> 
         <result column="flag_id" property="flagId" /> 
-        <result column="grade_id" property="gradeId" /> 
-        <result column="status" property="status" /> 
+        <result column="score" property="score" />
+        <result column="approver_type" property="approverType" />
+        <result column="status" property="status" />
         <result column="is_delete" property="isDelete" /> 
         <result column="create_date" property="createDate" /> 
         <result column="modify_date" property="modifyDate" /> 
@@ -17,8 +18,9 @@
         <if test="id != null "> and id = #{id} </if> 
         <if test="userId != null "> and user_id = #{userId} </if> 
         <if test="flagId != null "> and flag_id = #{flagId} </if> 
-        <if test="gradeId != null "> and grade_id = #{gradeId} </if> 
-        <if test="status != null "> and status = #{status} </if> 
+        <if test="score != null "> and score = #{score} </if>
+        <if test="approverType != null "> and approver_type = #{approverType} </if>
+        <if test="status != null "> and status = #{status} </if>
         <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
         <if test="createDate != null "> and create_date = #{createDate} </if> 
         <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
@@ -27,7 +29,7 @@
     </where> 
   </sql> 
   <sql id="Base_Column_List" > 
-    	id,user_id,flag_id,grade_id,status,is_delete,create_date,modify_date 
+    	id,user_id,flag_id,score,approver_type,status,is_delete,create_date,modify_date
   </sql> 
   <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo" > 
     select 
@@ -41,9 +43,9 @@
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo"  useGeneratedKeys="true" keyProperty="id">
     insert into approver 
-     ( user_id,flag_id,grade_id,status,is_delete,create_date,modify_date )
+     ( user_id,flag_id,score,approver_type,status,is_delete,create_date,modify_date )
     values 
-    ( #{userId},#{flagId},#{gradeId},#{status},'N',now(),now() )
+    ( #{userId},#{flagId},#{score},#{approverType},#{gradeId},#{status},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo" resultType="java.lang.Integer" > 
     select count(*) from approver 
@@ -54,8 +56,9 @@
     <set > 
      	  <if test="userId != null"> user_id = #{userId},</if> 
         <if test="flagId != null"> flag_id = #{flagId},</if> 
-        <if test="gradeId != null"> grade_id = #{gradeId},</if> 
-        <if test="status != null"> status = #{status},</if> 
+        <if test="score != null"> score = #{score},</if>
+        <if test="approverType != null"> approver_type = #{approverType},</if>
+        <if test="status != null"> status = #{status},</if>
         <if test="isDelete != null"> is_delete = #{isDelete},</if>
         modify_date = now()
     </set> 

@@ -25,7 +25,7 @@ public interface FlagTraceConvert {
     List<FlagTraceRequestDto> convertDtoList(List<FlagTraceDo> flagDos);
 
     @Mappings({
-            @Mapping(source = "id", target = "id", ignore = true),
+            @Mapping(target = "id", ignore = true),
             @Mapping(source = "id", target = "flagId")
     })
     FlagTraceRequestDto convertFlag(FlagRequestDto flagRequestDto);

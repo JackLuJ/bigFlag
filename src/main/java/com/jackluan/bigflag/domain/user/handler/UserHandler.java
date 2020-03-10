@@ -21,7 +21,7 @@ public class UserHandler {
     @Autowired
     private UserLogic userLogic;
 
-    public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto) throws BigFlagRuntimeException{
+    public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto){
         Long id = userLogic.createUser(userRequestDto);
         if (null == id || id < 1) {
             throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_USER_FAILED);

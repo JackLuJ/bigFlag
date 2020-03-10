@@ -15,12 +15,14 @@ import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
 import com.jackluan.bigflag.share.service.IFlagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author: jack.luan
  * @Date: 2020/3/9 22:36
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class FlagServiceImpl implements IFlagService {
 
     @Autowired

@@ -3,6 +3,7 @@ package com.jackluan.bigflag.domain.flag.dto.base;
 import com.jackluan.bigflag.common.base.BaseDo;
 import com.jackluan.bigflag.common.base.BaseDto;
 import com.jackluan.bigflag.common.enums.flag.ApproverStatusEnum;
+import com.jackluan.bigflag.common.enums.flag.ApproverTypeEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,7 +21,9 @@ public class ApproverBaseDto extends BaseDto {
 
     private Long flagId;
 
-    private Long gradeId;
+    private String score;
+
+    private ApproverTypeEnum approverType;
 
     private ApproverStatusEnum status;
 }

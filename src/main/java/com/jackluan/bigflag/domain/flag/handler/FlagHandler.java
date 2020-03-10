@@ -12,6 +12,8 @@ import com.jackluan.bigflag.domain.flag.logic.FlagTraceLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @Author: jack.luan
  * @Date: 2020/3/8 15:53
@@ -25,7 +27,7 @@ public class FlagHandler {
     @Autowired
     private FlagTraceLogic flagTraceLogic;
 
-    public ResultBase<FlagResponseDto> createFlag(FlagRequestDto requestDto) throws BigFlagRuntimeException {
+    public ResultBase<FlagResponseDto> createFlag(FlagRequestDto requestDto){
         FlagResponseDto responseDto = new FlagResponseDto();
         requestDto.setSequenceNo(1);
         long flagId = flagLogic.createFlag(requestDto);
@@ -42,6 +44,10 @@ public class FlagHandler {
 
         responseDto.setId(flagId);
         return new ResultBase<FlagResponseDto>().success(responseDto);
+    }
+
+    public ResultBase<List<FlagResponseDto>> queryFlagList(FlagRequestDto requestDto){
+        return new ResultBase<List<FlagResponseDto>>().success(flagLogic.queryFlagList(requestDto));
     }
 
 }
