@@ -19,6 +19,10 @@ public class NoticeConfigLogic {
 
     public long createNoticeConfig(NoticeConfigRequestDto requestDto){
         NoticeConfigDo noticeConfigDo = NoticeConfigConvert.INSTANCE.convertToDo(requestDto);
-        return noticeConfigDao.insert(noticeConfigDo);
+        long count = noticeConfigDao.insert(noticeConfigDo);
+        if (count < 1){
+            return count;
+        }
+        return noticeConfigDo.getId();
     }
 }

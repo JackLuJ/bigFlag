@@ -1,9 +1,12 @@
 package com.jackluan.bigflag.share.service;
 
 import com.jackluan.bigflag.common.base.BigFlagRuntimeException;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @Author: jack.luan
@@ -11,6 +14,7 @@ import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
  */
 public interface IFlagService {
 
-    ResultBase<FlagResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto) throws BigFlagRuntimeException;
+    ResultBase<FlagResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto);
 
+    ResultBase<Page<FlagResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto);
 }

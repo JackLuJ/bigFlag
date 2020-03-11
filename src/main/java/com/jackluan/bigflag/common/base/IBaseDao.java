@@ -14,7 +14,7 @@ public interface IBaseDao<T> {
 
     int update(T t);
 
-    List<T> list(T t);
+    List<T> select(T t);
 
     int count(T t);
 

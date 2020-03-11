@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.share.service.impl;
 
 import com.jackluan.bigflag.common.base.BigFlagRuntimeException;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.enums.flag.FlagStatusEnum;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
@@ -12,6 +13,7 @@ import com.jackluan.bigflag.domain.notice.handler.NoticeConfigHandler;
 import com.jackluan.bigflag.share.convert.FlagShareConvert;
 import com.jackluan.bigflag.share.convert.NoticeShareConvert;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
 import com.jackluan.bigflag.share.service.IFlagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,11 +34,11 @@ public class FlagServiceImpl implements IFlagService {
     private FlagHandler flagHandler;
 
     @Override
-    public ResultBase<FlagResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto) throws BigFlagRuntimeException {
+    public ResultBase<FlagResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto) {
 
         NoticeConfigRequestDto noticeConfigRequestDto = NoticeShareConvert.INSTANCE.convertToNoticeConfig(flagCreateShareRequestDto);
         ResultBase<NoticeConfigResponseDto> noticeResult = noticeConfigHandler.createNoticeConfig(noticeConfigRequestDto);
-        if (!noticeResult.isSuccess()){
+        if (!noticeResult.isSuccess()) {
             return new ResultBase<FlagResponseDto>().failed(noticeResult);
         }
 
@@ -46,4 +48,9 @@ public class FlagServiceImpl implements IFlagService {
         return flagHandler.createFlag(flagRequestDto);
     }
 
+    @Override
+    public ResultBase<Page<FlagResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
+        Page<FlagRequestDto> flagRequestDto = FlagShareConvert.INSTANCE.convertToDomainDto(flagShareRequestDto);
+        return flagHandler.queryFlagListPage(flagRequestDto);
+    }
 }

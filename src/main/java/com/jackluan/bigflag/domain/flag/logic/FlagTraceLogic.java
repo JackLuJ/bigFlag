@@ -18,7 +18,11 @@ public class FlagTraceLogic {
     private IFlagTraceDao flagTraceDao;
 
     public long createFlagTrace(FlagTraceRequestDto flagRequestDto) {
-        FlagTraceDo flagDo = FlagTraceConvert.INSTANCE.convertToDo(flagRequestDto);
-        return flagTraceDao.insert(flagDo);
+        FlagTraceDo flagTraceDoDo = FlagTraceConvert.INSTANCE.convertToDo(flagRequestDto);
+        long count = flagTraceDao.insert(flagTraceDoDo);
+        if (count < 1){
+            return count;
+        }
+        return flagTraceDoDo.getId();
     }
 }

@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.domain.flag.convert;
 
 import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
@@ -8,6 +9,8 @@ import com.jackluan.bigflag.domain.user.component.dataobject.UserDo;
 import com.jackluan.bigflag.domain.user.dto.request.UserRequestDto;
 import com.jackluan.bigflag.domain.user.dto.response.UserResponseDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

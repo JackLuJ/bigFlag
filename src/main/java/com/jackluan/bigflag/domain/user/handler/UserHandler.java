@@ -22,8 +22,8 @@ public class UserHandler {
     private UserLogic userLogic;
 
     public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto){
-        Long id = userLogic.createUser(userRequestDto);
-        if (null == id || id < 1) {
+        long id = userLogic.createUser(userRequestDto);
+        if (id < 1) {
             throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_USER_FAILED);
         }
         return new ResultBase<Void>().success();

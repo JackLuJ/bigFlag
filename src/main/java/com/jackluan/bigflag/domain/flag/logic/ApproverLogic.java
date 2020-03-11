@@ -19,7 +19,11 @@ public class ApproverLogic {
 
     public long createApprover(ApproverRequestDto approverRequestDto){
         ApproverDo approverDo = ApproverConvert.INSTANCE.convertToDo(approverRequestDto);
-        return approverDao.insert(approverDo);
+        long count = approverDao.insert(approverDo);
+        if (count < 1){
+            return count;
+        }
+        return approverDo.getId();
     }
 
 }

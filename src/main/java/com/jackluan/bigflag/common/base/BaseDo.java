@@ -1,11 +1,14 @@
 package com.jackluan.bigflag.common.base;
 
+import lombok.Data;
+
 import java.util.Date;
 
 /**
  * @Author: jack.luan
  * @Date: 2020/3/1 17:00
  */
+@Data
 public class BaseDo {
 
     private String isDelete;

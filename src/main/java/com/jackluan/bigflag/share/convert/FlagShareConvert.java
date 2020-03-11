@@ -1,9 +1,11 @@
 package com.jackluan.bigflag.share.convert;
 
 import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
 import com.jackluan.bigflag.share.dto.request.ApproverCreateShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -15,6 +17,8 @@ import org.mapstruct.factory.Mappers;
 public interface FlagShareConvert {
 
     FlagShareConvert INSTANCE = Mappers.getMapper(FlagShareConvert.class);
+
+    Page<FlagRequestDto> convertToDomainDto(Page<FlagShareRequestDto> flagShareRequestDto);
 
     FlagRequestDto convertToDomainDto(FlagCreateShareRequestDto flagCreateShareRequestDto);
 

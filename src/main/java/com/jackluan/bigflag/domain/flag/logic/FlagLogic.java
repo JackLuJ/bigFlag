@@ -22,12 +22,21 @@ public class FlagLogic {
 
     public long createFlag(FlagRequestDto flagRequestDto) {
         FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
-        return flagDao.insert(flagDo);
+        long count = flagDao.insert(flagDo);
+        if (count < 1){
+            return count;
+        }
+        return flagDo.getId();
     }
 
     public List<FlagResponseDto> queryFlagList(FlagRequestDto flagRequestDto){
         FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
-        List<FlagDo> resultList = flagDao.list(flagDo);
+        List<FlagDo> resultList = flagDao.select(flagDo);
         return FlagConvert.INSTANCE.convertDtoList(resultList);
+    }
+
+    public int queryCount(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        return flagDao.count(flagDo);
     }
 }

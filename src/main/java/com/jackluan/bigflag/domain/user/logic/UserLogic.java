@@ -19,7 +19,11 @@ public class UserLogic {
 
     public long createUser(UserRequestDto userRequestDto){
         UserDo userDo = UserConvert.INSTANCE.convertToDo(userRequestDto);
-        return userDao.insert(userDo);
+        long count = userDao.insert(userDo);
+        if (count < 1){
+            return count;
+        }
+        return userDo.getId();
     }
 
 }

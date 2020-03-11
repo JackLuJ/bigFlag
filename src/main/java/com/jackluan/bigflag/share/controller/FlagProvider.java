@@ -1,9 +1,11 @@
 package com.jackluan.bigflag.share.controller;
 
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import com.jackluan.bigflag.share.IFlagShareService;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
 import com.jackluan.bigflag.share.service.IFlagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,4 +25,8 @@ public class FlagProvider implements IFlagShareService {
         return flagService.createFlag(flagCreateShareRequestDto);
     }
 
+    @Override
+    public ResultBase<Page<FlagResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
+        return flagService.queryFlag(flagShareRequestDto);
+    }
 }

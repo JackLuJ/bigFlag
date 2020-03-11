@@ -22,7 +22,7 @@
         <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
         <if test="createDate != null "> and create_date = #{createDate} </if> 
         <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
-        and is_deleted='N' 
+        and is_delete='N'
         <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
     </where> 
   </sql> 
