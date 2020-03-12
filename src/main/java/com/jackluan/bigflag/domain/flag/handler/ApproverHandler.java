@@ -31,4 +31,12 @@ public class ApproverHandler {
         return new ResultBase<ApproverResponseDto>().success(responseDto);
     }
 
+    public ResultBase<Void> confirmApprover(ApproverRequestDto approverRequestDto){
+        int count = approverLogic.updateApprover(approverRequestDto);
+        if (count < 1){
+            throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_APPROVER_FAILED);
+        }
+        return new ResultBase<Void>().success();
+    }
+
 }

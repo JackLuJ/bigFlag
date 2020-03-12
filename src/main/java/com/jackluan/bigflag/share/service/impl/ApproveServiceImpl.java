@@ -12,6 +12,7 @@ import com.jackluan.bigflag.domain.flag.handler.FlagHandler;
 import com.jackluan.bigflag.share.convert.ApproveShareConvert;
 import com.jackluan.bigflag.share.convert.FlagShareConvert;
 import com.jackluan.bigflag.share.dto.request.ApproverCreateShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
 import com.jackluan.bigflag.share.service.IApproveService;
 import com.jackluan.bigflag.share.service.IFlagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,4 +50,9 @@ public class ApproveServiceImpl implements IApproveService {
         return new ResultBase<Void>().success();
     }
 
+    @Override
+    public ResultBase<Void> confirmApprover(ConfirmApproverShareRequestDto confirmApproverShareRequestDto) {
+        ApproverRequestDto approverRequestDto = ApproveShareConvert.INSTANCE.convertToDomainDto(confirmApproverShareRequestDto);
+        return approverHandler.confirmApprover(approverRequestDto);
+    }
 }

@@ -45,7 +45,7 @@
     insert into approver 
      ( user_id,flag_id,score,approver_type,status,is_delete,create_date,modify_date )
     values 
-    ( #{userId},#{flagId},#{score},#{approverType},#{gradeId},#{status},'N',now(),now() )
+    ( #{userId},#{flagId},#{score},#{approverType},#{status},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo" resultType="java.lang.Integer" > 
     select count(*) from approver 

@@ -21,7 +21,12 @@ public enum ApproverStatusEnum implements KeyValueEnum<Integer> {
     /**
      * 失效
      */
-    DISABLED(3, "disabled");
+    DISABLED(3, "disabled"),
+
+    /**
+     * 拒绝
+     */
+    REFUSE(4, "refuse");
 
     private Integer code;
 

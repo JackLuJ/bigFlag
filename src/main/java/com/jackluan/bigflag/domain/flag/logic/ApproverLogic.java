@@ -17,13 +17,18 @@ public class ApproverLogic {
     @Autowired
     private IApproverDao approverDao;
 
-    public long createApprover(ApproverRequestDto approverRequestDto){
+    public long createApprover(ApproverRequestDto approverRequestDto) {
         ApproverDo approverDo = ApproverConvert.INSTANCE.convertToDo(approverRequestDto);
         long count = approverDao.insert(approverDo);
-        if (count < 1){
+        if (count < 1) {
             return count;
         }
         return approverDo.getId();
+    }
+
+    public int updateApprover(ApproverRequestDto approverRequestDto) {
+        ApproverDo approverDo = ApproverConvert.INSTANCE.convertToDo(approverRequestDto);
+        return approverDao.update(approverDo);
     }
 
 }

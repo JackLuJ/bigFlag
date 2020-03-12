@@ -4,6 +4,7 @@ import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import com.jackluan.bigflag.share.IFlagShareService;
+import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
 import com.jackluan.bigflag.share.service.IFlagService;
@@ -29,4 +30,5 @@ public class FlagProvider implements IFlagShareService {
     public ResultBase<Page<FlagResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
         return flagService.queryFlag(flagShareRequestDto);
     }
+
 }

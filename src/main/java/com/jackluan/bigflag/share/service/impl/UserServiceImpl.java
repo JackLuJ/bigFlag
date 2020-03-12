@@ -27,11 +27,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResultBase<Void> createUser(UserShareRequestDto userShareRequestDto) {
         UserRequestDto requestDto = UserShareConvert.INSTANCE.convertToDomainDto(userShareRequestDto);
-        try {
-            return userHandler.createUserHandler(requestDto);
-        } catch (BigFlagRuntimeException e) {
-            return new ResultBase<Void>().failed(e);
-        }
+        return userHandler.createUserHandler(requestDto);
     }
 
 }

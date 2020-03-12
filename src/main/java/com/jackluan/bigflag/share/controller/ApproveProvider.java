@@ -3,6 +3,7 @@ package com.jackluan.bigflag.share.controller;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.IApproveShareService;
 import com.jackluan.bigflag.share.dto.request.ApproverCreateShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
 import com.jackluan.bigflag.share.service.IApproveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +21,10 @@ public class ApproveProvider implements IApproveShareService {
     @Override
     public ResultBase<Void> createApprover(ApproverCreateShareRequestDto approverCreateShareRequestDto) {
         return approveService.createApprover(approverCreateShareRequestDto);
+    }
+
+    @Override
+    public ResultBase<Void> confirmApprover(ConfirmApproverShareRequestDto confirmApproverShareRequestDto) {
+        return approveService.confirmApprover(confirmApproverShareRequestDto);
     }
 }
