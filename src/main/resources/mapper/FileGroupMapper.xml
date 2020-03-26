@@ -1,58 +1,84 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
-<mapper namespace="com.jackluan.bigflag.domain.file.component.dao.IFileGroupDao" >
-  <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo" > 
-        <result column="id" property="id" /> 
-        <result column="file_group_id" property="fileGroupId" /> 
-        <result column="file_id" property="fileId" /> 
-        <result column="is_delete" property="isDelete" /> 
-        <result column="create_date" property="createDate" /> 
-        <result column="modify_date" property="modifyDate" /> 
-  </resultMap> 
-  <sql id="Example_Where_Clause" > 
-    <where > 
-		    1=1  
-        <if test="id != null "> and id = #{id} </if> 
-        <if test="fileGroupId != null "> and file_group_id = #{fileGroupId} </if> 
-        <if test="fileId != null "> and file_id = #{fileId} </if> 
-        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
-        <if test="createDate != null "> and create_date = #{createDate} </if> 
-        <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
-        and is_delete='N'
-        <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
-    </where> 
-  </sql> 
-  <sql id="Base_Column_List" > 
-    	id,file_group_id,file_id,is_delete,create_date,modify_date 
-  </sql> 
-  <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo" > 
-    select 
-    <include refid="Base_Column_List" /> 
-    from file_group 
-      <include refid="Example_Where_Clause" /> 
-  </select> 
-  <delete id="delete" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo" > 
-    update file_group set  is_delete='Y'
-      <include refid="Example_Where_Clause" /> 
-  </delete> 
-  <insert id="insert" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo"  useGeneratedKeys="true" keyProperty="id">
-    insert into file_group 
-     ( file_group_id,file_id,is_delete,create_date,modify_date )
-    values 
-    ( #{fileGroupId},#{fileId},'N',now(),now() )
-  </insert> 
-  <select id="count" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo" resultType="java.lang.Integer" > 
-    select count(*) from file_group 
-      <include refid="Example_Where_Clause" /> 
-  </select> 
-  <update id="update" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo" > 
-    update file_group 
-    <set > 
-     	  <if test="fileGroupId != null"> file_group_id = #{fileGroupId},</if> 
-        <if test="fileId != null"> file_id = #{fileId},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if>
-        modify_date = now()
-    </set> 
-       where id = #{id,jdbcType=BIGINT}  
-  </update> 
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jackluan.bigflag.domain.file.component.dao.IFileGroupDao">
+    <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo">
+        <result column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modify_date" property="modifyDate"/>
+    </resultMap>
+    <resultMap id="ResultMapWithFile" type="com.jackluan.bigflag.domain.file.component.dataobject.extra.FileGroupExtraDo">
+        <result column="g.id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="g.is_delete" property="isDelete"/>
+        <collection property="fileList" ofType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo">
+            <result column="f.id" property="id"/>
+            <result column="store_type" property="storeType"/>
+            <result column="file_type" property="fileType"/>
+            <result column="file_path" property="filePath"/>
+            <result column="file_name" property="fileName"/>
+            <result column="suffix" property="suffix"/>
+            <result column="file_unique_code" property="fileUniqueCode"/>
+            <result column="f.is_delete" property="isDelete"/>
+        </collection>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null ">and id = #{id}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="isDelete != null  and isDelete != ''">and is_delete = #{isDelete}</if>
+            <if test="createDate != null ">and create_date = #{createDate}</if>
+            <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
+            and is_delete='N'
+            <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id,user_id,is_delete,create_date,modify_date
+    </sql>
+    <select id="select" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo">
+        select
+        <include refid="Base_Column_List"/>
+        from file_group
+        <include refid="Example_Where_Clause"/>
+    </select>
+    <delete id="delete" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo">
+        update file_group set is_delete='Y'
+        <include refid="Example_Where_Clause"/>
+    </delete>
+    <insert id="insert" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into file_group
+        ( user_id,is_delete,create_date,modify_date )
+        values
+        ( #{userId},'N',now(),now() )
+    </insert>
+    <select id="count" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo"
+            resultType="java.lang.Integer">
+        select count(*) from file_group
+        <include refid="Example_Where_Clause"/>
+    </select>
+    <update id="update" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo">
+        update file_group
+        <set>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            modify_date = now()
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectWithFile" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileGroupDo"
+            resultMap="ResultMapWithFile">
+        SELECT g.id,user_id,g.is_delete, f.id,file_group_id,store_type,file_type,file_name,suffix,file_unique_code,f.is_delete
+        FROM file_group g left join file f on g.id = f.file_group_id
+        <where>
+            1=1
+            <if test="id != null ">and g.id = #{id}</if>
+            <if test="userId != null ">and g.user_id = #{userId}</if>
+            and g.is_delete='N'and f.is_delete='N'
+        </where>
+    </select>
 </mapper> 

@@ -28,7 +28,9 @@ public class FlagDo extends BaseDo {
 
     private Integer flagType;
 
-    private String threshold;
+    private Integer performance;
+
+    private Integer threshold;
 
     private Date deadline;
 

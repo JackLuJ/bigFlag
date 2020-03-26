@@ -1,5 +1,6 @@
 package com.jackluan.bigflag.share.controller;
 
+import com.jackluan.bigflag.common.annotation.CheckToken;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.IApproveShareService;
 import com.jackluan.bigflag.share.dto.request.ApproverCreateShareRequestDto;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author: jack.luan
  * @Date: 2020/3/10 22:13
  */
+@CheckToken
 @RestController
 public class ApproveProvider implements IApproveShareService {
 

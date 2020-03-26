@@ -1,6 +1,9 @@
 package com.jackluan.bigflag.common.enums.flag;
 
 import com.jackluan.bigflag.common.base.KeyValueEnum;
+import com.jackluan.bigflag.common.utils.DateUtils;
+
+import java.util.Date;
 
 /**
  * @Author: jack.luan
@@ -35,5 +38,12 @@ public enum FlagTypeEnum implements KeyValueEnum<Integer> {
     @Override
     public String getDesc() {
         return desc;
+    }
+
+    public Date getDeadline() {
+        if (1 == code) {
+            return DateUtils.getTodayEnd();
+        }
+        return null;
     }
 }

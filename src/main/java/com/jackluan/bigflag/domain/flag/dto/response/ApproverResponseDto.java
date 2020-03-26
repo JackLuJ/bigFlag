@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApproverResponseDto extends ApproverBaseDto {
 
+    private Long fileGroupId;
+
 }

@@ -13,6 +13,6 @@ public interface IApproveService {
 
     ResultBase<Void> createApprover(ApproverCreateShareRequestDto approverCreateShareRequestDto);
 
-    ResultBase<Void> confirmApprover(@RequestBody ConfirmApproverShareRequestDto confirmApproverShareRequestDto);
+    ResultBase<Void> confirmApprover(ConfirmApproverShareRequestDto confirmApproverShareRequestDto);
 
 }

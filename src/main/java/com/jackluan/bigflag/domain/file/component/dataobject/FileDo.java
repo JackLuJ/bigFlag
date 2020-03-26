@@ -14,10 +14,15 @@ public class FileDo extends BaseDo {
 
     private Long id;
 
+    private Long fileGroupId;
+
     private Integer storeType;
 
-    private String filePath;
+    private Integer fileType;
 
     private String fileName;
 
+    private String suffix;
+
+    private String fileUniqueCode;
 }

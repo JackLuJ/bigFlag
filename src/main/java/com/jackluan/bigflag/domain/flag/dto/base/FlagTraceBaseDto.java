@@ -34,7 +34,9 @@ public class FlagTraceBaseDto extends BaseDto {
 
     private FlagTypeEnum flagType;
 
-    private String threshold;
+    private Integer performance;
+
+    private Integer threshold;
 
     private Date deadline;
 

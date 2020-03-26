@@ -4,6 +4,8 @@ import com.jackluan.bigflag.domain.flag.dto.base.FlagBaseDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Author: jack.luan
  * @Date: 2020/3/7 17:41
@@ -11,5 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FlagResponseDto extends FlagBaseDto {
+
+    private List<ApproverResponseDto> approverList;
 
 }

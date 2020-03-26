@@ -6,6 +6,7 @@ import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
+import com.jackluan.bigflag.share.dto.response.FlagShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,7 @@ public interface IFlagShareService {
      * @return
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    ResultBase<FlagResponseDto> createFlag(@RequestBody FlagCreateShareRequestDto flagCreateShareRequestDto);
+    ResultBase<FlagShareResponseDto> createFlag(@RequestBody FlagCreateShareRequestDto flagCreateShareRequestDto);
 
     /**
      * 查询Flag
@@ -31,6 +32,6 @@ public interface IFlagShareService {
      * @return
      */
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    ResultBase<Page<FlagResponseDto>> queryFlag(@RequestBody Page<FlagShareRequestDto> flagShareRequestDto);
+    ResultBase<Page<FlagShareResponseDto>> queryFlag(@RequestBody Page<FlagShareRequestDto> flagShareRequestDto);
 
 }

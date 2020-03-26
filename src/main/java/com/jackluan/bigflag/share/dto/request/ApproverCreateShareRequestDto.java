@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApproverCreateShareRequestDto {
 
+    private Long userId;
+
     private Long flagId;
 
     private ApproverTypeEnum approverType;

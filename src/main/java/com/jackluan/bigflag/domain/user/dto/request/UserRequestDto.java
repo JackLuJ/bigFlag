@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserRequestDto extends UserBaseDto {
+
+    private String newToken;
 }

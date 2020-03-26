@@ -18,9 +18,15 @@ public class UserDo extends BaseDo {
 
     private String oaOpenId;
 
-    private String uniqueId;
+    private String unionId;
 
-    private Long fileId;
+    private String sessionKey;
+
+    private String token;
+
+    private Integer tokenDays;
+
+    private Long fileGroupId;
 
     private String mobile;
 

@@ -20,7 +20,7 @@ public class SignApproverDo extends BaseDo {
 
     private Long approverUserId;
 
-    private String score;
+    private Integer score;
 
     private Integer resultType;
 

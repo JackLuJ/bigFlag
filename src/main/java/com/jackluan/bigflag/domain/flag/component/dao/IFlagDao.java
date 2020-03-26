@@ -10,4 +10,9 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IFlagDao extends IBaseDao<FlagDo> {
+
+    int increasePerformance(FlagDo flagDo);
+
+    int updatePassFlag(FlagDo flagDo);
+
 }

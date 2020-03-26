@@ -5,8 +5,11 @@
         <result column="id" property="id"/>
         <result column="app_open_id" property="appOpenId"/>
         <result column="oa_open_id" property="oaOpenId"/>
-        <result column="union_id" property="uniqueId"/>
-        <result column="file_id" property="fileId"/>
+        <result column="union_id" property="unionId"/>
+        <result column="session_key" property="sessionKey"/>
+        <result column="token" property="token"/>
+        <result column="token_days" property="tokenDays"/>
+        <result column="file_group_id" property="fileGroupId"/>
         <result column="mobile" property="mobile"/>
         <result column="status" property="status"/>
         <result column="is_delete" property="isDelete"/>
@@ -15,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, app_open_id, oa_open_id, union_id, file_id, mobile, status, is_delete, create_date, modify_date
+        id, app_open_id, oa_open_id, union_id, session_key, token, token_days, file_group_id, mobile, status, is_delete, create_date, modify_date
     </sql>
 
     <sql id="Example_Where_Clause">
@@ -24,8 +27,11 @@
             <if test="id != null ">and id = #{id}</if>
             <if test="appOpenId != null ">and app_open_id = #{appOpenId}</if>
             <if test="oaOpenId != null ">and oa_open_id = #{oaOpenId}</if>
-            <if test="uniqueId != null ">and union_id = #{uniqueId}</if>
-            <if test="fileId != null ">and file_id = #{fileId}</if>
+            <if test="unionId != null ">and union_id = #{unionId}</if>
+            <if test="sessionKey != null ">and session_key = #{sessionKey}</if>
+            <if test="token != null ">and token = #{token}</if>
+            <if test="tokenDays != null ">and token_days = #{tokenDays}</if>
+            <if test="fileGroupId != null ">and file_group_id = #{fileGroupId}</if>
             <if test="mobile != null ">and mobile = #{mobile}</if>
             <if test="status != null ">and status = #{status}</if>
             <if test="isDelete != null ">and is_delete = #{isDelete}</if>
@@ -36,8 +42,8 @@
     </sql>
 
     <insert id="insert" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (app_open_id, oa_open_id, union_id, file_id, mobile, status, is_delete, create_date,
-        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{uniqueId}, #{fileId}, #{mobile}, #{status}, 'N',
+        INSERT INTO user (app_open_id, oa_open_id, union_id, session_key, token, token_days, file_group_id, mobile, status, is_delete, create_date,
+        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{unionId}, #{sessionKey}, #{token}, #{tokenDays}, #{fileGroupId}, #{mobile}, #{status}, 'N',
         now(), now());
     </insert>
 
@@ -51,8 +57,11 @@
         <set>
             <if test="appOpenId != null">app_open_id = #{appOpenId},</if>
             <if test="oaOpenId != null">oa_open_id = #{oaOpenId},</if>
-            <if test="uniqueId != null">union_id = #{uniqueId},</if>
-            <if test="fileId != null">file_id = #{fileId},</if>
+            <if test="unionId != null">union_id = #{unionId},</if>
+            <if test="sessionKey != null">session_key = #{sessionKey},</if>
+            <if test="token != null">token = #{token},</if>
+            <if test="tokenDays != null">token_days = #{tokenDays},</if>
+            <if test="fileGroupId != null">file_group_id = #{fileGroupId},</if>
             <if test="mobile != null">mobile = #{mobile},</if>
             <if test="status != null">status = #{status},</if>
             <if test="isDelete != null">is_delete = #{isDelete},</if>

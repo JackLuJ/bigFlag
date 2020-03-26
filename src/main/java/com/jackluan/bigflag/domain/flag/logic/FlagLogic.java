@@ -39,4 +39,15 @@ public class FlagLogic {
         FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
         return flagDao.count(flagDo);
     }
+
+    public int increasePerformance(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        return flagDao.increasePerformance(flagDo);
+    }
+
+    public int updatePassFlag(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        return flagDao.updatePassFlag(flagDo);
+    }
+
 }

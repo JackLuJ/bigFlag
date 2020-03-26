@@ -14,7 +14,6 @@ public class FileGroupDo extends BaseDo {
 
     private Long id;
 
-    private Long fileGroupId;
+    private Long userId;
 
-    private Long fileId;
 }

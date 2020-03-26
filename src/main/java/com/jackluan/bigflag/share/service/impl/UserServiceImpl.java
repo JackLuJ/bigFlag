@@ -30,4 +30,9 @@ public class UserServiceImpl implements IUserService {
         return userHandler.createUserHandler(requestDto);
     }
 
+    @Override
+    public ResultBase<Void> updateUser(UserShareRequestDto userShareRequestDto) {
+        UserRequestDto requestDto = UserShareConvert.INSTANCE.convertToDomainDto(userShareRequestDto);
+        return userHandler.updateUserHandler(requestDto);
+    }
 }

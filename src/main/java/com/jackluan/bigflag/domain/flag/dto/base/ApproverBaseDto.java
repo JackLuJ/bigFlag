@@ -21,7 +21,7 @@ public class ApproverBaseDto extends BaseDto {
 
     private Long flagId;
 
-    private String score;
+    private Integer score;
 
     private ApproverTypeEnum approverType;
 

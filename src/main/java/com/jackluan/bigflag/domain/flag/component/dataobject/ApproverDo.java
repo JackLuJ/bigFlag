@@ -18,7 +18,7 @@ public class ApproverDo extends BaseDo {
 
     private Long flagId;
 
-    private String score;
+    private Integer score;
 
     private Integer approverType;
 

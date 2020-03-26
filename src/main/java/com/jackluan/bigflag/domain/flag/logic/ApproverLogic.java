@@ -4,8 +4,11 @@ import com.jackluan.bigflag.domain.flag.component.dao.IApproverDao;
 import com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo;
 import com.jackluan.bigflag.domain.flag.convert.ApproverConvert;
 import com.jackluan.bigflag.domain.flag.dto.request.ApproverRequestDto;
+import com.jackluan.bigflag.domain.flag.dto.response.ApproverResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: jack.luan
@@ -31,4 +34,9 @@ public class ApproverLogic {
         return approverDao.update(approverDo);
     }
 
+    public List<ApproverResponseDto> queryApproverList(ApproverRequestDto approverRequestDto){
+        ApproverDo approverDo = ApproverConvert.INSTANCE.convertToDo(approverRequestDto);
+        List<ApproverDo> resultList = approverDao.select(approverDo);
+        return ApproverConvert.INSTANCE.convertDtoList(resultList);
+    }
 }

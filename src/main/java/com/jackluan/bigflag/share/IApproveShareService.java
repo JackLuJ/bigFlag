@@ -20,7 +20,7 @@ public interface IApproveShareService {
      * @param approverCreateShareRequestDto
      * @return
      */
-    @RequestMapping(value = "createApprover", method = RequestMethod.POST)
+    @RequestMapping(value = "/createApprover", method = RequestMethod.POST)
     ResultBase<Void> createApprover(@RequestBody ApproverCreateShareRequestDto approverCreateShareRequestDto);
 
     /**

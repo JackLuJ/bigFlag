@@ -2,6 +2,7 @@ package com.jackluan.bigflag.domain.file.component.dao;
 
 import com.jackluan.bigflag.common.base.IBaseDao;
 import com.jackluan.bigflag.domain.file.component.dataobject.FileDo;
+import com.jackluan.bigflag.domain.file.component.dataobject.extra.FileExtraDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,4 +11,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IFileDao extends IBaseDao<FileDo> {
+
+    int countExtra(FileExtraDo fileExtraDo);
+
+    int updateExtra(FileExtraDo fileExtraDo);
 }

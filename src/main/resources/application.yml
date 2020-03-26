@@ -4,6 +4,8 @@ spring:
     url: jdbc:mysql://localhost:3306/bigflag?serverTimezone=Asia/Shanghai
     username: root
     password: root
+  jackson:
+    default-property-inclusion: non_null
 mybatis:
   type-aliases-package: com.jackluan.bigflag.domain.*.component.dataobject
   mapper-locations: classpath:mapper/*.xml
@@ -11,3 +13,14 @@ mybatis:
 #引入日志配置文件
 logging:
   config: classpath:log4j2.yml
+
+aliyun:
+  oss:
+    end-point:
+    access-key-id:
+    access-key-secret:
+
+we-chat:
+  app-id:
+  app-secret:
+  code2Session-url:

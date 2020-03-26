@@ -24,16 +24,14 @@ public class SignDo extends BaseDo {
 
     private Long fileGroupId;
 
-    private Integer achieveWayType;
-
-    private Integer thresholdCalculationType;
-
-    private String threshold;
+    private Integer threshold;
 
     private Date achieveDate;
 
     private Date deadline;
 
     private Integer status;
+
+    private Integer sequenceNo;
 
 }

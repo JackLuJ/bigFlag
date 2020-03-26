@@ -10,8 +10,9 @@
         <result column="title" property="title" /> 
         <result column="description" property="description" /> 
         <result column="flag_type" property="flagType" /> 
-        <result column="threshold" property="threshold" /> 
-        <result column="deadline" property="deadline" /> 
+        <result column="performance" property="performance" />
+        <result column="threshold" property="threshold" />
+        <result column="deadline" property="deadline" />
         <result column="status" property="status" /> 
         <result column="sequence_no" property="sequenceNo" /> 
         <result column="approver_info" property="approverInfo" /> 
@@ -30,8 +31,9 @@
         <if test="title != null  and title != ''"> and title = #{title} </if> 
         <if test="description != null  and description != ''"> and description = #{description} </if> 
         <if test="flagType != null "> and flag_type = #{flagType} </if> 
-        <if test="threshold != null  and threshold != ''"> and threshold = #{threshold} </if> 
-        <if test="deadline != null "> and deadline = #{deadline} </if> 
+        <if test="performance != null  and performance != ''"> and performance = #{performance} </if>
+        <if test="threshold != null  and threshold != ''"> and threshold = #{threshold} </if>
+        <if test="deadline != null "> and deadline = #{deadline} </if>
         <if test="status != null "> and status = #{status} </if> 
         <if test="sequenceNo != null "> and sequence_no = #{sequenceNo} </if> 
         <if test="approverInfo != null "> and approver_info = #{approverInfo} </if> 
@@ -43,7 +45,7 @@
     </where> 
   </sql> 
   <sql id="Base_Column_List" > 
-    	id,flag_id,user_id,achieve_config_type,notice_config_id,title,description,flag_type,threshold,deadline,status,sequence_no,approver_info,is_delete,create_date,modify_date 
+    	id,flag_id,user_id,achieve_config_type,notice_config_id,title,description,flag_type,performance,threshold,deadline,status,sequence_no,approver_info,is_delete,create_date,modify_date
   </sql> 
   <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagTraceDo" > 
     select 
@@ -57,9 +59,9 @@
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagTraceDo"  useGeneratedKeys="true" keyProperty="id">
     insert into flag_trace 
-     ( flag_id,user_id,achieve_config_type,notice_config_id,title,description,flag_type,threshold,deadline,status,sequence_no,approver_info,is_delete,create_date,modify_date )
+     ( flag_id,user_id,achieve_config_type,notice_config_id,title,description,flag_type,performance,threshold,deadline,status,sequence_no,approver_info,is_delete,create_date,modify_date )
     values 
-    ( #{flagId},#{userId},#{achieveConfigType},#{noticeConfigId},#{title},#{description},#{flagType},#{threshold},#{deadline},#{status},#{sequenceNo},#{approverInfo},'N',now(),now() )
+    ( #{flagId},#{userId},#{achieveConfigType},#{noticeConfigId},#{title},#{description},#{flagType},#{performance},#{threshold},#{deadline},#{status},#{sequenceNo},#{approverInfo},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagTraceDo" resultType="java.lang.Integer" > 
     select count(*) from flag_trace 
@@ -75,8 +77,9 @@
         <if test="title != null"> title = #{title},</if> 
         <if test="description != null"> description = #{description},</if> 
         <if test="flagType != null"> flag_type = #{flagType},</if> 
-        <if test="threshold != null"> threshold = #{threshold},</if> 
-        <if test="deadline != null"> deadline = #{deadline},</if> 
+        <if test="performance != null"> performance = #{performance},</if>
+        <if test="threshold != null"> threshold = #{threshold},</if>
+        <if test="deadline != null"> deadline = #{deadline},</if>
         <if test="status != null"> status = #{status},</if> 
         <if test="sequenceNo != null"> sequence_no = #{sequenceNo},</if> 
         <if test="approverInfo != null"> approver_info = #{approverInfo},</if> 

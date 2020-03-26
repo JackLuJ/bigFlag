@@ -1,5 +1,6 @@
 package com.jackluan.bigflag.share.controller;
 
+import com.jackluan.bigflag.common.annotation.CheckToken;
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
@@ -7,6 +8,7 @@ import com.jackluan.bigflag.share.IFlagShareService;
 import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
+import com.jackluan.bigflag.share.dto.response.FlagShareResponseDto;
 import com.jackluan.bigflag.share.service.IFlagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Author: jack.luan
  * @Date: 2020/3/7 23:27
  */
+@CheckToken
 @RestController
 public class FlagProvider implements IFlagShareService {
 
@@ -22,12 +25,12 @@ public class FlagProvider implements IFlagShareService {
     private IFlagService flagService;
 
     @Override
-    public ResultBase<FlagResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto) {
+    public ResultBase<FlagShareResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto) {
         return flagService.createFlag(flagCreateShareRequestDto);
     }
 
     @Override
-    public ResultBase<Page<FlagResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
+    public ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
         return flagService.queryFlag(flagShareRequestDto);
     }
 

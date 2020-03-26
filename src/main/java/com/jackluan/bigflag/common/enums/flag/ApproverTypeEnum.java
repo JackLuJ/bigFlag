@@ -11,15 +11,15 @@ public enum ApproverTypeEnum implements KeyValueEnum<Integer> {
     /**
      * 普通审核人
      */
-    NORMAL(1, "normal", "1");
+    NORMAL(1, "normal", 1);
 
     private Integer code;
 
     private String desc;
 
-    private String score;
+    private Integer score;
 
-    ApproverTypeEnum(Integer code, String desc, String score) {
+    ApproverTypeEnum(Integer code, String desc, Integer score) {
         this.code = code;
         this.desc = desc;
         this.score = score;
@@ -35,7 +35,7 @@ public enum ApproverTypeEnum implements KeyValueEnum<Integer> {
         return desc;
     }
 
-    public String getScore() {
+    public Integer getScore() {
         return score;
     }
 }

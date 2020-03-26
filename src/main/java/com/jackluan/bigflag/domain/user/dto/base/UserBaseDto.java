@@ -19,7 +19,15 @@ public class UserBaseDto extends BaseDto {
 
     private String oaOpenId;
 
-    private String uniqueId;
+    private String unionId;
+
+    private String sessionKey;
+
+    private String token;
+
+    private Integer tokenDays;
+
+    private Long fileGroupId;
 
     private String mobile;
 

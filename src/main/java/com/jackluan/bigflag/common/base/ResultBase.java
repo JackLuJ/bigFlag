@@ -3,11 +3,13 @@ package com.jackluan.bigflag.common.base;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 
+import java.io.Serializable;
+
 /**
  * @Author: jack.luan
  * @Date: 2020/3/3 23:00
  */
-public class ResultBase<T> {
+public class ResultBase<T> implements Serializable {
 
     private boolean isSuccess;
 
@@ -74,12 +76,12 @@ public class ResultBase<T> {
         return this;
     }
 
-    public boolean isSuccess(){
+    public boolean isSuccess() {
         return this.isSuccess;
     }
 
-    public boolean isEmptyValue(){
-        return this.value == null;
+    public boolean isEmptyValue() {
+        return null == this.value;
     }
 
     public String getCode() {

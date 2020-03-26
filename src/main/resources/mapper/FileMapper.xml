@@ -1,61 +1,104 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
-<mapper namespace="com.jackluan.bigflag.domain.file.component.dao.IFileDao" > 
-  <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
-        <result column="id" property="id" /> 
-        <result column="store_type" property="storeType" /> 
-        <result column="file_path" property="filePath" /> 
-        <result column="file_name" property="fileName" /> 
-        <result column="is_delete" property="isDelete" /> 
-        <result column="create_date" property="createDate" /> 
-        <result column="modify_date" property="modifyDate" /> 
-  </resultMap> 
-  <sql id="Example_Where_Clause" > 
-    <where > 
-		    1=1  
-        <if test="id != null "> and id = #{id} </if> 
-        <if test="storeType != null "> and store_type = #{storeType} </if> 
-        <if test="filePath != null  and filePath != ''"> and file_path = #{filePath} </if> 
-        <if test="fileName != null  and fileName != ''"> and file_name = #{fileName} </if> 
-        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
-        <if test="createDate != null "> and create_date = #{createDate} </if> 
-        <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
-        and is_delete='N'
-        <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
-    </where> 
-  </sql> 
-  <sql id="Base_Column_List" > 
-    	id,store_type,file_path,file_name,is_delete,create_date,modify_date 
-  </sql> 
-  <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
-    select 
-    <include refid="Base_Column_List" /> 
-    from file 
-      <include refid="Example_Where_Clause" /> 
-  </select> 
-  <delete id="delete" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
-    update file set  is_delete='Y'
-      <include refid="Example_Where_Clause" /> 
-  </delete> 
-  <insert id="insert" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo"  useGeneratedKeys="true" keyProperty="id">
-    insert into file 
-     ( store_type,file_path,file_name,is_delete,create_date,modify_date )
-    values 
-    ( #{storeType},#{filePath},#{fileName},'N',now(),now() )
-  </insert> 
-  <select id="count" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" resultType="java.lang.Integer" > 
-    select count(*) from file 
-      <include refid="Example_Where_Clause" /> 
-  </select> 
-  <update id="update" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo" > 
-    update file 
-    <set > 
-     	  <if test="storeType != null"> store_type = #{storeType},</if> 
-        <if test="filePath != null"> file_path = #{filePath},</if> 
-        <if test="fileName != null"> file_name = #{fileName},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if>
-        modify_date = now()
-    </set> 
-       where id = #{id,jdbcType=BIGINT}  
-  </update> 
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jackluan.bigflag.domain.file.component.dao.IFileDao">
+    <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.file.component.dataobject.FileDo">
+        <result column="id" property="id"/>
+        <result column="file_group_id" property="fileGroupId"/>
+        <result column="store_type" property="storeType"/>
+        <result column="file_type" property="fileType"/>
+        <result column="file_name" property="fileName"/>
+        <result column="suffix" property="suffix"/>
+        <result column="file_unique_code" property="fileUniqueCode"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modify_date" property="modifyDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null ">and id = #{id}</if>
+            <if test="fileGroupId != null ">and file_group_id = #{fileGroupId}</if>
+            <if test="storeType != null ">and store_type = #{storeType}</if>
+            <if test="fileType != null  and fileType != ''">and file_type = #{fileType}</if>
+            <if test="fileName != null  and fileName != ''">and file_name = #{fileName}</if>
+            <if test="suffix != null  and suffix != ''">and suffix = #{suffix}</if>
+            <if test="fileUniqueCode != null  and fileUniqueCode != ''">and file_unique_code = #{fileUniqueCode}</if>
+            <if test="isDelete != null  and isDelete != ''">and is_delete = #{isDelete}</if>
+            <if test="createDate != null ">and create_date = #{createDate}</if>
+            <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
+            and is_delete='N'
+            <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id,file_group_id,store_type,file_type,file_name,suffix,file_unique_code,is_delete,create_date,modify_date
+    </sql>
+    <select id="select" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo">
+        select
+        <include refid="Base_Column_List"/>
+        from file
+        <include refid="Example_Where_Clause"/>
+    </select>
+    <delete id="delete" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo">
+        update file set is_delete='Y'
+        <include refid="Example_Where_Clause"/>
+    </delete>
+    <insert id="insert" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into file
+        ( file_group_id,store_type,file_type,file_name,suffix,file_unique_code,is_delete,create_date,modify_date )
+        values
+        ( #{fileGroupId},#{storeType},#{fileType},#{fileName},#{suffix},#{fileUniqueCode},'N',now(),now() )
+    </insert>
+    <select id="count" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo"
+            resultType="java.lang.Integer">
+        select count(*) from file
+        <include refid="Example_Where_Clause"/>
+    </select>
+    <update id="update" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.FileDo">
+        update file
+        <set>
+            <if test="fileGroupId != null">file_group_id = #{fileGroupId},</if>
+            <if test="storeType != null">store_type = #{storeType},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="suffix != null">suffix = #{suffix},</if>
+            <if test="fileUniqueCode != null">file_unique_code = #{fileUniqueCode},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            modify_date = now()
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="countExtra" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.extra.FileExtraDo"
+            resultType="java.lang.Integer">
+        select count(1) from file
+        where 1=1
+        <if test="fileUniqueCodeList != null ">
+            and file_unique_code in
+            <foreach collection="fileUniqueCodeList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <update id="updateExtra" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.extra.FileExtraDo">
+        update file
+        <set>
+            <if test="fileGroupId != null">file_group_id = #{fileGroupId},</if>
+            <if test="storeType != null">store_type = #{storeType},</if>
+            <if test="fileType != null">file_type = #{fileType},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="suffix != null">suffix = #{suffix},</if>
+            <if test="fileUniqueCode != null">file_unique_code = #{fileUniqueCode},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            modify_date = now()
+        </set>
+        where 1=1
+        <if test="fileUniqueCodeList != null ">
+            and file_unique_code in
+            <foreach collection="fileUniqueCodeList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
 </mapper> 

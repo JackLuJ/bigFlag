@@ -6,6 +6,7 @@ import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
+import com.jackluan.bigflag.share.dto.response.FlagShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 public interface IFlagService {
 
-    ResultBase<FlagResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto);
+    ResultBase<FlagShareResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto);
 
-    ResultBase<Page<FlagResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto);
+    ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto);
 }

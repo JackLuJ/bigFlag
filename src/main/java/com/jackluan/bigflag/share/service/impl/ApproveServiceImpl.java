@@ -2,6 +2,8 @@ package com.jackluan.bigflag.share.service.impl;
 
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
+import com.jackluan.bigflag.common.enums.flag.ApproverStatusEnum;
+import com.jackluan.bigflag.common.utils.UserUtils;
 import com.jackluan.bigflag.domain.flag.convert.ApproverConvert;
 import com.jackluan.bigflag.domain.flag.dto.request.ApproverRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
@@ -38,14 +40,17 @@ public class ApproveServiceImpl implements IApproveService {
 
     @Override
     public ResultBase<Void> createApprover(ApproverCreateShareRequestDto approverCreateShareRequestDto){
-        FlagRequestDto requestDto = FlagShareConvert.INSTANCE.convertToDomainDto(approverCreateShareRequestDto);
+        approverCreateShareRequestDto.setUserId(UserUtils.getUser().getUserId());
+
+        FlagRequestDto requestDto = new FlagRequestDto();
+        requestDto.setId(approverCreateShareRequestDto.getFlagId());
         ResultBase<List<FlagResponseDto>> flagResultBase =  flagHandler.queryFlagList(requestDto);
         if (!flagResultBase.isSuccess() || CollectionUtils.isEmpty(flagResultBase.getValue())){
             return new ResultBase<Void>().failed(ResultCodeConstant.FLAG_NOT_EXIST_FAILED, "flag not exist");
         }
 
-        //TODO setUserId
         ApproverRequestDto approverRequestDto = ApproveShareConvert.INSTANCE.convertToDomainDto(approverCreateShareRequestDto);
+        approverRequestDto.setStatus(ApproverStatusEnum.UNCONFIRMED);
         approverHandler.createApprover(approverRequestDto);
         return new ResultBase<Void>().success();
     }

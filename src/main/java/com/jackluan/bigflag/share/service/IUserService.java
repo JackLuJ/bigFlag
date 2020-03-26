@@ -11,4 +11,6 @@ public interface IUserService {
 
     ResultBase<Void> createUser(UserShareRequestDto userShareRequestDto);
 
+    ResultBase<Void> updateUser(UserShareRequestDto userShareRequestDto);
+
 }
