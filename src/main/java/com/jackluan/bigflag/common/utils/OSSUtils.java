@@ -4,20 +4,12 @@ import com.aliyun.oss.*;
 import com.aliyun.oss.model.*;
 import com.jackluan.bigflag.common.base.FileInfo;
 import com.jackluan.bigflag.common.constant.SystemConstant;
-import com.jackluan.bigflag.common.enums.base.DirectoryEnum;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -27,10 +19,10 @@ import java.util.List;
  */
 @Slf4j
 @Component
-@ConfigurationProperties(value = OSSUtils.prefix)
+@ConfigurationProperties(value = OSSUtils.PREFIX)
 public class OSSUtils {
 
-    static final String prefix = "aliyun.oss";
+    static final String PREFIX = "aliyun.oss";
 
     private String endPoint;
     private String accessKeyId;
@@ -86,15 +78,6 @@ public class OSSUtils {
         } finally {
             client.shutdown();
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-//        byte[] b = Files.readAllBytes(Paths.get("D://image1.jpg"));
-//        String base64 = Base64.getEncoder().encodeToString(b);
-//        byte[] bytes = Base64.getDecoder().decode(base64);
-//        List<FileInfo> array = Arrays.asList(new FileInfo(DirectoryEnum.FLAG, bytes, ".jpg"));
-//        OSSUtils ossUtils = new OSSUtils();
-//        System.out.println(getUrl(SystemConstant.BUCKET_NAME, "flag/458f4fbdc2554e8cac4a85545b016a6b.jpg").getPath());
     }
 
     public String getEndPoint() {
