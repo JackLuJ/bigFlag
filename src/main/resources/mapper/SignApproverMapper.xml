@@ -1,70 +1,87 @@
-<?xml version="1.0" encoding="UTF-8" ?> 
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
-<mapper namespace="com.jackluan.bigflag.domain.sign.component.dao.ISignApproverDao" >
-  <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" > 
-        <result column="id" property="id" /> 
-        <result column="sign_id" property="signId" /> 
-        <result column="approver_id" property="approverId" /> 
-        <result column="approver_user_id" property="approverUserId" /> 
-        <result column="score" property="score" /> 
-        <result column="result_type" property="resultType" /> 
-        <result column="description" property="description" /> 
-        <result column="is_delete" property="isDelete" /> 
-        <result column="create_date" property="createDate" /> 
-        <result column="modify_date" property="modifyDate" /> 
-  </resultMap> 
-  <sql id="Example_Where_Clause" > 
-    <where > 
-		    1=1  
-        <if test="id != null "> and id = #{id} </if> 
-        <if test="signId != null "> and sign_id = #{signId} </if> 
-        <if test="approverId != null "> and approver_id = #{approverId} </if> 
-        <if test="approverUserId != null "> and approver_user_id = #{approverUserId} </if> 
-        <if test="score != null  and score != ''"> and score = #{score} </if> 
-        <if test="resultType != null "> and result_type = #{resultType} </if> 
-        <if test="description != null  and description != ''"> and description = #{description} </if> 
-        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
-        <if test="createDate != null "> and create_date = #{createDate} </if> 
-        <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jackluan.bigflag.domain.sign.component.dao.ISignApproverDao">
+    <resultMap id="BaseResultMap" type="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        <result column="id" property="id"/>
+        <result column="sign_id" property="signId"/>
+        <result column="approver_id" property="approverId"/>
+        <result column="approver_user_id" property="approverUserId"/>
+        <result column="score" property="score"/>
+        <result column="result_type" property="resultType"/>
+        <result column="description" property="description"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_date" property="createDate"/>
+        <result column="modify_date" property="modifyDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            1=1
+            <if test="id != null ">and id = #{id}</if>
+            <if test="signId != null ">and sign_id = #{signId}</if>
+            <if test="approverId != null ">and approver_id = #{approverId}</if>
+            <if test="approverUserId != null ">and approver_user_id = #{approverUserId}</if>
+            <if test="score != null  and score != ''">and score = #{score}</if>
+            <if test="resultType != null ">and result_type = #{resultType}</if>
+            <if test="description != null  and description != ''">and description = #{description}</if>
+            <if test="isDelete != null  and isDelete != ''">and is_delete = #{isDelete}</if>
+            <if test="createDate != null ">and create_date = #{createDate}</if>
+            <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
+            and is_delete='N'
+            <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id,sign_id,approver_id,approver_user_id,score,result_type,description,is_delete,create_date,modify_date
+    </sql>
+    <select id="select" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        select
+        <include refid="Base_Column_List"/>
+        from sign_approver
+        <include refid="Example_Where_Clause"/>
+    </select>
+    <delete id="delete" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        update sign_approver set is_delete='Y'
+        <include refid="Example_Where_Clause"/>
+    </delete>
+    <insert id="insert" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into sign_approver
+        ( sign_id,approver_id,approver_user_id,score,result_type,description,is_delete,create_date,modify_date )
+        values
+        ( #{signId},#{approverId},#{approverUserId},#{score},#{resultType},#{description},'N',now(),now() )
+    </insert>
+    <select id="count" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo"
+            resultType="java.lang.Integer">
+        select count(*) from sign_approver
+        <include refid="Example_Where_Clause"/>
+    </select>
+    <update id="update" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        update sign_approver
+        <set>
+            <if test="signId != null">sign_id = #{signId},</if>
+            <if test="approverId != null">approver_id = #{approverId},</if>
+            <if test="approverUserId != null">approver_user_id = #{approverUserId},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="resultType != null">result_type = #{resultType},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="isDelete != null">is_delete = #{isDelete},</if>
+            modify_date = now()
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByResultTypeNotIn" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        select
+        <include refid="Base_Column_List"/>
+        from sign_approver
+        where result_type &lt;&gt; #{resultType}
         and is_delete='N'
-        <if test="start != null and limit != null "> limit #{start},#{limit} </if>        
-    </where> 
-  </sql> 
-  <sql id="Base_Column_List" > 
-    	id,sign_id,approver_id,approver_user_id,score,result_type,description,is_delete,create_date,modify_date 
-  </sql> 
-  <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" > 
-    select 
-    <include refid="Base_Column_List" /> 
-    from sign_approver 
-      <include refid="Example_Where_Clause" /> 
-  </select> 
-  <delete id="delete" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" > 
-    update sign_approver set  is_delete='Y'
-      <include refid="Example_Where_Clause" /> 
-  </delete> 
-  <insert id="insert" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo"  useGeneratedKeys="true" keyProperty="id">
-    insert into sign_approver 
-     ( sign_id,approver_id,approver_user_id,score,result_type,description,is_delete,create_date,modify_date )
-    values 
-    ( #{signId},#{approverId},#{approverUserId},#{score},#{resultType},#{description},'N',now(),now() )
-  </insert> 
-  <select id="count" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" resultType="java.lang.Integer" > 
-    select count(*) from sign_approver 
-      <include refid="Example_Where_Clause" /> 
-  </select> 
-  <update id="update" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo" > 
-    update sign_approver 
-    <set > 
-     	  <if test="signId != null"> sign_id = #{signId},</if> 
-        <if test="approverId != null"> approver_id = #{approverId},</if> 
-        <if test="approverUserId != null"> approver_user_id = #{approverUserId},</if> 
-        <if test="score != null"> score = #{score},</if> 
-        <if test="resultType != null"> result_type = #{resultType},</if> 
-        <if test="description != null"> description = #{description},</if> 
-        <if test="isDelete != null"> is_delete = #{isDelete},</if>
-        modify_date = now()
-    </set> 
-       where id = #{id,jdbcType=BIGINT}  
-  </update> 
+        <if test="id != null ">and id = #{id}</if>
+        <if test="signId != null ">and sign_id = #{signId}</if>
+        <if test="approverId != null ">and approver_id = #{approverId}</if>
+        <if test="approverUserId != null ">and approver_user_id = #{approverUserId}</if>
+        <if test="score != null  and score != ''">and score = #{score}</if>
+        <if test="description != null  and description != ''">and description = #{description}</if>
+    </select>
 </mapper> 

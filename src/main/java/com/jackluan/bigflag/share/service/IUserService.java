@@ -2,6 +2,8 @@ package com.jackluan.bigflag.share.service;
 
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.dto.request.UserShareRequestDto;
+import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @Author: jack.luan
@@ -11,6 +13,9 @@ public interface IUserService {
 
     ResultBase<Void> createUser(UserShareRequestDto userShareRequestDto);
 
-    ResultBase<Void> updateUser(UserShareRequestDto userShareRequestDto);
+    ResultBase<UserInfoShareResponseDto> updateUser(UserShareRequestDto userShareRequestDto);
+
+    ResultBase<UserInfoShareResponseDto> queryUser(UserShareRequestDto userShareRequestDto);
+
 
 }

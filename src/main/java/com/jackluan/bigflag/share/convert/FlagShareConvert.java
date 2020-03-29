@@ -38,4 +38,9 @@ public interface FlagShareConvert {
 
     FlagShareResponseDto convertToShareDto(FlagResponseDto flagResponseDto);
 
+    @Mappings({
+            @Mapping(target = "id", source = "flagId")
+    })
+    FlagRequestDto convertToDomainDto(FlagShareRequestDto flagShareRequestDto);
+
 }

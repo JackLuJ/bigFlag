@@ -36,5 +36,9 @@ public class FileGroupLogic {
         return FileGroupConvert.INSTANCE.convert(resultList);
     }
 
+    public int delete(FileGroupRequestDto fileGroupRequestDto){
+        FileGroupDo fileGroupDo = FileGroupConvert.INSTANCE.convert(fileGroupRequestDto);
+        return fileGroupDao.delete(fileGroupDo);
+    }
 
 }

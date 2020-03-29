@@ -39,4 +39,9 @@ public class ApproverLogic {
         List<ApproverDo> resultList = approverDao.select(approverDo);
         return ApproverConvert.INSTANCE.convertDtoList(resultList);
     }
+
+    public int queryApproverCount(ApproverRequestDto approverRequestDto) {
+        ApproverDo approverDo = ApproverConvert.INSTANCE.convertToDo(approverRequestDto);
+        return approverDao.count(approverDo);
+    }
 }

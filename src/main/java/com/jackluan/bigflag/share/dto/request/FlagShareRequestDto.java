@@ -5,6 +5,8 @@ import com.jackluan.bigflag.common.base.BaseDto;
 import com.jackluan.bigflag.common.constant.SystemConstant;
 import com.jackluan.bigflag.common.enums.flag.AchieveConfigEnum;
 import com.jackluan.bigflag.common.enums.flag.FlagTypeEnum;
+import com.jackluan.bigflag.common.enums.flag.QueryTypeEnum;
+import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +22,8 @@ public class FlagShareRequestDto extends BaseDto {
 
     private Long userId;
 
+    private Long flagId;
+
     private AchieveConfigEnum achieveConfigType;
 
     private String title;
@@ -33,4 +37,5 @@ public class FlagShareRequestDto extends BaseDto {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = SystemConstant.TIMEZONE)
     private Date deadline;
 
+    private QueryTypeEnum queryType;
 }

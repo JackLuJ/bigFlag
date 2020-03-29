@@ -4,6 +4,8 @@ import com.jackluan.bigflag.common.enums.user.UserStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @Author: jack.luan
  * @Date: 2020/3/3 22:59
@@ -14,14 +16,10 @@ public class UserShareRequestDto {
 
     private Long id;
 
-    private String appOpenId;
+    private String nickname;
 
-    private String oaOpenId;
-
-    private String uniqueId;
+    private List<String> fileUniqueCodes;
 
     private String mobile;
-
-    private UserStatusEnum status;
 
 }

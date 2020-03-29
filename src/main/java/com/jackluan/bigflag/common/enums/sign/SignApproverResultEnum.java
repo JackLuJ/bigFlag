@@ -9,6 +9,16 @@ import com.jackluan.bigflag.common.base.KeyValueEnum;
 public enum  SignApproverResultEnum implements KeyValueEnum<Integer> {
 
     /**
+     * 没权限
+     */
+    NO_PERMISSION(-1, "no permission"),
+
+    /**
+     * 未确认
+     */
+    UN_CONFIRM(0, "UN CONFIRM"),
+
+    /**
      * 通过
      */
     APPROVE(1, "APPROVE"),

@@ -5,10 +5,13 @@ import com.jackluan.bigflag.domain.file.component.dataobject.FileDo;
 import com.jackluan.bigflag.domain.file.component.dataobject.extra.FileExtraDo;
 import com.jackluan.bigflag.domain.file.dto.request.FileGroupRequestDto;
 import com.jackluan.bigflag.domain.file.dto.request.FileRequestDto;
+import com.jackluan.bigflag.domain.file.dto.response.FileResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * @Author: jack.luan
@@ -26,5 +29,7 @@ public interface FileConvert {
     FileExtraDo convert(FileGroupRequestDto fileGroupRequestDto);
 
     FileDo convert(FileRequestDto fileRequestDto);
+
+    List<FileResponseDto> convert(List<FileDo> fileDos);
 
 }

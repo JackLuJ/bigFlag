@@ -18,4 +18,7 @@ public interface IFlagService {
     ResultBase<FlagShareResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto);
 
     ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto);
+
+    ResultBase<FlagShareResponseDto> queryDetail(FlagShareRequestDto flagShareRequestDto);
+
 }

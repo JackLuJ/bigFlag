@@ -26,6 +26,8 @@ public class UserDo extends BaseDo {
 
     private Integer tokenDays;
 
+    private String nickname;
+
     private Long fileGroupId;
 
     private String mobile;

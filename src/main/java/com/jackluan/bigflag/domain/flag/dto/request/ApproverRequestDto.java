@@ -14,4 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApproverRequestDto extends ApproverBaseDto {
 
+    private Long flagUserId;
+
 }

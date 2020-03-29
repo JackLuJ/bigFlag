@@ -21,4 +21,6 @@ public class CreateSingInfoResponseDto extends BaseDto {
 
     private List<ApproverResponseDto> approverList;
 
+    private Boolean checkDailyTimes = false;
+
 }

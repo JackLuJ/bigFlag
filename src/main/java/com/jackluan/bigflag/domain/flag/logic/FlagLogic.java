@@ -50,4 +50,14 @@ public class FlagLogic {
         return flagDao.updatePassFlag(flagDo);
     }
 
+    public int queryApproveFlagCount(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        return flagDao.selectApproveFlagCount(flagDo);
+    }
+    public List<FlagResponseDto> queryApproveFlagList(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        List<FlagDo> resultList = flagDao.selectApproveFlagList(flagDo);
+        return FlagConvert.INSTANCE.convertDtoList(resultList);
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.jackluan.bigflag.share.service;
 
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.CreateSignShareResponseDto;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.jackluan.bigflag.share.dto.response.SignShareResponseDto;
 
 /**
  * @Author: jack.luan
@@ -12,5 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface ISignService {
 
     ResultBase<CreateSignShareResponseDto> createSign(CreateSignShareRequestDto createSignShareRequestDto);
+
+    ResultBase<Page<SignShareResponseDto>> querySign(Page<SignShareRequestDto> signShareRequestDtoPage);
 
 }

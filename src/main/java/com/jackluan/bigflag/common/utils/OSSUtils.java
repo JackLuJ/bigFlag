@@ -54,11 +54,11 @@ public class OSSUtils {
         return success;
     }
 
-    public URL getUrl(String bucketName, String key) {
+    public URL getUrl(String bucketName, FileInfo fileInfo) {
         OSS client = new OSSClientBuilder().build(endPoint, accessKeyId, accessKeySecret);
         try {
             Date expiration = new Date(System.currentTimeMillis() + SystemConstant.OSS_URL_EXPIRE_TIME);
-            return client.generatePresignedUrl(bucketName, key, expiration);
+            return client.generatePresignedUrl(bucketName, fileInfo.getPublicUrl(), expiration);
         } catch (ClientException e) {
             log.error("get file url from OSS failed error message is {}", e.getMessage());
         } finally {
@@ -67,12 +67,10 @@ public class OSSUtils {
         return null;
     }
 
-    public void delFile(String bucketName, List<String> filePathList) {
+    public void delFile(String bucketName, FileInfo fileInfo) {
         OSS client = new OSSClientBuilder().build(endPoint, accessKeyId, accessKeySecret);
         try {
-            filePathList.forEach(filePath -> {
-                client.deleteObject(bucketName, filePath);
-            });
+                client.deleteObject(bucketName, fileInfo.getPublicUrl());
         } catch (Exception e) {
             log.error("del file from OSS failed error message is {}", e.getMessage());
         } finally {

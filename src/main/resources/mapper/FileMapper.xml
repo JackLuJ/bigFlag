@@ -73,7 +73,7 @@
     <select id="countExtra" parameterType="com.jackluan.bigflag.domain.file.component.dataobject.extra.FileExtraDo"
             resultType="java.lang.Integer">
         select count(1) from file
-        where 1=1
+        where is_delete='N' and (file_group_id is null or file_group_id = '')
         <if test="fileUniqueCodeList != null ">
             and file_unique_code in
             <foreach collection="fileUniqueCodeList" index="index" item="item" open="(" separator="," close=")">
@@ -93,7 +93,7 @@
             <if test="isDelete != null">is_delete = #{isDelete},</if>
             modify_date = now()
         </set>
-        where 1=1
+        where 1=1 and (file_group_id is null or file_group_id = '')
         <if test="fileUniqueCodeList != null ">
             and file_unique_code in
             <foreach collection="fileUniqueCodeList" index="index" item="item" open="(" separator="," close=")">

@@ -1,9 +1,11 @@
 package com.jackluan.bigflag.domain.sign.dto.request;
 
+import com.jackluan.bigflag.common.enums.flag.QueryTypeEnum;
 import com.jackluan.bigflag.domain.sign.dto.base.SignBaseDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +16,14 @@ import java.util.List;
 @NoArgsConstructor
 public class SignRequestDto extends SignBaseDto {
 
-    List<SignApproverRequestDto> approverList;
+    private Boolean checkDailyTimes;
+
+    private QueryTypeEnum queryType;
+
+    private List<SignApproverRequestDto> approverList;
+
+    private Date startTime;
+
+    private Date endTime;
 
 }

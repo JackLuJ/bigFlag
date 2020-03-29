@@ -13,6 +13,8 @@ public class UserInfoShareResponseDto {
 
     private Long userId;
 
+    private String nickname;
+
     private String url;
 
 }

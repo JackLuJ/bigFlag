@@ -7,7 +7,9 @@ import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.common.constant.SystemConstant;
 import com.jackluan.bigflag.common.utils.OSSUtils;
 import com.jackluan.bigflag.domain.file.dto.request.FileGroupRequestDto;
+import com.jackluan.bigflag.domain.file.dto.request.FileRequestDto;
 import com.jackluan.bigflag.domain.file.dto.response.FileGroupResponseDto;
+import com.jackluan.bigflag.domain.file.dto.response.FileResponseDto;
 import com.jackluan.bigflag.domain.file.logic.FileGroupLogic;
 import com.jackluan.bigflag.domain.file.logic.FileLogic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +59,7 @@ public class FileGroupHandler {
 
         fileGroupRequestDto.setId(fileGroupId);
         int updateCount = fileLogic.updateExtra(fileGroupRequestDto);
-        if (updateCount != fileGroupRequestDto.getFileUniqueCodeList().size()){
+        if (updateCount != fileGroupRequestDto.getFileUniqueCodeList().size()) {
             throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_FILE_FAILED);
         }
 
@@ -66,25 +68,42 @@ public class FileGroupHandler {
         return new ResultBase<FileGroupResponseDto>().success(responseDto);
     }
 
-    public ResultBase<FileGroupResponseDto> queryFileGroup(FileGroupRequestDto fileGroupRequestDto){
+    public ResultBase<FileGroupResponseDto> queryFileGroup(FileGroupRequestDto fileGroupRequestDto) {
         String key = String.format(cacheKey, fileGroupRequestDto.getUserId(), fileGroupRequestDto.getId());
         FileGroupResponseDto responseDto = fileGroupCache.get(key);
-        if (responseDto!= null){
+        if (responseDto != null) {
             return new ResultBase<FileGroupResponseDto>().success(responseDto);
         }
 
         List<FileGroupResponseDto> responseList = fileGroupLogic.queryGroup(fileGroupRequestDto);
-        if (!CollectionUtils.isEmpty(responseList)){
+        if (!CollectionUtils.isEmpty(responseList)) {
             responseDto = responseList.get(0);
-            if (!CollectionUtils.isEmpty(responseDto.getFileList())){
+            if (!CollectionUtils.isEmpty(responseDto.getFileList())) {
                 responseDto.getFileList().forEach(file -> {
-                    FileInfo fileInfo = new FileInfo(file.getFileType(), file.getFileUniqueCode(), file.getSuffix());
-                    URL url = ossUtils.getUrl(SystemConstant.BUCKET_NAME, fileInfo.getPublicUrl());
+                    URL url = ossUtils.getUrl(SystemConstant.BUCKET_NAME, new FileInfo(file.getFileType(), file.getFileUniqueCode(), file.getSuffix()));
                     file.setUrl(url.toString());
                 });
             }
             fileGroupCache.put(key, responseDto);
         }
         return new ResultBase<FileGroupResponseDto>().success(responseDto);
+    }
+
+    public ResultBase<Void> deleteFileGroup(FileGroupRequestDto fileGroupRequestDto) {
+
+        fileGroupLogic.delete(fileGroupRequestDto);
+
+        FileRequestDto fileRequestDto = new FileRequestDto();
+        fileRequestDto.setFileGroupId(fileGroupRequestDto.getId());
+        List<FileResponseDto> files = fileLogic.queryList(fileRequestDto);
+        if (!CollectionUtils.isEmpty(files)) {
+            files.forEach(file -> {
+                ossUtils.delFile(SystemConstant.BUCKET_NAME, new FileInfo(file.getFileType(), file.getFileUniqueCode(), file.getSuffix()));
+            });
+        }
+
+        fileLogic.delete(fileRequestDto);
+
+        return new ResultBase<Void>().success();
     }
 }

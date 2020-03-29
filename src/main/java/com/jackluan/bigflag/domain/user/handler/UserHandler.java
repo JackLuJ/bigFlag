@@ -24,65 +24,69 @@ public class UserHandler {
     @Autowired
     private UserLogic userLogic;
 
-    public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto){
+    public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto) {
         UserRequestDto queryDto = new UserRequestDto();
         queryDto.setAppOpenId(userRequestDto.getAppOpenId());
         List<UserResponseDto> userList = userLogic.queryList(queryDto);
-        if (CollectionUtils.isEmpty(userList)){
+        if (CollectionUtils.isEmpty(userList)) {
             long id = userLogic.createUser(userRequestDto);
             if (id < 1) {
                 throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_USER_FAILED);
             }
-        }else {
+        } else {
             userRequestDto.setId(userList.get(0).getId());
             int count = userLogic.updateUser(userRequestDto);
-            if (count < 1){
+            if (count < 1) {
                 throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_USER_FAILED);
             }
         }
         return new ResultBase<Void>().success();
     }
 
-    public ResultBase<List<UserResponseDto>> queryUser(UserRequestDto userRequestDto){
+    public ResultBase<List<UserResponseDto>> queryUser(UserRequestDto userRequestDto) {
         List<UserResponseDto> list = userLogic.queryList(userRequestDto);
-        if (CollectionUtils.isEmpty(list)){
-            return new ResultBase<List<UserResponseDto>>().failed(ResultCodeConstant.CAN_NOT_FIND_USER_FAILED);
+        if (CollectionUtils.isEmpty(list)) {
+            return new ResultBase<List<UserResponseDto>>().failed(ResultCodeConstant.CAN_NOT_FIND_USER);
         }
         return new ResultBase<List<UserResponseDto>>().success(list);
     }
 
-    public ResultBase<Void> refreshToken(UserRequestDto userRequestDto){
+    public ResultBase<Void> refreshToken(UserRequestDto userRequestDto) {
         List<UserResponseDto> list = userLogic.queryList(userRequestDto);
-        if (CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return new ResultBase<Void>().failed(ResultCodeConstant.TOKEN_EXPIRE);
         }
         UserRequestDto requestDto = new UserRequestDto();
         requestDto.setId(list.get(0).getId());
         requestDto.setToken(userRequestDto.getNewToken());
         int count = userLogic.updateUser(requestDto);
-        if (count < 1){
+        if (count < 1) {
             throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_USER_FAILED);
         }
         return new ResultBase<Void>().success();
     }
 
-    public ResultBase<Void> updateUserHandler(UserRequestDto userRequestDto){
+    public ResultBase<UserResponseDto> updateUserHandler(UserRequestDto userRequestDto) {
         UserRequestDto queryDto = new UserRequestDto();
-        queryDto.setAppOpenId(userRequestDto.getAppOpenId());
+        queryDto.setId(userRequestDto.getId());
         List<UserResponseDto> userList = userLogic.queryList(queryDto);
-        if (CollectionUtils.isEmpty(userList)){
-            long id = userLogic.createUser(userRequestDto);
-            if (id < 1) {
-                throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_USER_FAILED);
-            }
-        }else {
-            userRequestDto.setId(userList.get(0).getId());
-            int count = userLogic.updateUser(userRequestDto);
-            if (count < 1){
-                throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_USER_FAILED);
-            }
+        if (CollectionUtils.isEmpty(userList)) {
+            throw new BigFlagRuntimeException(ResultCodeConstant.CAN_NOT_FIND_USER);
         }
-        return new ResultBase<Void>().success();
+
+        UserResponseDto responseDto = new UserResponseDto();
+        responseDto.setId(userList.get(0).getId());
+
+        if (null != userList.get(0).getFileGroupId()) {
+            responseDto.setFileGroupId(userList.get(0).getFileGroupId());
+        }
+
+        int count = userLogic.updateUser(userRequestDto);
+        if (count < 1) {
+            throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_USER_FAILED);
+        }
+
+        return new ResultBase<UserResponseDto>().success(responseDto);
     }
 
 }

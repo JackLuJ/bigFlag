@@ -1,12 +1,18 @@
 package com.jackluan.bigflag.share.convert;
 
 import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.domain.file.dto.response.FileGroupResponseDto;
 import com.jackluan.bigflag.domain.flag.dto.response.ApproverResponseDto;
 import com.jackluan.bigflag.domain.flag.dto.response.CreateSingInfoResponseDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignApproverRequestDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignRequestDto;
+import com.jackluan.bigflag.domain.sign.dto.response.SignApproverResponseDto;
+import com.jackluan.bigflag.domain.sign.dto.response.SignResponseDto;
 import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
+import com.jackluan.bigflag.share.dto.response.SignShareResponseDto;
+import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -34,5 +40,19 @@ public interface SignShareConvert {
     SignApproverRequestDto convertToDomainDto(ApproverResponseDto approverResponseDto);
 
     List<SignApproverRequestDto> convertToDomainDto(List<ApproverResponseDto> approverResponses);
+
+    Page<SignRequestDto> convertToDomainDto(Page<SignShareRequestDto> signShareRequestDtoPage);
+
+    Page<SignShareResponseDto> convertToShareDto(Page<SignResponseDto> signResponseDtoPage);
+
+    @Mappings({
+            @Mapping(target = "approverList", source = "signApproverList")
+    })
+    SignShareResponseDto convertToShareDto(SignResponseDto signResponseDto);
+
+    @Mappings({
+            @Mapping(target = "userId", source = "approverUserId")
+    })
+    UserInfoShareResponseDto convertToShareDto(SignApproverResponseDto signApproverResponseDto);
 
 }

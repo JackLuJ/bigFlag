@@ -107,4 +107,24 @@
         and performance &gt;= threshold
         and is_delete='N'
     </update>
+
+    <select id="selectApproveFlagCount" resultType="java.lang.Integer"
+            parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
+        select
+            count(1)
+        from flag
+        where id in (SELECT distinct flag_id FROM approver where user_id = #{userId} and status = 2 and is_delete = 'N')
+        and is_delete = 'N'
+    </select>
+
+    <select id="selectApproveFlagList" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
+        select
+        <include refid="Base_Column_List"/>
+        from flag
+        where id in (SELECT distinct flag_id FROM approver where user_id = #{userId} and status = 2 and is_delete = 'N')
+        and is_delete = 'N'
+        order by create_date desc
+    </select>
+
 </mapper> 

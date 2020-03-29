@@ -16,6 +16,9 @@
         <result column="create_date" property="createDate"/>
         <result column="modify_date" property="modifyDate"/>
     </resultMap>
+    <resultMap id="ExtraBaseResultMap" type="com.jackluan.bigflag.domain.sign.component.dataobject.extra.SignExtraDo" extends="BaseResultMap">
+        <result column="result_type" property="resultType"/>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             1=1
@@ -83,4 +86,50 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+    <select id="selectApproveSignCount" resultType="java.lang.Integer"
+            parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        select count(1)
+        FROM sign s left join (SELECT sign_id, result_type FROM sign_approver where approver_user_id = #{userId} and is_delete = 'N') a on s.id = a.sign_id
+        where is_delete = 'N'
+        and flag_id = #{flagId}
+        order by create_date desc
+        <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+    </select>
+    <select id="selectApproveSignList" resultMap="ExtraBaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo">
+        select
+        <include refid="Base_Column_List"/>, ifnull(result_type, -1) as result_type
+        FROM sign s left join (SELECT sign_id, result_type FROM sign_approver where approver_user_id = #{userId} and is_delete = 'N') a on s.id = a.sign_id
+        where is_delete = 'N'
+        and flag_id = #{flagId}
+        order by create_date desc
+        <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+    </select>
+
+    <select id="selectSignCountWithDate" resultType="java.lang.Integer"
+            parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.extra.SignExtraDo">
+        select count(1) from sign
+        <where>
+            1=1
+            <if test="id != null ">and id = #{id}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="flagId != null ">and flag_id = #{flagId}</if>
+            <if test="description != null  and description != ''">and description = #{description}</if>
+            <if test="fileGroupId != null ">and file_group_id = #{fileGroupId}</if>
+            <if test="threshold != null  and threshold != ''">and threshold = #{threshold}</if>
+            <if test="achieveDate != null ">and achieve_date = #{achieveDate}</if>
+            <if test="deadline != null ">and deadline = #{deadline}</if>
+            <if test="status != null ">and status = #{status}</if>
+            <if test="sequenceNo != null "> and sequence_no = #{sequenceNo} </if>
+            <if test="isDelete != null  and isDelete != ''">and is_delete = #{isDelete}</if>
+            <if test="startTime != null ">and create_date &gt; #{startTime}</if>
+            <if test="endTime != null ">and create_date &lt; #{endTime}</if>
+            <if test="createDate != null ">and create_date = #{createDate}</if>
+            <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
+            and is_delete='N'
+            <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+        </where>
+    </select>
+
 </mapper> 

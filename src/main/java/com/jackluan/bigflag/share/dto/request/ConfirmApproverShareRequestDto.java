@@ -17,4 +17,6 @@ public class ConfirmApproverShareRequestDto {
 
     private YesNoEnum decision;
 
+    private Long flagUserId;
+
 }

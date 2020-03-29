@@ -34,4 +34,12 @@ public interface IFlagShareService {
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     ResultBase<Page<FlagShareResponseDto>> queryFlag(@RequestBody Page<FlagShareRequestDto> flagShareRequestDto);
 
+    /**
+     * 查询详细信息
+     * @param flagShareRequestDto
+     * @return
+     */
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    ResultBase<FlagShareResponseDto> queryDetail(@RequestBody FlagShareRequestDto flagShareRequestDto);
+
 }

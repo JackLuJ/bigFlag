@@ -4,6 +4,7 @@ import com.jackluan.bigflag.common.annotation.PassToken;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.dto.request.LoginShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.LoginShareResponseDto;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,4 +32,6 @@ public interface ILoginShareService {
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     ResultBase<LoginShareResponseDto> refreshToken(@RequestBody LoginShareRequestDto loginShareRequestDto);
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    ResultBase<String> test();
 }

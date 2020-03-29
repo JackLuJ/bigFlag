@@ -32,4 +32,10 @@ public class LoginProvider implements ILoginShareService {
     public ResultBase<LoginShareResponseDto> refreshToken(LoginShareRequestDto loginShareRequestDto) {
         return loginService.refreshToken(loginShareRequestDto);
     }
+
+    @PassToken
+    @Override
+    public ResultBase<String> test() {
+        return new ResultBase<String>().success("hello world");
+    }
 }

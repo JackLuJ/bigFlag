@@ -27,6 +27,8 @@ public class UserBaseDto extends BaseDto {
 
     private Integer tokenDays;
 
+    private String nickname;
+
     private Long fileGroupId;
 
     private String mobile;

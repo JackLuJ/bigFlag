@@ -3,6 +3,7 @@ package com.jackluan.bigflag.share.controller;
 import com.jackluan.bigflag.common.annotation.CheckToken;
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import com.jackluan.bigflag.share.IFlagShareService;
 import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
@@ -31,7 +32,14 @@ public class FlagProvider implements IFlagShareService {
 
     @Override
     public ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
+        if (flagShareRequestDto == null || flagShareRequestDto.getCondition() == null || flagShareRequestDto.getCondition().getQueryType() == null) {
+            return new ResultBase<Page<FlagShareResponseDto>>().failed(ResultCodeConstant.PARAM_VALIDATION_NOT_PASS);
+        }
         return flagService.queryFlag(flagShareRequestDto);
     }
 
+    @Override
+    public ResultBase<FlagShareResponseDto> queryDetail(FlagShareRequestDto flagShareRequestDto) {
+        return flagService.queryDetail(flagShareRequestDto);
+    }
 }

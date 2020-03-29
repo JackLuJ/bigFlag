@@ -80,9 +80,18 @@ public class FlagHandler {
     }
 
     public ResultBase<Page<FlagResponseDto>> queryFlagListPage(Page<FlagRequestDto> requestDto) {
-        int count = flagLogic.queryCount(requestDto.getPageCondition());
-        requestDto.setTotal(count);
-        List<FlagResponseDto> responseList = flagLogic.queryFlagList(requestDto.getCondition());
+
+        List<FlagResponseDto> responseList;
+        switch (requestDto.getCondition().getQueryType()){
+            case OWN:
+                responseList = queryOwnFlagList(requestDto);
+                break;
+            case APPROVE:
+                responseList = queryApproveFlagList(requestDto);
+                break;
+            default:
+                return new ResultBase<Page<FlagResponseDto>>().success();
+        }
 
         Boolean showApprover = requestDto.getCondition().getShowApprover();
         if (showApprover != null && showApprover) {
@@ -129,6 +138,9 @@ public class FlagHandler {
         response.setDeadline(flag.getFlagType().getDeadline());
         response.setThreshold(threshold);
         response.setApproverList(approverList);
+        if (FlagTypeEnum.DAILY_FLAG == flag.getFlagType()){
+            response.setCheckDailyTimes(true);
+        }
         return new ResultBase<CreateSingInfoResponseDto>().success(response);
     }
 
@@ -170,6 +182,18 @@ public class FlagHandler {
 
         flagRequestDto.setStatus(FlagStatusEnum.FINISHED);
         flagLogic.updatePassFlag(flagRequestDto);
+    }
+
+    private List<FlagResponseDto> queryOwnFlagList(Page<FlagRequestDto> requestDto){
+        int count = flagLogic.queryCount(requestDto.getPageCondition());
+        requestDto.setTotal(count);
+        return flagLogic.queryFlagList(requestDto.getCondition());
+    }
+
+    private List<FlagResponseDto> queryApproveFlagList(Page<FlagRequestDto> requestDto){
+        int count = flagLogic.queryApproveFlagCount(requestDto.getPageCondition());
+        requestDto.setTotal(count);
+        return flagLogic.queryApproveFlagList(requestDto.getCondition());
     }
 
 }

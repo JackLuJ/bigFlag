@@ -13,7 +13,7 @@ import java.util.List;
 public class Page<T extends BaseDto> implements Serializable {
     private static final int MAX_LIMIT = 1000;
     private Integer start;
-    private Integer pageIndex;
+    private Integer pageIndex = 1;
     private Integer limit = 20;
     private Integer total = 0;
     private List<T> results = new ArrayList();

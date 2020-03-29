@@ -51,12 +51,17 @@ public class ApproveServiceImpl implements IApproveService {
 
         ApproverRequestDto approverRequestDto = ApproveShareConvert.INSTANCE.convertToDomainDto(approverCreateShareRequestDto);
         approverRequestDto.setStatus(ApproverStatusEnum.UNCONFIRMED);
-        approverHandler.createApprover(approverRequestDto);
-        return new ResultBase<Void>().success();
+        ResultBase<ApproverResponseDto> resultBase = approverHandler.createApprover(approverRequestDto);
+        if (resultBase.isSuccess()){
+            return new ResultBase<Void>().success();
+        }else {
+            return new ResultBase<Void>().failed(resultBase);
+        }
     }
 
     @Override
     public ResultBase<Void> confirmApprover(ConfirmApproverShareRequestDto confirmApproverShareRequestDto) {
+        confirmApproverShareRequestDto.setFlagUserId(UserUtils.getUser().getUserId());
         ApproverRequestDto approverRequestDto = ApproveShareConvert.INSTANCE.convertToDomainDto(confirmApproverShareRequestDto);
         return approverHandler.confirmApprover(approverRequestDto);
     }

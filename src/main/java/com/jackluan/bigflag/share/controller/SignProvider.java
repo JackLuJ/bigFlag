@@ -1,10 +1,15 @@
 package com.jackluan.bigflag.share.controller;
 
 import com.jackluan.bigflag.common.annotation.CheckToken;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.share.ISignShareService;
 import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
+import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.CreateSignShareResponseDto;
+import com.jackluan.bigflag.share.dto.response.FlagShareResponseDto;
+import com.jackluan.bigflag.share.dto.response.SignShareResponseDto;
 import com.jackluan.bigflag.share.service.ISignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +28,10 @@ public class SignProvider implements ISignShareService {
     @Override
     public ResultBase<CreateSignShareResponseDto> createSign(CreateSignShareRequestDto createSignShareRequestDto) {
         return signService.createSign(createSignShareRequestDto);
+    }
+
+    @Override
+    public ResultBase<Page<SignShareResponseDto>> querySign(Page<SignShareRequestDto> signShareRequestDtoPage) {
+        return signService.querySign(signShareRequestDtoPage);
     }
 }

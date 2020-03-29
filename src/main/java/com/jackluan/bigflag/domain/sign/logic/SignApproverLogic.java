@@ -4,8 +4,11 @@ import com.jackluan.bigflag.domain.sign.component.dao.ISignApproverDao;
 import com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo;
 import com.jackluan.bigflag.domain.sign.convert.SignApproverConvert;
 import com.jackluan.bigflag.domain.sign.dto.request.SignApproverRequestDto;
+import com.jackluan.bigflag.domain.sign.dto.response.SignApproverResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @Author: jack.luan
@@ -24,6 +27,18 @@ public class SignApproverLogic {
             return count;
         }
         return signApproverDo.getId();
+    }
+
+    public List<SignApproverResponseDto> queryList(SignApproverRequestDto signApproverRequestDto){
+        SignApproverDo signApproverDo = SignApproverConvert.INSTANCE.convert(signApproverRequestDto);
+        List<SignApproverDo> resultList = signApproverDao.select(signApproverDo);
+        return SignApproverConvert.INSTANCE.convert(resultList);
+    }
+
+    public List<SignApproverResponseDto> selectByResultTypeNotIn(SignApproverRequestDto signApproverRequestDto){
+        SignApproverDo signApproverDo = SignApproverConvert.INSTANCE.convert(signApproverRequestDto);
+        List<SignApproverDo> resultList = signApproverDao.selectByResultTypeNotIn(signApproverDo);
+        return SignApproverConvert.INSTANCE.convert(resultList);
     }
 
 }

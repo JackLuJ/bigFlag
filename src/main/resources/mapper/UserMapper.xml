@@ -9,6 +9,7 @@
         <result column="session_key" property="sessionKey"/>
         <result column="token" property="token"/>
         <result column="token_days" property="tokenDays"/>
+        <result column="nickname" property="nickname"/>
         <result column="file_group_id" property="fileGroupId"/>
         <result column="mobile" property="mobile"/>
         <result column="status" property="status"/>
@@ -18,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, app_open_id, oa_open_id, union_id, session_key, token, token_days, file_group_id, mobile, status, is_delete, create_date, modify_date
+        id, app_open_id, oa_open_id, union_id, session_key, token, token_days, nickname, file_group_id, mobile, status, is_delete, create_date, modify_date
     </sql>
 
     <sql id="Example_Where_Clause">
@@ -31,6 +32,7 @@
             <if test="sessionKey != null ">and session_key = #{sessionKey}</if>
             <if test="token != null ">and token = #{token}</if>
             <if test="tokenDays != null ">and token_days = #{tokenDays}</if>
+            <if test="nickname != null ">and nickname = #{nickname}</if>
             <if test="fileGroupId != null ">and file_group_id = #{fileGroupId}</if>
             <if test="mobile != null ">and mobile = #{mobile}</if>
             <if test="status != null ">and status = #{status}</if>
@@ -42,8 +44,8 @@
     </sql>
 
     <insert id="insert" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (app_open_id, oa_open_id, union_id, session_key, token, token_days, file_group_id, mobile, status, is_delete, create_date,
-        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{unionId}, #{sessionKey}, #{token}, #{tokenDays}, #{fileGroupId}, #{mobile}, #{status}, 'N',
+        INSERT INTO user (app_open_id, oa_open_id, union_id, session_key, token, token_days, nickname, file_group_id, mobile, status, is_delete, create_date,
+        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{unionId}, #{sessionKey}, #{token}, #{tokenDays}, #{nickname}, #{fileGroupId}, #{mobile}, #{status}, 'N',
         now(), now());
     </insert>
 
@@ -61,6 +63,7 @@
             <if test="sessionKey != null">session_key = #{sessionKey},</if>
             <if test="token != null">token = #{token},</if>
             <if test="tokenDays != null">token_days = #{tokenDays},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
             <if test="fileGroupId != null">file_group_id = #{fileGroupId},</if>
             <if test="mobile != null">mobile = #{mobile},</if>
             <if test="status != null">status = #{status},</if>
