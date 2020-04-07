@@ -6,8 +6,10 @@
         <result column="user_id" property="userId" /> 
         <result column="notice_config_id" property="noticeConfigId" /> 
         <result column="notice_type" property="noticeType" /> 
-        <result column="notice_result" property="noticeResult" /> 
-        <result column="is_delete" property="isDelete" /> 
+        <result column="msg_type" property="msgType" />
+        <result column="notice_result" property="noticeResult" />
+        <result column="extra" property="extra" />
+        <result column="is_delete" property="isDelete" />
         <result column="create_date" property="createDate" /> 
         <result column="modify_date" property="modifyDate" /> 
   </resultMap> 
@@ -18,8 +20,10 @@
         <if test="userId != null "> and user_id = #{userId} </if> 
         <if test="noticeConfigId != null "> and notice_config_id = #{noticeConfigId} </if> 
         <if test="noticeType != null "> and notice_type = #{noticeType} </if> 
-        <if test="noticeResult != null "> and notice_result = #{noticeResult} </if> 
-        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if> 
+        <if test="msgType != null "> and msg_type = #{msgType} </if>
+        <if test="noticeResult != null "> and notice_result = #{noticeResult} </if>
+        <if test="extra != null "> and extra = #{extra} </if>
+        <if test="isDelete != null  and isDelete != ''"> and is_delete = #{isDelete} </if>
         <if test="createDate != null "> and create_date = #{createDate} </if> 
         <if test="modifyDate != null "> and modify_date = #{modifyDate} </if> 
         and is_delete='N'
@@ -27,7 +31,7 @@
     </where> 
   </sql> 
   <sql id="Base_Column_List" > 
-    	id,user_id,notice_config_id,notice_type,notice_result,is_delete,create_date,modify_date 
+    	id,user_id,notice_config_id,notice_type,msg_type,notice_result,extra,is_delete,create_date,modify_date
   </sql> 
   <select id="select" resultMap="BaseResultMap" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeTraceDo" > 
     select 
@@ -41,9 +45,9 @@
   </delete> 
   <insert id="insert" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeTraceDo"  useGeneratedKeys="true" keyProperty="id">
     insert into notice_trace 
-     ( user_id,notice_config_id,notice_type,notice_result,is_delete,create_date,modify_date )
+     ( user_id,notice_config_id,notice_type,msg_type,notice_result,extra,is_delete,create_date,modify_date )
     values 
-    ( #{userId},#{noticeConfigId},#{noticeType},#{noticeResult},'N',now(),now() )
+    ( #{userId},#{noticeConfigId},#{noticeType},#{msgType},#{noticeResult},#{extra},'N',now(),now() )
   </insert> 
   <select id="count" parameterType="com.jackluan.bigflag.domain.notice.component.dataobject.NoticeTraceDo" resultType="java.lang.Integer" > 
     select count(*) from notice_trace 
@@ -55,7 +59,9 @@
      	  <if test="userId != null"> user_id = #{userId},</if> 
         <if test="noticeConfigId != null"> notice_config_id = #{noticeConfigId},</if> 
         <if test="noticeType != null"> notice_type = #{noticeType},</if> 
-        <if test="noticeResult != null"> notice_result = #{noticeResult},</if> 
+        <if test="msgType != null"> msg_type = #{msgType},</if>
+        <if test="noticeResult != null"> notice_result = #{noticeResult},</if>
+        <if test="extra != null"> extra = #{extra},</if>
         <if test="isDelete != null"> is_delete = #{isDelete},</if>
         modify_date = now()
     </set> 

@@ -16,7 +16,7 @@ public class BigFlagRuntimeException extends RuntimeException {
     }
 
     public BigFlagRuntimeException(String code, String msg) {
-        super(code);
+        super(code + " ### " + msg);
         this.code = code;
         this.msg = msg;
     }

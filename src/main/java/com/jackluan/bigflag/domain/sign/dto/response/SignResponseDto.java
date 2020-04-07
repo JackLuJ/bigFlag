@@ -5,7 +5,6 @@ import com.jackluan.bigflag.domain.sign.dto.base.SignBaseDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,5 +18,11 @@ public class SignResponseDto extends SignBaseDto {
     private SignApproverResultEnum resultType;
 
     private List<SignApproverResponseDto> signApproverList;
+
+    private List<SignApproverResponseDto> approveList;
+
+    private Integer passCount = 0;
+
+    private Boolean signFinish;
 
 }

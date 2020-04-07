@@ -1,7 +1,9 @@
 package com.jackluan.bigflag.share.convert;
 
 import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
+import com.jackluan.bigflag.domain.user.dto.request.UserOpinionRequestDto;
 import com.jackluan.bigflag.domain.user.dto.request.UserRequestDto;
+import com.jackluan.bigflag.share.dto.request.UserOpinionShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.UserShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.wechat.Code2SessionResponseDto;
 import org.mapstruct.Mapper;
@@ -26,4 +28,6 @@ public interface UserShareConvert {
             @Mapping(target = "sessionKey", source = "session_key")
     })
     UserRequestDto convertToDomainDto(Code2SessionResponseDto responseDto);
+
+    UserOpinionRequestDto convertToDomainDto(UserOpinionShareRequestDto opinionShareRequestDto);
 }

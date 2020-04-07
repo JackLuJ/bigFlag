@@ -84,4 +84,9 @@
         <if test="score != null  and score != ''">and score = #{score}</if>
         <if test="description != null  and description != ''">and description = #{description}</if>
     </select>
+    <select id="sumScore" parameterType="com.jackluan.bigflag.domain.sign.component.dataobject.SignApproverDo"
+            resultType="java.lang.Integer">
+        select count(score) from sign_approver
+        where is_delete='N' and result_type = 1 and sign_id = #{signId}
+    </select>
 </mapper> 

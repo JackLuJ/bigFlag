@@ -93,7 +93,7 @@
     <update id="increasePerformance" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
         update flag
         <set>
-            <if test="performance != null">performance = performance + #{performance},</if>
+            <if test="performance != null">performance = performance + #{performance}</if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>

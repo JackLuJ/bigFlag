@@ -30,6 +30,8 @@ public class SignShareResponseDto extends BaseDto {
 
     private String description;
 
+    private Long fileGroupId;
+
     private List<String> fileUrlList;
 
     private Integer threshold;
@@ -44,7 +46,7 @@ public class SignShareResponseDto extends BaseDto {
 
     private Integer sequenceNo;
 
-    private List<UserInfoShareResponseDto> approverList;
+    private List<SignApproverShareResponseDto> approverList;
 
     private SignApproverResultEnum resultType;
 

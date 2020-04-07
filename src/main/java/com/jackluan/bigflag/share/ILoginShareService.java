@@ -4,10 +4,9 @@ import com.jackluan.bigflag.common.annotation.PassToken;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.dto.request.LoginShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.LoginShareResponseDto;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author: jack.luan
@@ -18,6 +17,7 @@ public interface ILoginShareService {
 
     /**
      * login
+     *
      * @param loginShareRequestDto
      * @return
      */
@@ -26,11 +26,43 @@ public interface ILoginShareService {
 
     /**
      * refreshToken
+     *
      * @param loginShareRequestDto
      * @return
      */
     @RequestMapping(value = "/refresh", method = RequestMethod.POST)
     ResultBase<LoginShareResponseDto> refreshToken(@RequestBody LoginShareRequestDto loginShareRequestDto);
+
+    /**
+     * listen weChat
+     * @param signature
+     * @param timestamp
+     * @param nonce
+     * @param echostr
+     * @return
+     */
+    @RequestMapping(value = "/listen/wx", method = RequestMethod.GET)
+    String validate(@RequestParam(value = "signature") String signature, @RequestParam(value = "timestamp") String timestamp, @RequestParam(value = "nonce") String nonce, @RequestParam(value = "echostr") String echostr);
+
+    /**
+     * operate msg
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/listen/wx", method = RequestMethod.POST)
+    String processMsg(HttpServletRequest request);
+
+
+    @RequestMapping(value = "/listen/wx/app", method = RequestMethod.GET)
+    String validateApp(@RequestParam(value = "signature") String signature, @RequestParam(value = "timestamp") String timestamp, @RequestParam(value = "nonce") String nonce, @RequestParam(value = "echostr") String echostr);
+
+    /**
+     * operate msg
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/listen/wx/app", method = RequestMethod.POST)
+    String processMsgApp(HttpServletRequest request);
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
     ResultBase<String> test();

@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.domain.flag.dto.request;
 
 import com.jackluan.bigflag.common.base.BaseDto;
+import com.jackluan.bigflag.common.enums.base.YesNoEnum;
 import com.jackluan.bigflag.common.enums.flag.FlagStatusEnum;
 import com.jackluan.bigflag.common.enums.flag.FlagTypeEnum;
 import com.jackluan.bigflag.common.enums.flag.FlagUpdateTypeEnum;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: jack.luan
@@ -25,5 +27,11 @@ public class FlagRequestDto extends FlagBaseDto {
     private FlagUpdateTypeEnum flagUpdateType;
 
     private QueryTypeEnum queryType;
+
+    private List<ApproverRequestDto> approverList;
+
+    private YesNoEnum terminateFlag;
+
+    private Integer passCount;
 
 }

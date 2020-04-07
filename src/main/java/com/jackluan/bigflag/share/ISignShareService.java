@@ -2,6 +2,7 @@ package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.share.dto.request.ApproveSignShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.CreateSignShareResponseDto;
@@ -32,5 +33,21 @@ public interface ISignShareService {
      */
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     ResultBase<Page<SignShareResponseDto>> querySign(@RequestBody Page<SignShareRequestDto> signShareRequestDtoPage);
+
+    /**
+     * 审批Sign
+     * @param approveSignShareRequestDto
+     * @return
+     */
+    @RequestMapping(value = "/approve", method = RequestMethod.POST)
+    ResultBase<Void> approveSign(@RequestBody ApproveSignShareRequestDto approveSignShareRequestDto);
+
+    /**
+     * 查询Sign
+     * @param signShareRequestDto
+     * @return
+     */
+    @RequestMapping(value = "/detail", method = RequestMethod.POST)
+    ResultBase<SignShareResponseDto> detail(@RequestBody SignShareRequestDto signShareRequestDto);
 
 }

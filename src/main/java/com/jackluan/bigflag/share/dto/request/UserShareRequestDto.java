@@ -18,7 +18,7 @@ public class UserShareRequestDto {
 
     private String nickname;
 
-    private List<String> fileUniqueCodes;
+    private String fileUniqueCode;
 
     private String mobile;
 

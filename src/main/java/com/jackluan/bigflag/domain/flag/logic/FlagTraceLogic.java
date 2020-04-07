@@ -17,12 +17,17 @@ public class FlagTraceLogic {
     @Autowired
     private IFlagTraceDao flagTraceDao;
 
-    public long createFlagTrace(FlagTraceRequestDto flagRequestDto) {
-        FlagTraceDo flagTraceDoDo = FlagTraceConvert.INSTANCE.convertToDo(flagRequestDto);
+    public long createFlagTrace(FlagTraceRequestDto flagTraceRequestDto) {
+        FlagTraceDo flagTraceDoDo = FlagTraceConvert.INSTANCE.convertToDo(flagTraceRequestDto);
         long count = flagTraceDao.insert(flagTraceDoDo);
         if (count < 1){
             return count;
         }
         return flagTraceDoDo.getId();
+    }
+
+    public int updateTrace(FlagTraceRequestDto flagTraceRequestDto){
+        FlagTraceDo flagTraceDoDo = FlagTraceConvert.INSTANCE.convertToDo(flagTraceRequestDto);
+        return flagTraceDao.update(flagTraceDoDo);
     }
 }

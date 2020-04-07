@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SignShareRequestDto extends BaseDto {
 
+    private Long id;
+
     private Long userId;
 
     private Long flagId;

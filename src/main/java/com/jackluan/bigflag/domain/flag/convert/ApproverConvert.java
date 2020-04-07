@@ -1,7 +1,9 @@
 package com.jackluan.bigflag.domain.flag.convert;
 
 import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
+import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo;
+import com.jackluan.bigflag.domain.flag.component.dataobject.extra.ApproverExtraDo;
 import com.jackluan.bigflag.domain.flag.dto.request.ApproverRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.CreateSingInfoRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.response.ApproverResponseDto;
@@ -25,9 +27,5 @@ public interface ApproverConvert {
 
     List<ApproverResponseDto> convertDtoList(List<ApproverDo> ApproverDos);
 
-    @Mappings({
-            @Mapping(target = "userId", ignore = true)
-    })
-    ApproverRequestDto convert(CreateSingInfoRequestDto createSingInfoRequestDto);
-
+    ApproverExtraDo convert(ApproverRequestDto ApproverRequestDto);
 }

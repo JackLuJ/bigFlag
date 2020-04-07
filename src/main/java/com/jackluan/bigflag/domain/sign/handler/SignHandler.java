@@ -5,17 +5,12 @@ import com.jackluan.bigflag.common.base.JsonConverter;
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
-import com.jackluan.bigflag.common.enums.flag.ApproverStatusEnum;
 import com.jackluan.bigflag.common.enums.sign.SignApproverResultEnum;
 import com.jackluan.bigflag.common.enums.sign.SignStatusEnum;
 import com.jackluan.bigflag.common.utils.DateUtils;
-import com.jackluan.bigflag.domain.flag.dto.request.ApproverRequestDto;
-import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
-import com.jackluan.bigflag.domain.flag.dto.response.ApproverResponseDto;
-import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
-import com.jackluan.bigflag.domain.sign.component.dataobject.SignTraceDo;
+import com.jackluan.bigflag.domain.sign.convert.SignConvert;
 import com.jackluan.bigflag.domain.sign.convert.SignTraceConvert;
-import com.jackluan.bigflag.domain.sign.dto.base.SignBaseDto;
+import com.jackluan.bigflag.domain.sign.dto.base.SignApproverBaseDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignApproverRequestDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignRequestDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignTraceRequestDto;
@@ -28,8 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
@@ -66,10 +62,7 @@ public class SignHandler {
             signRequestDto.setStatus(SignStatusEnum.PASSED);
         } else {
             signRequestDto.setStatus(SignStatusEnum.UNDER_REVIEW);
-            List<Long> approverUserId = new ArrayList<>();
-            signRequestDto.getApproverList().forEach(approver -> {
-                approverUserId.add(approver.getApproverUserId());
-            });
+            List<Long> approverUserId = signRequestDto.getApproverList().stream().map(SignApproverBaseDto::getApproverUserId).collect(Collectors.toList());
             JsonConverter converter = new JsonConverter();
             approverInfo = converter.objToJson(approverUserId);
         }
@@ -110,8 +103,8 @@ public class SignHandler {
         }
 
         SignResponseDto signResponseDto = new SignResponseDto();
-        signResponseDto.setStatus(signRequestDto.getStatus());
         signResponseDto.setId(signId);
+        signResponseDto.setPassCount(signRequestDto.getStatus() == SignStatusEnum.PASSED ? 1 : 0);
         return new ResultBase<SignResponseDto>().success(signResponseDto);
     }
 
@@ -133,8 +126,7 @@ public class SignHandler {
             responseList.forEach(signResponseDto -> {
                 SignApproverRequestDto signApproverRequestDto = new SignApproverRequestDto();
                 signApproverRequestDto.setSignId(signResponseDto.getId());
-                signApproverRequestDto.setResultType(SignApproverResultEnum.UN_CONFIRM);
-                List<SignApproverResponseDto> approverList = signApproverLogic.selectByResultTypeNotIn(signApproverRequestDto);
+                List<SignApproverResponseDto> approverList = signApproverLogic.queryList(signApproverRequestDto);
                 signResponseDto.setSignApproverList(approverList);
             });
         }
@@ -154,5 +146,159 @@ public class SignHandler {
         int count = signLogic.selectApproveSignCount(requestDto.getPageCondition());
         requestDto.setTotal(count);
         return signLogic.queryApproveSignList(requestDto.getCondition());
+    }
+
+    public ResultBase<SignResponseDto> updateSign(SignRequestDto signRequestDto) {
+        if (signRequestDto.getChangeType() == null || signRequestDto.getDelApprover() == null) {
+            return new ResultBase<SignResponseDto>().success();
+        }
+
+        SignRequestDto requestDto = new SignRequestDto();
+        requestDto.setFlagId(signRequestDto.getFlagId());
+        requestDto.setStatus(SignStatusEnum.UNDER_REVIEW);
+        List<SignResponseDto> responseList = signLogic.querySignList(requestDto);
+        if (CollectionUtils.isEmpty(responseList)) {
+            return new ResultBase<SignResponseDto>().success();
+        }
+
+        AtomicInteger passCount = new AtomicInteger();
+
+        responseList.forEach(signResponseDto -> {
+            SignTraceRequestDto signTraceRequestDto = SignTraceConvert.INSTANCE.convert(signResponseDto);
+            signTraceRequestDto.setSequenceNo(signTraceRequestDto.getSequenceNo() + 1);
+            switch (signRequestDto.getChangeType()) {
+                case APPROVER:
+                    SignApproverRequestDto approverRequestDto = signRequestDto.getDelApprover();
+                    approverRequestDto.setSignId(signResponseDto.getId());
+                    if (approverRequestDto.getApproverId() == null) {
+                        throw new BigFlagRuntimeException(ResultCodeConstant.CAN_NOT_FIND_SIGN_APPROVER);
+                    }
+                    List<SignApproverResponseDto> signApproverResponse = signApproverLogic.queryList(approverRequestDto);
+                    if (CollectionUtils.isEmpty(signApproverResponse) || signApproverResponse.size() != 1) {
+                        return;
+                    }
+                    int delScore = signApproverResponse.get(0).getScore();
+                    int count = signApproverLogic.delete(approverRequestDto);
+                    if (count != 1) {
+                        throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_SIGN_APPROVER_FAILED);
+                    }
+
+                    SignApproverRequestDto approverRequest = new SignApproverRequestDto();
+                    approverRequest.setSignId(signTraceRequestDto.getSignId());
+                    List<SignApproverResponseDto> exist = signApproverLogic.queryList(approverRequest);
+                    if (CollectionUtils.isEmpty(exist)) {
+                        signTraceRequestDto.setStatus(SignStatusEnum.PASSED);
+                        signTraceRequestDto.setThreshold(0);
+                        passCount.getAndIncrement();
+                    } else {
+                        int approveScore = exist.stream().filter(approver -> approver.getResultType() == SignApproverResultEnum.APPROVE).mapToInt(SignApproverBaseDto::getScore).sum();
+                        //更新threshold
+                        int newThreshold = signTraceRequestDto.getThreshold() - delScore;
+                        signTraceRequestDto.setThreshold(Math.max(newThreshold, 1));
+
+                        //如果达成更新状态
+                        if (signTraceRequestDto.getThreshold() <= approveScore) {
+                            signTraceRequestDto.setStatus(SignStatusEnum.PASSED);
+                            passCount.getAndIncrement();
+                        }
+
+                        //更新approverInfo
+                        List<Long> userIds = exist.stream().map(SignApproverBaseDto::getApproverUserId).collect(Collectors.toList());
+                        JsonConverter converter = new JsonConverter();
+                        signTraceRequestDto.setApproverInfo(converter.objToJson(userIds));
+                    }
+                    break;
+                case TERMINATION:
+                    signTraceRequestDto.setStatus(SignStatusEnum.TERMINATION);
+                    break;
+                default:
+                    break;
+            }
+
+            long traceCount = signTraceLogic.createSignTrace(signTraceRequestDto);
+            if (traceCount < 1) {
+                throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_SIGN_TRACE_FAILED);
+            }
+
+            SignRequestDto newSignRequest = SignConvert.INSTANCE.convert(signTraceRequestDto);
+            int count = signLogic.update(newSignRequest);
+            if (count < 1) {
+                throw new BigFlagRuntimeException(ResultCodeConstant.UPDATE_SIGN_FAILED);
+            }
+
+        });
+
+        SignResponseDto responseDto = new SignResponseDto();
+        responseDto.setPassCount(passCount.intValue());
+        return new ResultBase<SignResponseDto>().success(responseDto);
+    }
+
+    public ResultBase<SignResponseDto> approveSign(SignApproverRequestDto signApproverRequestDto) {
+        SignResponseDto signResponseDto = new SignResponseDto();
+
+        //校验审批
+        SignApproverRequestDto queryRequest = new SignApproverRequestDto();
+        queryRequest.setSignId(signApproverRequestDto.getId());
+        queryRequest.setApproverUserId(signApproverRequestDto.getApproverUserId());
+        queryRequest.setResultType(SignApproverResultEnum.UN_CONFIRM);
+        List<SignApproverResponseDto> signApproverList = signApproverLogic.queryList(queryRequest);
+        if (CollectionUtils.isEmpty(signApproverList)) {
+            throw new BigFlagRuntimeException(ResultCodeConstant.CAN_NOT_APPROVE_SIGN);
+        }
+
+        //更新signApprover
+        signApproverRequestDto.setId(signApproverList.get(0).getId());
+        int count = signApproverLogic.update(signApproverRequestDto);
+        if (count < 1) {
+            throw new BigFlagRuntimeException(ResultCodeConstant.APPROVE_SIGN_FAILED);
+        }
+
+        //校验sign是否通过
+        SignApproverRequestDto sumRequest = new SignApproverRequestDto();
+        sumRequest.setSignId(signApproverRequestDto.getSignId());
+        List<SignApproverResponseDto> approverList = signApproverLogic.queryList(sumRequest);
+        AtomicReference<Boolean> allApprove = new AtomicReference<>(true);
+        AtomicInteger sumScore = new AtomicInteger();
+        approverList.forEach(approver -> {
+            if (approver.getResultType() == SignApproverResultEnum.UN_CONFIRM) {
+                allApprove.set(false);
+            } else if ((approver.getResultType() == SignApproverResultEnum.APPROVE)) {
+                sumScore.getAndAdd(approver.getScore());
+            }
+        });
+
+        SignRequestDto signRequestDto = new SignRequestDto();
+        signRequestDto.setId(signApproverRequestDto.getSignId());
+        List<SignResponseDto> signList = signLogic.querySignList(signRequestDto);
+        if (CollectionUtils.isEmpty(signList)) {
+            throw new BigFlagRuntimeException(ResultCodeConstant.CAN_NOT_FIND_SIGN);
+        }
+
+        signResponseDto.setFlagId(signList.get(0).getFlagId());
+        signResponseDto.setUserId(signList.get(0).getUserId());
+
+        boolean statusChange = false;
+        if (signList.get(0).getThreshold() <= sumScore.get()) {
+            signResponseDto.setPassCount(1);
+            statusChange = true;
+            signRequestDto.setStatus(SignStatusEnum.PASSED);
+        } else if (allApprove.get()) {
+            statusChange = true;
+            signRequestDto.setStatus(SignStatusEnum.NO_PASS);
+        }
+
+        //sign状态变更
+        if (statusChange) {
+            signLogic.update(signRequestDto);
+        }
+
+        signResponseDto.setStatus(signRequestDto.getStatus());
+        signResponseDto.setSignFinish(statusChange);
+
+        return new ResultBase<SignResponseDto>().success(signResponseDto);
+    }
+
+    public List<SignResponseDto> queryListByTimeRange(SignRequestDto signRequestDto){
+        return signLogic.selectSignListWithDate(signRequestDto);
     }
 }

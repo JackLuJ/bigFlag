@@ -2,6 +2,7 @@ package com.jackluan.bigflag.domain.flag.logic;
 
 import com.jackluan.bigflag.domain.flag.component.dao.IApproverDao;
 import com.jackluan.bigflag.domain.flag.component.dataobject.ApproverDo;
+import com.jackluan.bigflag.domain.flag.component.dataobject.extra.ApproverExtraDo;
 import com.jackluan.bigflag.domain.flag.convert.ApproverConvert;
 import com.jackluan.bigflag.domain.flag.dto.request.ApproverRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.response.ApproverResponseDto;
@@ -40,8 +41,19 @@ public class ApproverLogic {
         return ApproverConvert.INSTANCE.convertDtoList(resultList);
     }
 
-    public int queryApproverCount(ApproverRequestDto approverRequestDto) {
+    public int queryCount(ApproverRequestDto approverRequestDto) {
         ApproverDo approverDo = ApproverConvert.INSTANCE.convertToDo(approverRequestDto);
         return approverDao.count(approverDo);
+    }
+
+    public List<ApproverResponseDto> queryApproverListExtra(ApproverRequestDto approverRequestDto){
+        ApproverExtraDo approverDo = ApproverConvert.INSTANCE.convert(approverRequestDto);
+        List<ApproverDo> resultList = approverDao.selectByStatus(approverDo);
+        return ApproverConvert.INSTANCE.convertDtoList(resultList);
+    }
+
+    public int queryCountExtra(ApproverRequestDto approverRequestDto) {
+        ApproverExtraDo approverDo = ApproverConvert.INSTANCE.convert(approverRequestDto);
+        return approverDao.countByStatus(approverDo);
     }
 }

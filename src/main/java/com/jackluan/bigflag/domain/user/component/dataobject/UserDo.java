@@ -18,6 +18,8 @@ public class UserDo extends BaseDo {
 
     private String oaOpenId;
 
+    private Integer oaSubscribeStatus;
+
     private String unionId;
 
     private String sessionKey;

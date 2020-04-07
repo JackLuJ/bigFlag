@@ -21,4 +21,6 @@ public interface IFlagService {
 
     ResultBase<FlagShareResponseDto> queryDetail(FlagShareRequestDto flagShareRequestDto);
 
+    ResultBase<FlagShareResponseDto> update(FlagShareRequestDto flagShareRequestDto);
+
 }

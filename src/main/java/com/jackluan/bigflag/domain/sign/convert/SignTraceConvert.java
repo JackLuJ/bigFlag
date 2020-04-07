@@ -4,6 +4,7 @@ import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
 import com.jackluan.bigflag.domain.sign.component.dataobject.SignTraceDo;
 import com.jackluan.bigflag.domain.sign.dto.request.SignRequestDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignTraceRequestDto;
+import com.jackluan.bigflag.domain.sign.dto.response.SignResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -24,6 +25,12 @@ public interface SignTraceConvert {
             @Mapping(target = "signId", source = "id")
     })
     SignTraceRequestDto convert(SignRequestDto signRequestDto);
+
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(target = "signId", source = "id")
+    })
+    SignTraceRequestDto convert(SignResponseDto signResponseDto);
 
     SignTraceDo convert(SignTraceRequestDto signTraceRequestDto);
 

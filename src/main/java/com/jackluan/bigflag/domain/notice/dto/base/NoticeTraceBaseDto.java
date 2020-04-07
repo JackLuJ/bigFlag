@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.domain.notice.dto.base;
 
 import com.jackluan.bigflag.common.base.BaseDto;
+import com.jackluan.bigflag.common.enums.base.WeChatNoticeTypeEnum;
 import com.jackluan.bigflag.common.enums.notice.NoticeResultEnum;
 import com.jackluan.bigflag.common.enums.notice.NoticeTypeEnum;
 import lombok.Data;
@@ -22,5 +23,9 @@ public class NoticeTraceBaseDto extends BaseDto {
 
     private NoticeTypeEnum noticeType;
 
+    private WeChatNoticeTypeEnum msgType;
+
     private NoticeResultEnum noticeResult;
+
+    private String extra;
 }

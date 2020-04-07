@@ -22,11 +22,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @Author: jack.luan
@@ -38,17 +40,23 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("token");
-        boolean isLogin = false;
         // 如果不是映射到方法直接通过
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+
+        JsonConverter converter = new JsonConverter();
+
+        //日志输出
+        log.info("###### request method:{}. path:{}", request.getMethod(), request.getRequestURI());
+
+        String token = request.getHeader("token");
+        boolean isLogin = false;
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
 
         //检查是否有CheckToken注解，有则进行验证
-        if (!method.getDeclaringClass().isAnnotationPresent(CheckToken.class)){
+        if (!method.getDeclaringClass().isAnnotationPresent(CheckToken.class)) {
             return true;
         }
 
@@ -86,7 +94,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                 Map<String, String> msg = new HashMap<>(4);
                 msg.put("code", ResultCodeConstant.NOT_LOGIN);
                 msg.put("msg", "please login");
-                JsonConverter converter = new JsonConverter();
                 out = response.getWriter();
                 out.append(converter.objToJson(msg));
             } catch (Exception e) {

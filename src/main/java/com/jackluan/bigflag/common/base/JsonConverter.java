@@ -1,5 +1,6 @@
 package com.jackluan.bigflag.common.base;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +17,7 @@ public class JsonConverter {
     private static final Logger log = LoggerFactory.getLogger(JsonConverter.class);
     private ObjectMapper objectMapper;
     private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    String datePattern;
+    private String datePattern;
 
     public JsonConverter(String datePattern) {
         this.datePattern = datePattern;
@@ -30,6 +31,7 @@ public class JsonConverter {
 
     private ObjectMapper getObjectMapper(String pattern) {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         objectMapper.setDateFormat(new SimpleDateFormat(pattern));
         return objectMapper;
     }

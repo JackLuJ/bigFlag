@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.share.service;
 
 import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.share.dto.request.UserOpinionShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.UserShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,5 +18,6 @@ public interface IUserService {
 
     ResultBase<UserInfoShareResponseDto> queryUser(UserShareRequestDto userShareRequestDto);
 
+    ResultBase<Void> opinion(UserOpinionShareRequestDto userOpinionShareRequestDto);
 
 }

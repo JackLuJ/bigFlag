@@ -47,4 +47,6 @@ public class FlagShareResponseDto extends BaseDto implements Serializable {
 
     private List<UserInfoShareResponseDto> approverList;
 
+    private String noticeDate;
+
 }

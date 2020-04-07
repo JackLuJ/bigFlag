@@ -70,8 +70,7 @@
   <update id="update" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagTraceDo" > 
     update flag_trace 
     <set > 
-     	  <if test="flagId != null"> flag_id = #{flagId},</if> 
-        <if test="userId != null"> user_id = #{userId},</if> 
+        <if test="userId != null"> user_id = #{userId},</if>
         <if test="achieveConfigType != null"> achieve_config_type = #{achieveConfigType},</if> 
         <if test="noticeConfigId != null"> notice_config_id = #{noticeConfigId},</if> 
         <if test="title != null"> title = #{title},</if> 
@@ -80,12 +79,14 @@
         <if test="performance != null"> performance = #{performance},</if>
         <if test="threshold != null"> threshold = #{threshold},</if>
         <if test="deadline != null"> deadline = #{deadline},</if>
-        <if test="status != null"> status = #{status},</if> 
-        <if test="sequenceNo != null"> sequence_no = #{sequenceNo},</if> 
+        <if test="status != null"> status = #{status},</if>
         <if test="approverInfo != null"> approver_info = #{approverInfo},</if> 
         <if test="isDelete != null"> is_delete = #{isDelete},</if>
         modify_date = now()
     </set> 
-       where id = #{id,jdbcType=BIGINT}  
+       where 1=1
+      <if test="id != null"> and id = #{id}</if>
+      <if test="flagId != null"> and flag_id = #{flagId}</if>
+      <if test="sequenceNo != null"> and sequence_no = #{sequenceNo}</if>
   </update> 
 </mapper> 

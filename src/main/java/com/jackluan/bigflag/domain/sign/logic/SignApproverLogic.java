@@ -41,4 +41,23 @@ public class SignApproverLogic {
         return SignApproverConvert.INSTANCE.convert(resultList);
     }
 
+    public int delete(SignApproverRequestDto signApproverRequestDto) {
+        SignApproverDo signApproverDo = SignApproverConvert.INSTANCE.convert(signApproverRequestDto);
+        return signApproverDao.delete(signApproverDo);
+    }
+
+    public int count(SignApproverRequestDto signApproverRequestDto){
+        SignApproverDo signApproverDo = SignApproverConvert.INSTANCE.convert(signApproverRequestDto);
+        return signApproverDao.count(signApproverDo);
+    }
+
+    public int update(SignApproverRequestDto signApproverRequestDto){
+        SignApproverDo signApproverDo = SignApproverConvert.INSTANCE.convert(signApproverRequestDto);
+        return signApproverDao.update(signApproverDo);
+    }
+
+    public int sumScore(SignApproverRequestDto signApproverRequestDto){
+        SignApproverDo signApproverDo = SignApproverConvert.INSTANCE.convert(signApproverRequestDto);
+        return signApproverDao.sumScore(signApproverDo);
+    }
 }

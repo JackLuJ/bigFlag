@@ -21,28 +21,24 @@
 		<mybatis-springboot-starter.version>2.1.1</mybatis-springboot-starter.version>
 		<aliyun-sso.version>3.8.1</aliyun-sso.version>
 		<okhttp3.version>4.4.1</okhttp3.version>
+		<dom4j.version>2.1.1</dom4j.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-quartz</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<version>${springboot.version}</version>
 			<exclusions>
-				<exclusion>
-					<artifactId>log4j-to-slf4j</artifactId>
-					<groupId>org.apache.logging.log4j</groupId>
-				</exclusion>
 				<exclusion>
 					<artifactId>logback-classic</artifactId>
 					<groupId>ch.qos.logback</groupId>
 				</exclusion>
+				<exclusion>
+					<artifactId>log4j-to-slf4j</artifactId>
+					<groupId>org.apache.logging.log4j</groupId>
+				</exclusion>
 			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${springboot.version}</version>
 		</dependency>
 
 		<dependency>
@@ -116,6 +112,17 @@
 			<version>${okhttp3.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>${dom4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>1.64</version>
+		</dependency>
 
 	</dependencies>
 

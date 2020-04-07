@@ -20,5 +20,9 @@ public class NoticeTraceDo extends BaseDo {
 
     private Integer noticeType;
 
+    private Integer msgType;
+
     private Integer noticeResult;
+
+    private String extra;
 }

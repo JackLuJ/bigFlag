@@ -1,5 +1,7 @@
 package com.jackluan.bigflag.share.dto.response;
 
+import com.jackluan.bigflag.common.base.BaseDto;
+import com.jackluan.bigflag.common.enums.user.OaSubscribeStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class UserInfoShareResponseDto {
+public class UserInfoShareResponseDto extends BaseDto {
 
     private Long userId;
 
@@ -17,4 +19,5 @@ public class UserInfoShareResponseDto {
 
     private String url;
 
+    private OaSubscribeStatusEnum oaSubscribeStatus;
 }

@@ -5,6 +5,7 @@
         <result column="id" property="id"/>
         <result column="app_open_id" property="appOpenId"/>
         <result column="oa_open_id" property="oaOpenId"/>
+        <result column="oa_subscribe_status" property="oaSubscribeStatus"/>
         <result column="union_id" property="unionId"/>
         <result column="session_key" property="sessionKey"/>
         <result column="token" property="token"/>
@@ -19,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, app_open_id, oa_open_id, union_id, session_key, token, token_days, nickname, file_group_id, mobile, status, is_delete, create_date, modify_date
+        id, app_open_id, oa_open_id, oa_subscribe_status, union_id, session_key, token, token_days, nickname, file_group_id, mobile, status, is_delete, create_date, modify_date
     </sql>
 
     <sql id="Example_Where_Clause">
@@ -28,6 +29,7 @@
             <if test="id != null ">and id = #{id}</if>
             <if test="appOpenId != null ">and app_open_id = #{appOpenId}</if>
             <if test="oaOpenId != null ">and oa_open_id = #{oaOpenId}</if>
+            <if test="oaSubscribeStatus != null ">and oa_subscribe_status = #{oaSubscribeStatus}</if>
             <if test="unionId != null ">and union_id = #{unionId}</if>
             <if test="sessionKey != null ">and session_key = #{sessionKey}</if>
             <if test="token != null ">and token = #{token}</if>
@@ -44,8 +46,8 @@
     </sql>
 
     <insert id="insert" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user (app_open_id, oa_open_id, union_id, session_key, token, token_days, nickname, file_group_id, mobile, status, is_delete, create_date,
-        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{unionId}, #{sessionKey}, #{token}, #{tokenDays}, #{nickname}, #{fileGroupId}, #{mobile}, #{status}, 'N',
+        INSERT INTO user (app_open_id, oa_open_id, oa_subscribe_status, union_id, session_key, token, token_days, nickname, file_group_id, mobile, status, is_delete, create_date,
+        modify_date) VALUES (#{appOpenId}, #{oaOpenId}, #{oaSubscribeStatus}, #{unionId}, #{sessionKey}, #{token}, #{tokenDays}, #{nickname}, #{fileGroupId}, #{mobile}, #{status}, 'N',
         now(), now());
     </insert>
 
@@ -59,6 +61,7 @@
         <set>
             <if test="appOpenId != null">app_open_id = #{appOpenId},</if>
             <if test="oaOpenId != null">oa_open_id = #{oaOpenId},</if>
+            <if test="oaSubscribeStatus != null">oa_subscribe_status = #{oaSubscribeStatus},</if>
             <if test="unionId != null">union_id = #{unionId},</if>
             <if test="sessionKey != null">session_key = #{sessionKey},</if>
             <if test="token != null">token = #{token},</if>
@@ -86,4 +89,11 @@
         select count(*) from user
         <include refid="Example_Where_Clause"/>
     </select>
+
+    <update id="updateByUnionId" parameterType="com.jackluan.bigflag.domain.user.component.dataobject.UserDo">
+        UPDATE user
+            set oa_open_id = #{oaOpenId},
+            modify_date = now()
+        where union_id = #{unionId}
+    </update>
 </mapper>

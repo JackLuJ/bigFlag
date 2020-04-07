@@ -20,4 +20,6 @@ public interface ISignDao extends IBaseDao<SignDo> {
 
     int selectSignCountWithDate(SignExtraDo signExtraDo);
 
+    List<SignDo> selectSignListWithDate(SignExtraDo signExtraDo);
+
 }

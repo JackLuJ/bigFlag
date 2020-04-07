@@ -42,4 +42,12 @@ public interface IFlagShareService {
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
     ResultBase<FlagShareResponseDto> queryDetail(@RequestBody FlagShareRequestDto flagShareRequestDto);
 
+    /**
+     * 更新flag
+     * @param flagShareRequestDto
+     * @return
+     */
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    ResultBase<FlagShareResponseDto> update(@RequestBody FlagShareRequestDto flagShareRequestDto);
+
 }

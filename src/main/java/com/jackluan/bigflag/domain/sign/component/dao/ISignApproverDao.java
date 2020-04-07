@@ -15,4 +15,5 @@ public interface ISignApproverDao extends IBaseDao<SignApproverDo> {
 
     List<SignApproverDo> selectByResultTypeNotIn(SignApproverDo signApproverDo);
 
+    int sumScore(SignApproverDo signApproverDo);
 }

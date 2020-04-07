@@ -9,8 +9,10 @@ import com.jackluan.bigflag.domain.sign.dto.request.SignApproverRequestDto;
 import com.jackluan.bigflag.domain.sign.dto.request.SignRequestDto;
 import com.jackluan.bigflag.domain.sign.dto.response.SignApproverResponseDto;
 import com.jackluan.bigflag.domain.sign.dto.response.SignResponseDto;
+import com.jackluan.bigflag.share.dto.request.ApproveSignShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
+import com.jackluan.bigflag.share.dto.response.SignApproverShareResponseDto;
 import com.jackluan.bigflag.share.dto.response.SignShareResponseDto;
 import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
 import org.mapstruct.Mapper;
@@ -53,6 +55,11 @@ public interface SignShareConvert {
     @Mappings({
             @Mapping(target = "userId", source = "approverUserId")
     })
-    UserInfoShareResponseDto convertToShareDto(SignApproverResponseDto signApproverResponseDto);
+    SignApproverShareResponseDto convertToShareDto(SignApproverResponseDto signApproverResponseDto);
+
+    @Mappings({
+            @Mapping(target = "approverUserId", source = "userId")
+    })
+    SignApproverRequestDto convertToDomainDto(ApproveSignShareRequestDto approveSignShareRequestDto);
 
 }

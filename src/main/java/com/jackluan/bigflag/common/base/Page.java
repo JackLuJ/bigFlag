@@ -1,6 +1,5 @@
 package com.jackluan.bigflag.common.base;
 
-import com.jackluan.bigflag.common.utils.CommonUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class Page<T extends BaseDto> implements Serializable {
     private Integer pageIndex = 1;
     private Integer limit = 20;
     private Integer total = 0;
-    private List<T> results = new ArrayList();
+    private List<T> results = new ArrayList<>();
     private T condition;
 
     public Page() {
@@ -94,10 +93,6 @@ public class Page<T extends BaseDto> implements Serializable {
         this.results = results;
     }
 
-    public static int getMaxLimit() {
-        return 1000;
-    }
-
     public Integer getPageIndex() {
         return this.pageIndex;
     }
@@ -111,7 +106,7 @@ public class Page<T extends BaseDto> implements Serializable {
     }
 
     public static <R extends BaseDto> Page<R> mapper(Page<?> biz) {
-        Page<R> pageTmp = new Page();
+        Page<R> pageTmp = new Page<>();
         pageTmp.setLimit(biz.getLimit());
         pageTmp.setPageIndex(biz.getPageIndex());
         pageTmp.setStart(biz.getStart());

@@ -4,6 +4,7 @@ import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
 import com.jackluan.bigflag.domain.flag.component.dataobject.FlagTraceDo;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagTraceRequestDto;
+import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -29,5 +30,11 @@ public interface FlagTraceConvert {
             @Mapping(source = "id", target = "flagId")
     })
     FlagTraceRequestDto convertFlag(FlagRequestDto flagRequestDto);
+
+    @Mappings({
+            @Mapping(target = "id", ignore = true),
+            @Mapping(source = "id", target = "flagId")
+    })
+    FlagTraceRequestDto convertFlag(FlagResponseDto flagResponseDto);
 
 }

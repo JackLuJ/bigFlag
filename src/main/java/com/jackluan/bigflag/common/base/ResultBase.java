@@ -2,8 +2,10 @@ package com.jackluan.bigflag.common.base;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @Author: jack.luan
@@ -81,7 +83,12 @@ public class ResultBase<T> implements Serializable {
     }
 
     public boolean isEmptyValue() {
-        return null == this.value;
+        if (null == this.value){
+            return true;
+        }else if (this.value instanceof Collection){
+            return CollectionUtils.isEmpty((Collection<?>) this.value);
+        }
+        return false;
     }
 
     public String getCode() {

@@ -3,6 +3,7 @@ package com.jackluan.bigflag.domain.file.handler;
 import com.jackluan.bigflag.common.base.BigFlagRuntimeException;
 import com.jackluan.bigflag.common.base.FileInfo;
 import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.common.constant.CacheObject;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.common.constant.SystemConstant;
 import com.jackluan.bigflag.common.utils.OSSUtils;
@@ -28,10 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FileGroupHandler {
 
     private static final String cacheKey = "userId:%s,groupId:%s";
-
-    //TODO 凌晨12点跑批清理缓存
-
-    private static ConcurrentHashMap<String, FileGroupResponseDto> fileGroupCache = new ConcurrentHashMap<>();
 
     @Autowired
     private FileLogic fileLogic;
@@ -69,8 +66,11 @@ public class FileGroupHandler {
     }
 
     public ResultBase<FileGroupResponseDto> queryFileGroup(FileGroupRequestDto fileGroupRequestDto) {
+        if (fileGroupRequestDto.getUserId() == null || fileGroupRequestDto.getId() == null){
+            return new ResultBase<FileGroupResponseDto>().failed(ResultCodeConstant.QUERY_FILE_PARAM_VALIDATION_FAILED);
+        }
         String key = String.format(cacheKey, fileGroupRequestDto.getUserId(), fileGroupRequestDto.getId());
-        FileGroupResponseDto responseDto = fileGroupCache.get(key);
+        FileGroupResponseDto responseDto = CacheObject.fileGroupCache.get(key);
         if (responseDto != null) {
             return new ResultBase<FileGroupResponseDto>().success(responseDto);
         }
@@ -84,7 +84,7 @@ public class FileGroupHandler {
                     file.setUrl(url.toString());
                 });
             }
-            fileGroupCache.put(key, responseDto);
+            CacheObject.fileGroupCache.put(key, responseDto);
         }
         return new ResultBase<FileGroupResponseDto>().success(responseDto);
     }

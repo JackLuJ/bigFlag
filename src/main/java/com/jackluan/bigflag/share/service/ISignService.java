@@ -2,6 +2,7 @@ package com.jackluan.bigflag.share.service;
 
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
+import com.jackluan.bigflag.share.dto.request.ApproveSignShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.CreateSignShareResponseDto;
@@ -17,4 +18,5 @@ public interface ISignService {
 
     ResultBase<Page<SignShareResponseDto>> querySign(Page<SignShareRequestDto> signShareRequestDtoPage);
 
+    ResultBase<Void> approveSign(ApproveSignShareRequestDto approveSignShareRequestDto);
 }

@@ -39,11 +39,4 @@ public enum FlagTypeEnum implements KeyValueEnum<Integer> {
     public String getDesc() {
         return desc;
     }
-
-    public Date getDeadline() {
-        if (1 == code) {
-            return DateUtils.getTodayEnd();
-        }
-        return null;
-    }
 }

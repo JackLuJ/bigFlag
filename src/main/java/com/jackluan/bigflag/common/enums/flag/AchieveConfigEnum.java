@@ -14,17 +14,17 @@ public enum AchieveConfigEnum implements KeyValueEnum<Integer> {
     /**
      * 困难
      */
-    DIFFICULT(1, "difficult", new BigDecimal(1), 0, RoundingMode.HALF_UP),
+    DIFFICULT(1, "困难", new BigDecimal(1), 0, RoundingMode.HALF_UP),
 
     /**
      * 中等
      */
-    NORMAL(2, "normal", new BigDecimal(2), 0, RoundingMode.HALF_UP),
+    NORMAL(2, "中等", new BigDecimal(2), 0, RoundingMode.HALF_UP),
 
     /**
      * 简单
      */
-    EASY(3, "easy", new BigDecimal(-1), 0, RoundingMode.HALF_UP);
+    EASY(3, "简单", new BigDecimal(-1), 0, RoundingMode.HALF_UP);
 
     private Integer code;
 

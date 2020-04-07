@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.domain.user.dto.base;
 
 import com.jackluan.bigflag.common.base.BaseDto;
+import com.jackluan.bigflag.common.enums.user.OaSubscribeStatusEnum;
 import com.jackluan.bigflag.common.enums.user.UserStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ public class UserBaseDto extends BaseDto {
     private String appOpenId;
 
     private String oaOpenId;
+
+    private OaSubscribeStatusEnum oaSubscribeStatus;
 
     private String unionId;
 

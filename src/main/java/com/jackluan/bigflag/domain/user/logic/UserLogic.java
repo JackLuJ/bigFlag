@@ -40,4 +40,9 @@ public class UserLogic {
         return userDao.update(userDo);
     }
 
+    public int updateByUnionId(UserRequestDto userRequestDto){
+        UserDo userDo = UserConvert.INSTANCE.convertToDo(userRequestDto);
+        return userDao.updateByUnionId(userDo);
+    }
+
 }

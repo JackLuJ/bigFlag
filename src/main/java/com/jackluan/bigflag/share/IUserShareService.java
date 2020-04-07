@@ -2,6 +2,7 @@ package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.share.convert.UserShareConvert;
+import com.jackluan.bigflag.share.dto.request.UserOpinionShareRequestDto;
 import com.jackluan.bigflag.share.dto.request.UserShareRequestDto;
 import com.jackluan.bigflag.share.dto.response.LoginShareResponseDto;
 import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
@@ -32,10 +33,18 @@ public interface IUserShareService {
     ResultBase<UserInfoShareResponseDto> updateUser(@RequestBody UserShareRequestDto userShareRequestDto);
 
     /**
-     * 更新用户信息
+     * 查询当前登录用户信息
      * @return
      */
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     ResultBase<UserInfoShareResponseDto> queryUser();
+
+    /**
+     * 意见接口
+     * @param userOpinionShareRequestDto
+     * @return
+     */
+    @RequestMapping(value = "/opinion", method = RequestMethod.POST)
+    ResultBase<Void> opinion(@RequestBody UserOpinionShareRequestDto userOpinionShareRequestDto);
 
 }

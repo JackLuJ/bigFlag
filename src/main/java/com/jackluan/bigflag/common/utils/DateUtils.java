@@ -1,7 +1,10 @@
 package com.jackluan.bigflag.common.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -19,8 +22,20 @@ public class DateUtils {
 
     public static Date getYesterdayEnd(Date date) {
         ZoneId zoneId = ZoneId.systemDefault();
-        LocalDateTime yesterday = date.toInstant().atZone(zoneId).toLocalDateTime().minusSeconds(1);
+        LocalDateTime yesterday = LocalDateTime.of(date.toInstant().atZone(zoneId).toLocalDate(), LocalTime.MAX);
         return Date.from(yesterday.atZone(zoneId).toInstant());
+    }
+
+    public static Date getBeforeMinuteStart(Date date, int hourCount, int minuteCount) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDateTime time = date.toInstant().atZone(zoneId).toLocalDateTime().minusHours(hourCount).minusMinutes(minuteCount).withSecond(0).withNano(0);
+        return Date.from(time.atZone(zoneId).toInstant());
+    }
+
+    public static Date getBeforeMinuteEnd(Date date, int hourCount, int minuteCount) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDateTime time = date.toInstant().atZone(zoneId).toLocalDateTime().minusHours(hourCount).minusMinutes(minuteCount).withSecond(59).withNano(999999999);
+        return Date.from(time.atZone(zoneId).toInstant());
     }
 
     public static Date getTodayStart(){
@@ -28,7 +43,7 @@ public class DateUtils {
     }
 
     public static Date getTodayEnd(){
-        return getYesterdayEnd(getDayStart(new Date(), 1));
+        return getYesterdayEnd(new Date());
     }
 
 }
