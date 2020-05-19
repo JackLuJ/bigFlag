@@ -14,6 +14,7 @@ import com.jackluan.bigflag.common.utils.DateUtils;
 import com.jackluan.bigflag.domain.flag.convert.FlagConvert;
 import com.jackluan.bigflag.domain.flag.convert.FlagTraceConvert;
 import com.jackluan.bigflag.domain.flag.dto.base.ApproverBaseDto;
+import com.jackluan.bigflag.domain.flag.dto.base.FlagBaseDto;
 import com.jackluan.bigflag.domain.flag.dto.request.ApproverRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.CreateSingInfoRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
@@ -55,7 +56,7 @@ public class FlagHandler {
 
     public ResultBase<FlagResponseDto> createFlag(FlagRequestDto requestDto) {
         FlagResponseDto responseDto = new FlagResponseDto();
-        if (requestDto.getFlagType() == FlagTypeEnum.DAILY_FLAG) {
+        if (requestDto.getFlagType() == FlagTypeEnum.DAILY_FLAG && requestDto.getDeadline() != null) {
             requestDto.setThreshold(getThreshold(requestDto.getDeadline()));
         }
 
@@ -132,7 +133,7 @@ public class FlagHandler {
         }
 
         switch (flagRequestDto.getFlagUpdateType()) {
-            case SIGN_PASS:
+            case SIGN_CHANGE:
                 updateFlagResponseDto.setFlagFinish(updateWhenSignPass(flagRequestDto));
                 break;
             case FLAG_UPDATE:
@@ -147,7 +148,23 @@ public class FlagHandler {
         List<FlagResponseDto> resultList = flagLogic.queryFlagList(requestDto);
         updateFlagResponseDto.setFlagStatusEnum(resultList.get(0).getStatus());
         updateFlagResponseDto.setNoticeConfigId(flagList.get(0).getNoticeConfigId());
+        updateFlagResponseDto.setFlagType(resultList.get(0).getFlagType());
         return new ResultBase<UpdateFlagResponseDto>().success(updateFlagResponseDto);
+    }
+
+    public List<Long> batchExpireFlag(){
+        Date now = DateUtils.getTodayStart();
+        FlagRequestDto requestDto = new FlagRequestDto();
+        requestDto.setDeadline(now);
+        List<FlagResponseDto> responseList = flagLogic.selectByDeadline(requestDto);
+        if (responseList == null){
+            return null;
+        }
+        List<Long> noticeConfigIds = responseList.stream().map(FlagBaseDto::getNoticeConfigId).collect(Collectors.toList());
+
+        requestDto.setStatus(FlagStatusEnum.OVER_DUE);
+        flagLogic.updateByDeadline(requestDto);
+        return noticeConfigIds;
     }
 
     private int getThreshold(Date deadline) {
@@ -168,7 +185,7 @@ public class FlagHandler {
         //生成本次变更的类型集合
         boolean checkFinish = false;
         List<FlagChangeTypeEnum> changeTypes = new ArrayList<>();
-        if (oldFlag.getFlagType() == FlagTypeEnum.DAILY_FLAG && flagRequestDto.getDeadline() != null && flagRequestDto.getDeadline().getTime() != oldFlag.getDeadline().getTime()) {
+        if (oldFlag.getFlagType() == FlagTypeEnum.DAILY_FLAG && flagRequestDto.getDeadline() != null && (oldFlag.getDeadline() == null || flagRequestDto.getDeadline().getTime() != oldFlag.getDeadline().getTime())) {
             changeTypes.add(FlagChangeTypeEnum.DEADLINE);
             flagTraceRequestDto.setDeadline(flagRequestDto.getDeadline());
             flagTraceRequestDto.setThreshold(getThreshold(flagRequestDto.getDeadline()));
@@ -186,14 +203,18 @@ public class FlagHandler {
         if (!CollectionUtils.isEmpty(flagRequestDto.getApproverList())) {
             changeTypes.add(FlagChangeTypeEnum.APPROVER);
         }
-        if (flagRequestDto.getTerminateFlag() != null && YesNoEnum.YES == flagRequestDto.getTerminateFlag()) {
+        if (flagRequestDto.getAchieve() != null) {
             changeTypes.add(FlagChangeTypeEnum.TERMINATION);
-            flagTraceRequestDto.setStatus(FlagStatusEnum.TERMINATION);
+            if (YesNoEnum.YES == flagRequestDto.getAchieve()){
+                flagTraceRequestDto.setStatus(FlagStatusEnum.ACHIEVE);
+            }else {
+                flagTraceRequestDto.setStatus(FlagStatusEnum.NOT_ACHIEVE);
+            }
             checkFinish = false;
         }
 
-        //判断Flag是否成功
-        if (checkFinish && flagTraceRequestDto.getPerformance() >= flagTraceRequestDto.getThreshold()) {
+        //判断Flag是否成功 flag 种类是force的才会变更为完成
+        if (checkFinish && flagTraceRequestDto.getPerformance() >= flagTraceRequestDto.getThreshold() && oldFlag.getFlagType().getForce()) {
             flagTraceRequestDto.setStatus(FlagStatusEnum.FINISHED);
         }
 
@@ -221,6 +242,7 @@ public class FlagHandler {
 
     private CreateSingInfoResponseDto getSignInfoBase(CreateSingInfoRequestDto createSingInfoRequestDto){
         FlagRequestDto requestDto = FlagConvert.INSTANCE.convert(createSingInfoRequestDto);
+        requestDto.setStatus(FlagStatusEnum.IN_PROGRESS);
         List<FlagResponseDto> responseList = flagLogic.queryFlagList(requestDto);
         if (CollectionUtils.isEmpty(responseList)) {
             throw new BigFlagRuntimeException(ResultCodeConstant.FIND_FLAG_FAILED);
@@ -252,10 +274,8 @@ public class FlagHandler {
         CreateSingInfoResponseDto response = new CreateSingInfoResponseDto();
         response.setThreshold(threshold);
         response.setApproverList(approverList);
-        if (FlagTypeEnum.DAILY_FLAG == flag.getFlagType()) {
-            response.setCheckDailyTimes(true);
-            response.setDeadline(DateUtils.getTodayEnd());
-        }
+        response.setDeadline(DateUtils.getTodayEnd());
+        response.setFlagType(flag.getFlagType());
         return response;
     }
 
@@ -302,13 +322,16 @@ public class FlagHandler {
             throw new BigFlagRuntimeException(ResultCodeConstant.INCREASE_FLAG_PERFORMANCE_FAILED);
         }
 
-        flagRequestDto.setStatus(FlagStatusEnum.FINISHED);
-        int successCount = flagLogic.updatePassFlag(flagRequestDto);
-        if (successCount > 0){
-            return true;
-        }else {
-            return false;
-        }
+        //flag暂时没有完成状态
+//        flagRequestDto.setStatus(FlagStatusEnum.FINISHED);
+//        int successCount = flagLogic.updatePassFlag(flagRequestDto);
+//        if (successCount > 0){
+//            return true;
+//        }else {
+//            return false;
+//        }
+
+        return false;
     }
 
     private List<FlagResponseDto> queryOwnFlagList(Page<FlagRequestDto> requestDto) {

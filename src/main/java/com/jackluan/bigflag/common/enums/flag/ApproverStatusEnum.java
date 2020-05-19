@@ -9,6 +9,16 @@ import com.jackluan.bigflag.common.base.KeyValueEnum;
 public enum ApproverStatusEnum implements KeyValueEnum<Integer> {
 
     /**
+     * 自己的flag
+     */
+    OWNER(-1, "owner"),
+
+    /**
+     * 未申请
+     */
+    NO_PERMISSION(0, "no permission"),
+
+    /**
      * 未确认
      */
     UNCONFIRMED(1, "unconfirmed"),

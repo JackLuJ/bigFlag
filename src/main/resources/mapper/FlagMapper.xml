@@ -5,6 +5,7 @@
         <result column="id" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="notice_config_id" property="noticeConfigId"/>
+        <result column="file_group_id" property="fileGroupId"/>
         <result column="achieve_config_type" property="achieveConfigType"/>
         <result column="title" property="title"/>
         <result column="description" property="description"/>
@@ -24,6 +25,7 @@
             <if test="id != null ">and id = #{id}</if>
             <if test="userId != null ">and user_id = #{userId}</if>
             <if test="noticeConfigId != null ">and notice_config_id = #{noticeConfigId}</if>
+            <if test="fileGroupId != null ">and file_group_id = #{fileGroupId}</if>
             <if test="achieveConfigType != null ">and achieve_config_type = #{achieveConfigType}</if>
             <if test="title != null  and title != ''">and title = #{title}</if>
             <if test="description != null  and description != ''">and description = #{description}</if>
@@ -37,11 +39,12 @@
             <if test="createDate != null ">and create_date = #{createDate}</if>
             <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
             and is_delete='N'
+            order by status asc, create_date desc
             <if test="start != null and limit != null ">limit #{start},#{limit}</if>
         </where>
     </sql>
     <sql id="Base_Column_List">
-        id,user_id,achieve_config_type,notice_config_id,title,description,flag_type,performance,threshold,deadline,sequence_no,status,is_delete,create_date,modify_date
+        id,user_id,achieve_config_type,notice_config_id,file_group_id,title,description,flag_type,performance,threshold,deadline,sequence_no,status,is_delete,create_date,modify_date
     </sql>
     <select id="select" resultMap="BaseResultMap"
             parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
@@ -58,11 +61,11 @@
             useGeneratedKeys="true" keyProperty="id">
         insert into flag
         (
-        user_id,achieve_config_type,notice_config_id,title,description,flag_type,performance,threshold,deadline,sequence_no,status,is_delete,create_date,modify_date
+        user_id,achieve_config_type,notice_config_id,file_group_id,title,description,flag_type,performance,threshold,deadline,sequence_no,status,is_delete,create_date,modify_date
         )
         values
         (
-        #{userId},#{achieveConfigType},#{noticeConfigId},#{title},#{description},#{flagType},#{performance},#{threshold},#{deadline},#{sequenceNo},#{status},'N',now(),now()
+        #{userId},#{achieveConfigType},#{noticeConfigId},#{fileGroupId},#{title},#{description},#{flagType},#{performance},#{threshold},#{deadline},#{sequenceNo},#{status},'N',now(),now()
         )
     </insert>
     <select id="count" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo"
@@ -76,6 +79,7 @@
             <if test="userId != null">user_id = #{userId},</if>
             <if test="achieveConfigType != null">achieve_config_type = #{achieveConfigType},</if>
             <if test="noticeConfigId != null">notice_config_id = #{noticeConfigId},</if>
+            <if test="fileGroupId != null">file_group_id = #{fileGroupId},</if>
             <if test="title != null">title = #{title},</if>
             <if test="description != null">description = #{description},</if>
             <if test="flagType != null">flag_type = #{flagType},</if>
@@ -124,7 +128,28 @@
         from flag
         where id in (SELECT distinct flag_id FROM approver where user_id = #{userId} and status = 2 and is_delete = 'N')
         and is_delete = 'N'
-        order by create_date desc
+        order by status asc, create_date desc
     </select>
 
+
+    <update id="updateByDeadline" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
+        update flag
+        <set>
+            <if test="status != null">status = #{status}</if>
+        </set>
+        where deadline &lt;= #{deadline}
+        and status = 2
+        and is_delete='N'
+    </update>
+
+
+    <select id="selectByDeadline" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
+        select
+        <include refid="Base_Column_List"/>
+        from flag
+        where deadline &lt;= #{deadline}
+        and status = 2
+        and is_delete='N'
+    </select>
 </mapper> 

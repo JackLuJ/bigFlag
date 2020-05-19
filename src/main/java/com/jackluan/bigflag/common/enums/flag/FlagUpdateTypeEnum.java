@@ -9,9 +9,9 @@ import com.jackluan.bigflag.common.base.KeyValueEnum;
 public enum FlagUpdateTypeEnum implements KeyValueEnum<Integer> {
 
     /**
-     * sign pass
+     * sign change
      */
-    SIGN_PASS(1, "sign pass"),
+    SIGN_CHANGE(1, "sign change"),
 
     /**
      * flag update

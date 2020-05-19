@@ -30,8 +30,8 @@ public class FlagRequestDto extends FlagBaseDto {
 
     private List<ApproverRequestDto> approverList;
 
-    private YesNoEnum terminateFlag;
-
     private Integer passCount;
+
+    private YesNoEnum achieve;
 
 }

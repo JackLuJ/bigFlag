@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -46,17 +47,6 @@ public class SignHandler {
 
     public ResultBase<SignResponseDto> createSign(SignRequestDto signRequestDto) {
 
-        if (signRequestDto.getCheckDailyTimes()) {
-            SignRequestDto checkRequestDto = new SignRequestDto();
-            checkRequestDto.setFlagId(signRequestDto.getFlagId());
-            checkRequestDto.setStartTime(DateUtils.getTodayStart());
-            checkRequestDto.setEndTime(DateUtils.getTodayEnd());
-            int count = signLogic.selectSignCountWithDate(checkRequestDto);
-            if (count > 0) {
-                return new ResultBase<SignResponseDto>().failed(ResultCodeConstant.HAD_CREATE_SIGN_TODAY);
-            }
-        }
-
         String approverInfo = null;
         if (CollectionUtils.isEmpty(signRequestDto.getApproverList())) {
             signRequestDto.setStatus(SignStatusEnum.PASSED);
@@ -77,6 +67,7 @@ public class SignHandler {
         signTraceRequestDto.setSignId(signId);
         signTraceRequestDto.setApproverInfo(approverInfo);
         if (CollectionUtils.isEmpty(signRequestDto.getApproverList())) {
+            signTraceRequestDto.setAchieveDate(new Date());
             signTraceRequestDto.setStatus(SignStatusEnum.PASSED);
         } else {
             List<Long> approverUserId = signRequestDto.getApproverList().stream().map(SignApproverRequestDto::getApproverUserId).collect(Collectors.toList());
@@ -238,7 +229,7 @@ public class SignHandler {
 
         //校验审批
         SignApproverRequestDto queryRequest = new SignApproverRequestDto();
-        queryRequest.setSignId(signApproverRequestDto.getId());
+        queryRequest.setSignId(signApproverRequestDto.getSignId());
         queryRequest.setApproverUserId(signApproverRequestDto.getApproverUserId());
         queryRequest.setResultType(SignApproverResultEnum.UN_CONFIRM);
         List<SignApproverResponseDto> signApproverList = signApproverLogic.queryList(queryRequest);
@@ -274,6 +265,8 @@ public class SignHandler {
             throw new BigFlagRuntimeException(ResultCodeConstant.CAN_NOT_FIND_SIGN);
         }
 
+        int achieveTimes = this.queryTodayAchieveTimes(signList.get(0).getFlagId(), signList.get(0).getAchieveDate());
+        signResponseDto.setAlreadyAchieveTimes(achieveTimes);
         signResponseDto.setFlagId(signList.get(0).getFlagId());
         signResponseDto.setUserId(signList.get(0).getUserId());
 
@@ -282,6 +275,7 @@ public class SignHandler {
             signResponseDto.setPassCount(1);
             statusChange = true;
             signRequestDto.setStatus(SignStatusEnum.PASSED);
+            signRequestDto.setAchieveDate(new Date());
         } else if (allApprove.get()) {
             statusChange = true;
             signRequestDto.setStatus(SignStatusEnum.NO_PASS);
@@ -300,5 +294,22 @@ public class SignHandler {
 
     public List<SignResponseDto> queryListByTimeRange(SignRequestDto signRequestDto){
         return signLogic.selectSignListWithDate(signRequestDto);
+    }
+
+    public int queryTodayAchieveTimes(Long flagId, Date date){
+        SignRequestDto checkRequestDto = new SignRequestDto();
+        checkRequestDto.setFlagId(flagId);
+        checkRequestDto.setStatus(SignStatusEnum.PASSED);
+        checkRequestDto.setStartTime(DateUtils.getDayStart(date, 0));
+        checkRequestDto.setEndTime(DateUtils.getDayEnd(date));
+        return signLogic.selectSignCountWithDate(checkRequestDto);
+    }
+
+    public void delete(SignRequestDto signRequestDto){
+        signLogic.delete(signRequestDto);
+    }
+
+    public List<SignResponseDto> queryList(SignRequestDto signRequestDto){
+        return signLogic.querySignList(signRequestDto);
     }
 }

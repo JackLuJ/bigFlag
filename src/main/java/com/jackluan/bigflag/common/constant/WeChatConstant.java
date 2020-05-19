@@ -29,7 +29,7 @@ public class WeChatConstant {
     public static final String APP_FROM_USER_NAME = "FromUserName";
 
     public static final String APP_TEXT_MSG_DATA_JSON = "{\"touser\":\"%s\",\"msgtype\":\"text\",\"text\":{\"content\":\"长按扫码关注公众号获得flag打卡提示\"}}";
-    public static final String APP_PHOTO_MSG_DATA_JSON = "{\"touser\":\"%s\",\"msgtype\":\"image\",\"image\": {\"media_id\":\"PuuZPcNJVlbRlBjaqShw1cir3Fj20jM38xX3FFco2eq7aMKkUGcfFIpU6LSh4gqJ\"}}";
+    public static final String APP_PHOTO_MSG_DATA_JSON = "{\"touser\":\"%s\",\"msgtype\":\"image\",\"image\": {\"media_id\":\"%s\"}}";
     public static final String APP_PHOTO_TEXT_MSG_DATA_JSON = "{\"touser\":\"%s\",\"msgtype\":\"news\",\"news\":{\"articles\":[{\"title\":\"长按扫码关注公众号获得flag打卡提示\",\"description\":\"长按扫码关注公众号获得flag打卡提示\",\"url\":\"\",\"picurl\":\"%s\"}]}}";
 
 }

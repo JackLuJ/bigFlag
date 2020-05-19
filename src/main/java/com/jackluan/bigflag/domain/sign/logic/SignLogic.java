@@ -69,4 +69,9 @@ public class SignLogic {
         List<SignDo> signList = signDao.selectSignListWithDate(signExtraDo);
         return SignConvert.INSTANCE.convert(signList);
     }
+
+    public int delete(SignRequestDto signRequestDto){
+        SignDo signDo = SignConvert.INSTANCE.convert(signRequestDto);
+        return signDao.delete(signDo);
+    }
 }

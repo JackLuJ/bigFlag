@@ -24,6 +24,8 @@ public class SystemConstant {
 
     public static final String WE_CHAT_APP_ACCESS_TOKEN_KEY = "accessToken_app";
 
+    public static final String WE_CHAT_APP_FILE_ID_KEY = "media_id";
+
     public static final String OA_ENCODING_AES_KEY = "vac8A1qBmpLP7RhbwdBz2G61x852obO4wdapcuovtuJ";
 
     public static final String APP_ENCODING_AES_KEY = "J5RR9Z7wQ4Wd4vyypcakFAhOdrIiXeNWttqEZaGKFMO";

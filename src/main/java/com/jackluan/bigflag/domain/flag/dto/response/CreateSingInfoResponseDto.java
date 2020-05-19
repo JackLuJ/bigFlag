@@ -1,6 +1,7 @@
 package com.jackluan.bigflag.domain.flag.dto.response;
 
 import com.jackluan.bigflag.common.base.BaseDto;
+import com.jackluan.bigflag.common.enums.flag.FlagTypeEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,6 @@ public class CreateSingInfoResponseDto extends BaseDto {
 
     private List<ApproverResponseDto> approverList;
 
-    private Boolean checkDailyTimes = false;
+    private FlagTypeEnum flagType;
 
 }

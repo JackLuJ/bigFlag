@@ -59,9 +59,21 @@ public class FlagLogic {
         FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
         return flagDao.selectApproveFlagCount(flagDo);
     }
+
     public List<FlagResponseDto> queryApproveFlagList(FlagRequestDto flagRequestDto){
         FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
         List<FlagDo> resultList = flagDao.selectApproveFlagList(flagDo);
+        return FlagConvert.INSTANCE.convertDtoList(resultList);
+    }
+
+    public int updateByDeadline(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        return flagDao.updateByDeadline(flagDo);
+    }
+
+    public List<FlagResponseDto> selectByDeadline(FlagRequestDto flagRequestDto){
+        FlagDo flagDo = FlagConvert.INSTANCE.convertToDo(flagRequestDto);
+        List<FlagDo> resultList = flagDao.selectByDeadline(flagDo);
         return FlagConvert.INSTANCE.convertDtoList(resultList);
     }
 

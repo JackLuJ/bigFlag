@@ -12,6 +12,7 @@ import com.jackluan.bigflag.domain.user.logic.UserLogic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -27,9 +28,14 @@ public class UserHandler {
 
     public ResultBase<Void> createUserHandler(UserRequestDto userRequestDto) {
         UserRequestDto queryDto = new UserRequestDto();
-        queryDto.setUnionId(userRequestDto.getUnionId());
+        if (StringUtils.isEmpty(userRequestDto.getUnionId())){
+            queryDto.setAppOpenId(userRequestDto.getAppOpenId());
+        }else{
+            queryDto.setUnionId(userRequestDto.getUnionId());
+        }
         List<UserResponseDto> userList = userLogic.queryList(queryDto);
         if (CollectionUtils.isEmpty(userList)) {
+            userRequestDto.setOaSubscribeStatus(OaSubscribeStatusEnum.UN_SUBSCRIBE);
             long id = userLogic.createUser(userRequestDto);
             if (id < 1) {
                 throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_USER_FAILED);

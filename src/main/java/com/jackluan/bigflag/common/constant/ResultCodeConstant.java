@@ -26,6 +26,10 @@ public class ResultCodeConstant {
 
     public static final String HTTP_POST_REQUEST_FAILED = "SYS000009";
 
+    public static final String IMG_CHECK_NOT_PASS = "SYS000010";
+
+    public static final String MSG_CHECK_NOT_PASS = "SYS000011";
+
 
 
     public static final String CREATE_USER_FAILED = "USER00001";
@@ -63,6 +67,8 @@ public class ResultCodeConstant {
     public static final String HAVE_NOT_APPROVE_PERMISSION = "FLAG00011";
 
     public static final String FLAG_NOT_CHANGE = "FLAG000012";
+
+    public static final String FLAG_NOT_EFFECTIVE = "FLAG000013";
 
 
 

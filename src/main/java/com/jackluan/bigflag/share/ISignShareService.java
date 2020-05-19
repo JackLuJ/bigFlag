@@ -2,11 +2,11 @@ package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
-import com.jackluan.bigflag.share.dto.request.ApproveSignShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.CreateSignShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.SignShareRequestDto;
-import com.jackluan.bigflag.share.dto.response.CreateSignShareResponseDto;
-import com.jackluan.bigflag.share.dto.response.SignShareResponseDto;
+import com.jackluan.bigflag.provider.dto.request.ApproveSignShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.CreateSignShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.SignShareRequestDto;
+import com.jackluan.bigflag.provider.dto.response.CreateSignShareResponseDto;
+import com.jackluan.bigflag.provider.dto.response.SignShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,5 +49,13 @@ public interface ISignShareService {
      */
     @RequestMapping(value = "/detail", method = RequestMethod.POST)
     ResultBase<SignShareResponseDto> detail(@RequestBody SignShareRequestDto signShareRequestDto);
+
+    /**
+     * 删除Sign
+     * @param signShareRequestDto
+     * @return
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    ResultBase<Void> delete(@RequestBody SignShareRequestDto signShareRequestDto);
 
 }

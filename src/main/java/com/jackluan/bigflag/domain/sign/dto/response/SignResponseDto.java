@@ -25,4 +25,5 @@ public class SignResponseDto extends SignBaseDto {
 
     private Boolean signFinish;
 
+    private Integer alreadyAchieveTimes;
 }

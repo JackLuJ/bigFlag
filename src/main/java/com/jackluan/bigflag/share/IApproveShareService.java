@@ -2,16 +2,11 @@ package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
-import com.jackluan.bigflag.share.dto.request.ApproverCreateShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.ApproverOperateShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.QueryApproverShareRequestDto;
-import com.jackluan.bigflag.share.dto.response.ApproverShareResponseDto;
+import com.jackluan.bigflag.provider.dto.request.*;
+import com.jackluan.bigflag.provider.dto.response.ApproverShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
 
 /**
  * @Author: jack.luan
@@ -61,4 +56,12 @@ public interface IApproveShareService {
      */
     @RequestMapping(value = "/needApprove", method = RequestMethod.POST)
     ResultBase<Boolean> needApprove(@RequestBody QueryApproverShareRequestDto queryApproverShareRequestDto);
+
+    /**
+     * 查询审批人状态
+     * @param requestDto
+     * @return
+     */
+    @RequestMapping(value = "/query/status", method = RequestMethod.POST)
+    ResultBase<ApproverShareResponseDto> queryStatus(@RequestBody QueryApproverStatusShareRequestDto requestDto);
 }

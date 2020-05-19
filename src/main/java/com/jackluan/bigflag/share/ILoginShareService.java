@@ -1,9 +1,8 @@
 package com.jackluan.bigflag.share;
 
-import com.jackluan.bigflag.common.annotation.PassToken;
 import com.jackluan.bigflag.common.base.ResultBase;
-import com.jackluan.bigflag.share.dto.request.LoginShareRequestDto;
-import com.jackluan.bigflag.share.dto.response.LoginShareResponseDto;
+import com.jackluan.bigflag.provider.dto.request.LoginShareRequestDto;
+import com.jackluan.bigflag.provider.dto.response.LoginShareResponseDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

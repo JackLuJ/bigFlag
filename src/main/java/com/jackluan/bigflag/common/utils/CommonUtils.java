@@ -129,19 +129,17 @@ public class CommonUtils {
         return map;
     }
 
-
     /**
      * 解密方法
-     *
-     * @param encryptDataB64 要解密的字符串
-     * @param sessionKeyB64  解密密钥
-     * @param ivB64          自定义对称解密算法初始向量 iv
-     * @return 解密后的字节数组
+     * @param encryptData
+     * @param sessionKey
+     * @param iv
+     * @return
      */
-    private static String decryptOfDiyIV(String encryptDataB64, String sessionKeyB64, String ivB64) {
-        byte[] encryptedData = Base64.decode(encryptDataB64);
-        byte[] keyBytes = Base64.decode(sessionKeyB64);
-        byte[] ivs = Base64.decode(ivB64);
+    public static String decryptOfDiyIV(String encryptData, String sessionKey, String iv) {
+        byte[] encryptedData = Base64.decode(encryptData);
+        byte[] keyBytes = Base64.decode(sessionKey);
+        byte[] ivs = Base64.decode(iv);
 
         byte[] encryptedText = null;
         Key key = null;

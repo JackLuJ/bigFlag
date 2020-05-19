@@ -20,6 +20,8 @@ public class FlagDo extends BaseDo {
 
     private Long noticeConfigId;
 
+    private Long fileGroupId;
+
     private Integer achieveConfigType;
 
     private String title;

@@ -9,9 +9,14 @@ import com.jackluan.bigflag.common.base.KeyValueEnum;
 public enum DirectoryEnum implements KeyValueEnum<Integer> {
 
     /**
+     * 海报图
+     */
+    POSTER_SYS(0, "poster_sys", "poster_sys"),
+
+    /**
      * 背景图
      */
-    BACKGROUND(1, "background", "background"),
+    BACKGROUND_SYS(1, "background_sys", "background_sys"),
 
     /**
      * 头像
@@ -26,7 +31,12 @@ public enum DirectoryEnum implements KeyValueEnum<Integer> {
     /**
      * 打卡
      */
-    SIGN(4, "sign", "sign");
+    SIGN(4, "sign", "sign"),
+
+    /**
+     * 背景图
+     */
+    BACKGROUND(5, "background", "background");
 
     private Integer code;
 

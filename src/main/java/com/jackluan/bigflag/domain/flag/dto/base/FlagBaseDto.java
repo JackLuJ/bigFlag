@@ -24,6 +24,8 @@ public class FlagBaseDto extends BaseDto {
 
     private Long noticeConfigId;
 
+    private Long fileGroupId;
+
     private AchieveConfigEnum achieveConfigType;
 
     private String title;

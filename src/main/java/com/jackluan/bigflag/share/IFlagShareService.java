@@ -2,11 +2,10 @@ package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
-import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
-import com.jackluan.bigflag.share.dto.request.ConfirmApproverShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.FlagCreateShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.FlagShareRequestDto;
-import com.jackluan.bigflag.share.dto.response.FlagShareResponseDto;
+import com.jackluan.bigflag.provider.dto.request.FlagCreateShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.FlagShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.FlagUpdateRequestDto;
+import com.jackluan.bigflag.provider.dto.response.FlagShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,10 +43,10 @@ public interface IFlagShareService {
 
     /**
      * 更新flag
-     * @param flagShareRequestDto
+     * @param flagUpdateRequestDto
      * @return
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    ResultBase<FlagShareResponseDto> update(@RequestBody FlagShareRequestDto flagShareRequestDto);
+    ResultBase<FlagShareResponseDto> update(@RequestBody FlagUpdateRequestDto flagUpdateRequestDto);
 
 }

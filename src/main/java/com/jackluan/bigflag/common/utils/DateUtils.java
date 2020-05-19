@@ -20,10 +20,10 @@ public class DateUtils {
         return Date.from(dayStart.atStartOfDay(zoneId).toInstant());
     }
 
-    public static Date getYesterdayEnd(Date date) {
+    public static Date getDayEnd(Date date) {
         ZoneId zoneId = ZoneId.systemDefault();
-        LocalDateTime yesterday = LocalDateTime.of(date.toInstant().atZone(zoneId).toLocalDate(), LocalTime.MAX);
-        return Date.from(yesterday.atZone(zoneId).toInstant());
+        LocalDateTime dayEnd = LocalDateTime.of(date.toInstant().atZone(zoneId).toLocalDate(), LocalTime.MAX).withNano(0);
+        return Date.from(dayEnd.atZone(zoneId).toInstant());
     }
 
     public static Date getBeforeMinuteStart(Date date, int hourCount, int minuteCount) {
@@ -43,7 +43,11 @@ public class DateUtils {
     }
 
     public static Date getTodayEnd(){
-        return getYesterdayEnd(new Date());
+        return getDayEnd(new Date());
+    }
+
+    public static Date now(){
+        return new Date();
     }
 
 }

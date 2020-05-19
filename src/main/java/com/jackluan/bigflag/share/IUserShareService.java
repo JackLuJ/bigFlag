@@ -1,11 +1,9 @@
 package com.jackluan.bigflag.share;
 
 import com.jackluan.bigflag.common.base.ResultBase;
-import com.jackluan.bigflag.share.convert.UserShareConvert;
-import com.jackluan.bigflag.share.dto.request.UserOpinionShareRequestDto;
-import com.jackluan.bigflag.share.dto.request.UserShareRequestDto;
-import com.jackluan.bigflag.share.dto.response.LoginShareResponseDto;
-import com.jackluan.bigflag.share.dto.response.UserInfoShareResponseDto;
+import com.jackluan.bigflag.provider.dto.request.UserOpinionShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.UserShareRequestDto;
+import com.jackluan.bigflag.provider.dto.response.UserInfoShareResponseDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

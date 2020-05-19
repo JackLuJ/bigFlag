@@ -29,7 +29,7 @@ Configuration:
         onMismatch: DENY
       PatternLayout:
         pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"
-    RollingFile: # 输出到文件，超过128MB归档
+    RollingFile: # 输出到文件，超过10MB归档
       - name: ROLLING_FILE
         ignoreExceptions: false
         fileName: ${log.path}/${project.name}.log
@@ -38,7 +38,7 @@ Configuration:
           pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"
         Policies:
           SizeBasedTriggeringPolicy:
-            size: "128 MB"
+            size: "10 MB"
         DefaultRolloverStrategy:
           max: 1000
 

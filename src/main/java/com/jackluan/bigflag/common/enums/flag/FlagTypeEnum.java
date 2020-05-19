@@ -14,20 +14,36 @@ public enum FlagTypeEnum implements KeyValueEnum<Integer> {
     /**
      * 按完成天数计算
      */
-    DAILY_FLAG(1, "daily flag"),
+    DAILY_FLAG(1, "daily flag", false, true),
 
     /**
      * 按完成次数计算
      */
-    TIMES_FLAG(2, "times flag");
+    TIMES_FLAG(2, "times flag", false, false),
+
+    /**
+     * 按完成天数计算(强制计算成功或失败)
+     */
+    DAILY_FLAG_FORCE(3, "daily flag force", true, true),
+
+    /**
+     * 按完成次数计算(强制计算成功或失败)
+     */
+    TIMES_FLAG_FORCE(4, "times flag force", true, false);
 
     private Integer code;
 
     private String desc;
 
-    FlagTypeEnum(Integer code, String desc) {
+    private Boolean force;
+
+    private Boolean daily;
+
+    FlagTypeEnum(Integer code, String desc, Boolean force, Boolean daily) {
         this.code = code;
         this.desc = desc;
+        this.force = force;
+        this.daily = daily;
     }
 
     @Override
@@ -38,5 +54,13 @@ public enum FlagTypeEnum implements KeyValueEnum<Integer> {
     @Override
     public String getDesc() {
         return desc;
+    }
+
+    public Boolean getForce() {
+        return force;
+    }
+
+    public Boolean getDaily() {
+        return daily;
     }
 }

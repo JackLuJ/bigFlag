@@ -79,9 +79,10 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
                 UserInfoBaseDto userInfoBase = new UserInfoBaseDto();
                 userInfoBase.setUserId(user.getId());
-
                 UserUtils.setUserInfo(userInfoBase);
                 isLogin = true;
+
+                log.info("###### request user. id:{}. nickName:{}", user.getId(), user.getNickname());
             }
         }
 

@@ -19,6 +19,10 @@ public class UserUtils {
         return USER_INFO.get();
     }
 
+    public static Long getUserId(){
+        return USER_INFO.get().getUserId();
+    }
+
     public static void clean(){
         USER_INFO.remove();
     }

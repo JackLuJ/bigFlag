@@ -24,19 +24,19 @@ public enum FlagStatusEnum implements KeyValueEnum<Integer> {
     FINISHED(3, "finished"),
 
     /**
-     * 未通过
-     */
-    NO_PASS(4, "no pass"),
-
-    /**
      * 已过期
      */
-    OVER_DUE(5, "over due"),
+    OVER_DUE(4, "over due"),
 
     /**
-     * 终止
+     * 用户认为达成
      */
-    TERMINATION(6, "termination");
+    ACHIEVE(5, "achieve"),
+
+    /**
+     * 用户认为未达成
+     */
+    NOT_ACHIEVE(6, "not achieve");
 
     private Integer code;
 

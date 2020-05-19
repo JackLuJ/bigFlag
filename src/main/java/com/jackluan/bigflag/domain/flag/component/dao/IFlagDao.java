@@ -21,4 +21,8 @@ public interface IFlagDao extends IBaseDao<FlagDo> {
 
     List<FlagDo> selectApproveFlagList(FlagDo flagDo);
 
+    int updateByDeadline(FlagDo flagDo);
+
+    List<FlagDo> selectByDeadline(FlagDo flagDo);
+
 }
