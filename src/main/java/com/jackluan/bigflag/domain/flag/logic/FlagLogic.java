@@ -2,6 +2,7 @@ package com.jackluan.bigflag.domain.flag.logic;
 
 import com.jackluan.bigflag.domain.flag.component.dao.IFlagDao;
 import com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo;
+import com.jackluan.bigflag.domain.flag.component.dataobject.extra.FlagExtraDo;
 import com.jackluan.bigflag.domain.flag.convert.FlagConvert;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.response.FlagResponseDto;
@@ -77,4 +78,14 @@ public class FlagLogic {
         return FlagConvert.INSTANCE.convertDtoList(resultList);
     }
 
+    public List<FlagResponseDto> queryFlagListExtra(FlagRequestDto flagRequestDto){
+        FlagExtraDo flagDo = FlagConvert.INSTANCE.convertToExtraDo(flagRequestDto);
+        List<FlagDo> resultList = flagDao.selectExtra(flagDo);
+        return FlagConvert.INSTANCE.convertDtoList(resultList);
+    }
+
+    public int queryCountExtra(FlagRequestDto flagRequestDto){
+        FlagExtraDo flagDo = FlagConvert.INSTANCE.convertToExtraDo(flagRequestDto);
+        return flagDao.countExtra(flagDo);
+    }
 }

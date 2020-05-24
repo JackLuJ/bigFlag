@@ -87,6 +87,7 @@ public class FlagHandler {
         List<FlagResponseDto> responseList;
         switch (requestDto.getCondition().getQueryType()) {
             case OWN:
+                requestDto.getCondition().setStatusList(FlagStatusEnum.getStatusListByCategory(requestDto.getCondition().getFlagCategory()));
                 responseList = queryOwnFlagList(requestDto);
                 break;
             case APPROVE:
@@ -335,9 +336,9 @@ public class FlagHandler {
     }
 
     private List<FlagResponseDto> queryOwnFlagList(Page<FlagRequestDto> requestDto) {
-        int count = flagLogic.queryCount(requestDto.getPageCondition());
+        int count = flagLogic.queryCountExtra(requestDto.getPageCondition());
         requestDto.setTotal(count);
-        return flagLogic.queryFlagList(requestDto.getCondition());
+        return flagLogic.queryFlagListExtra(requestDto.getCondition());
     }
 
     private List<FlagResponseDto> queryApproveFlagList(Page<FlagRequestDto> requestDto) {

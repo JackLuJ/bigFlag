@@ -43,6 +43,35 @@
             <if test="start != null and limit != null ">limit #{start},#{limit}</if>
         </where>
     </sql>
+    <sql id="Example_Where_Clause_Extra">
+        <where>
+            1=1
+            <if test="id != null ">and id = #{id}</if>
+            <if test="userId != null ">and user_id = #{userId}</if>
+            <if test="noticeConfigId != null ">and notice_config_id = #{noticeConfigId}</if>
+            <if test="fileGroupId != null ">and file_group_id = #{fileGroupId}</if>
+            <if test="achieveConfigType != null ">and achieve_config_type = #{achieveConfigType}</if>
+            <if test="title != null  and title != ''">and title = #{title}</if>
+            <if test="description != null  and description != ''">and description = #{description}</if>
+            <if test="flagType != null ">and flag_type = #{flagType}</if>
+            <if test="performance != null  and performance != ''">and performance = #{performance}</if>
+            <if test="threshold != null  and threshold != ''">and threshold = #{threshold}</if>
+            <if test="deadline != null ">and deadline = #{deadline}</if>
+            <if test="sequenceNo != null ">and sequence_no = #{sequenceNo}</if>
+            <if test="status != null ">and status = #{status}</if>
+            <if test="isDelete != null  and isDelete != ''">and is_delete = #{isDelete}</if>
+            <if test="createDate != null ">and create_date = #{createDate}</if>
+            <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
+            <if test="statusList != null ">and status in
+                <foreach collection="statusList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            and is_delete='N'
+            order by status asc, create_date desc
+            <if test="start != null and limit != null ">limit #{start},#{limit}</if>
+        </where>
+    </sql>
     <sql id="Base_Column_List">
         id,user_id,achieve_config_type,notice_config_id,file_group_id,title,description,flag_type,performance,threshold,deadline,sequence_no,status,is_delete,create_date,modify_date
     </sql>
@@ -93,7 +122,6 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-
     <update id="increasePerformance" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
         update flag
         <set>
@@ -101,7 +129,6 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-
     <update id="updatePassFlag" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
         update flag
         <set>
@@ -111,7 +138,6 @@
         and performance &gt;= threshold
         and is_delete='N'
     </update>
-
     <select id="selectApproveFlagCount" resultType="java.lang.Integer"
             parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
         select
@@ -130,8 +156,6 @@
         and is_delete = 'N'
         order by status asc, create_date desc
     </select>
-
-
     <update id="updateByDeadline" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
         update flag
         <set>
@@ -141,8 +165,6 @@
         and status = 2
         and is_delete='N'
     </update>
-
-
     <select id="selectByDeadline" resultMap="BaseResultMap"
             parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo">
         select
@@ -151,5 +173,17 @@
         where deadline &lt;= #{deadline}
         and status = 2
         and is_delete='N'
+    </select>
+    <select id="selectExtra" resultMap="BaseResultMap"
+            parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.extra.FlagExtraDo">
+        select
+        <include refid="Base_Column_List"/>
+        from flag
+        <include refid="Example_Where_Clause_Extra"/>
+    </select>
+    <select id="countExtra" parameterType="com.jackluan.bigflag.domain.flag.component.dataobject.extra.FlagExtraDo"
+            resultType="java.lang.Integer">
+        select count(*) from flag
+        <include refid="Example_Where_Clause_Extra"/>
     </select>
 </mapper> 

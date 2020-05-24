@@ -28,10 +28,7 @@ import com.jackluan.bigflag.domain.sign.handler.SignHandler;
 import com.jackluan.bigflag.domain.user.handler.UserHandler;
 import com.jackluan.bigflag.provider.convert.FlagShareConvert;
 import com.jackluan.bigflag.provider.convert.NoticeShareConvert;
-import com.jackluan.bigflag.provider.dto.request.FlagCreateShareRequestDto;
-import com.jackluan.bigflag.provider.dto.request.FlagShareRequestDto;
-import com.jackluan.bigflag.provider.dto.request.FlagUpdateRequestDto;
-import com.jackluan.bigflag.provider.dto.request.UserShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.*;
 import com.jackluan.bigflag.provider.dto.response.FlagShareResponseDto;
 import com.jackluan.bigflag.provider.dto.response.UserInfoShareResponseDto;
 import com.jackluan.bigflag.provider.dto.response.wechat.SecCheckResponseDto;
@@ -122,11 +119,11 @@ public class FlagServiceImpl implements IFlagService {
     }
 
     @Override
-    public ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
-        flagShareRequestDto.getCondition().setUserId(UserUtils.getUser().getUserId());
+    public ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagListShareRequestDto> flagListShareRequestDtoPage) {
+        flagListShareRequestDtoPage.getCondition().setUserId(UserUtils.getUser().getUserId());
 
         //查询flagList
-        Page<FlagRequestDto> flagRequestDto = FlagShareConvert.INSTANCE.convertToDomainDto(flagShareRequestDto);
+        Page<FlagRequestDto> flagRequestDto = FlagShareConvert.INSTANCE.convertToDomainDto2(flagListShareRequestDtoPage);
         flagRequestDto.getCondition().setShowApprover(true);
         ResultBase<Page<FlagResponseDto>> resultBase = flagHandler.queryFlagListPage(flagRequestDto);
         if (!resultBase.isSuccess()) {

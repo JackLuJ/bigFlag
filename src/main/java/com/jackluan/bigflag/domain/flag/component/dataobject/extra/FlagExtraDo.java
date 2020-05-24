@@ -17,4 +17,6 @@ public class FlagExtraDo extends FlagDo {
 
     private List<ApproverDo> approverList;
 
+    private List<Integer> statusList;
+
 }

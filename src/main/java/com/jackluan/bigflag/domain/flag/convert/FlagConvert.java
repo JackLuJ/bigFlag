@@ -2,6 +2,7 @@ package com.jackluan.bigflag.domain.flag.convert;
 
 import com.jackluan.bigflag.common.base.KeyValueEnumMapper;
 import com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo;
+import com.jackluan.bigflag.domain.flag.component.dataobject.extra.FlagExtraDo;
 import com.jackluan.bigflag.domain.flag.dto.request.CreateSingInfoRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagRequestDto;
 import com.jackluan.bigflag.domain.flag.dto.request.FlagTraceRequestDto;
@@ -23,6 +24,8 @@ public interface FlagConvert {
     FlagConvert INSTANCE = Mappers.getMapper(FlagConvert.class);
 
     FlagDo convertToDo(FlagRequestDto flagRequestDto);
+
+    FlagExtraDo convertToExtraDo(FlagRequestDto flagRequestDto);
 
     List<FlagResponseDto> convertDtoList(List<FlagDo> flagDos);
 

@@ -5,8 +5,10 @@ import com.jackluan.bigflag.common.base.JsonConverter;
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
+import com.jackluan.bigflag.common.enums.flag.FlagCategoryEnum;
 import com.jackluan.bigflag.common.enums.flag.FlagTypeEnum;
 import com.jackluan.bigflag.common.utils.ValidationUtils;
+import com.jackluan.bigflag.provider.dto.request.FlagListShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.FlagUpdateRequestDto;
 import com.jackluan.bigflag.share.IFlagShareService;
 import com.jackluan.bigflag.provider.dto.request.FlagCreateShareRequestDto;
@@ -40,11 +42,19 @@ public class FlagProvider implements IFlagShareService {
     }
 
     @Override
-    public ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagShareRequestDto> flagShareRequestDto) {
-        if (flagShareRequestDto == null || flagShareRequestDto.getCondition() == null || flagShareRequestDto.getCondition().getQueryType() == null) {
+    public ResultBase<Page<FlagShareResponseDto>> queryFlag(Page<FlagListShareRequestDto> flagListShareRequestDtoPage) {
+        if (flagListShareRequestDtoPage == null) {
             return new ResultBase<Page<FlagShareResponseDto>>().failed(ResultCodeConstant.PARAM_VALIDATION_NOT_PASS);
         }
-        return flagService.queryFlag(flagShareRequestDto);
+
+        //TODO 等待前段发布正式版后删除这个兼容操作
+        if (null == flagListShareRequestDtoPage.getCondition().getFlagCategory()){
+            flagListShareRequestDtoPage.getCondition().setFlagCategory(FlagCategoryEnum.IN_PROGRESS);
+        }
+        //TODO end
+
+        ValidationUtils.isEmpty(flagListShareRequestDtoPage.getCondition());
+        return flagService.queryFlag(flagListShareRequestDtoPage);
     }
 
     @Override

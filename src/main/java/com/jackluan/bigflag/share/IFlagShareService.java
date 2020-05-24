@@ -3,6 +3,7 @@ package com.jackluan.bigflag.share;
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.provider.dto.request.FlagCreateShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.FlagListShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.FlagShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.FlagUpdateRequestDto;
 import com.jackluan.bigflag.provider.dto.response.FlagShareResponseDto;
@@ -27,11 +28,11 @@ public interface IFlagShareService {
 
     /**
      * 查询Flag
-     * @param flagShareRequestDto
+     * @param flagListShareRequestDtoPage
      * @return
      */
     @RequestMapping(value = "/query", method = RequestMethod.POST)
-    ResultBase<Page<FlagShareResponseDto>> queryFlag(@RequestBody Page<FlagShareRequestDto> flagShareRequestDto);
+    ResultBase<Page<FlagShareResponseDto>> queryFlag(@RequestBody Page<FlagListShareRequestDto> flagListShareRequestDtoPage);
 
     /**
      * 查询详细信息

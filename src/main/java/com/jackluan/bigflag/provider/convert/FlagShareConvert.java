@@ -23,6 +23,8 @@ public interface FlagShareConvert {
 
     Page<FlagRequestDto> convertToDomainDto(Page<FlagShareRequestDto> flagShareRequestDto);
 
+    Page<FlagRequestDto> convertToDomainDto2(Page<FlagListShareRequestDto> flagListShareRequestDtoPage);
+
     FlagRequestDto convertToDomainDto(FlagCreateShareRequestDto flagCreateShareRequestDto);
 
     FlagRequestDto convertToDomainDto(ApproverCreateShareRequestDto approverCreateShareRequestDto);

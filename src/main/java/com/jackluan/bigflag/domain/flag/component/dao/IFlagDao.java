@@ -2,6 +2,7 @@ package com.jackluan.bigflag.domain.flag.component.dao;
 
 import com.jackluan.bigflag.common.base.IBaseDao;
 import com.jackluan.bigflag.domain.flag.component.dataobject.FlagDo;
+import com.jackluan.bigflag.domain.flag.component.dataobject.extra.FlagExtraDo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,5 +25,9 @@ public interface IFlagDao extends IBaseDao<FlagDo> {
     int updateByDeadline(FlagDo flagDo);
 
     List<FlagDo> selectByDeadline(FlagDo flagDo);
+
+    List<FlagDo> selectExtra(FlagExtraDo flagExtraDo);
+
+    int countExtra(FlagExtraDo flagExtraDo);
 
 }
