@@ -67,7 +67,7 @@ public class NoticeServiceImpl implements INoticeService {
     @Async
     @Override
     public void batchNoticeUser() {
-        Date date = new Date();
+        Date date = DateUtils.now();
         DateFormat format = new SimpleDateFormat("HH:mm");
         String dateStr = format.format(date);
         NoticeConfigRequestDto noticeConfig = new NoticeConfigRequestDto();
@@ -165,8 +165,8 @@ public class NoticeServiceImpl implements INoticeService {
     @Async
     @Override
     public void batchNoticeApprove() {
-        Date dateStart = DateUtils.getBeforeMinuteStart(new Date(), 2, 10);
-        Date dateEnd = DateUtils.getBeforeMinuteEnd(new Date(), 2, 0);
+        Date dateStart = DateUtils.getBeforeMinuteStart(DateUtils.now(), 2, 10);
+        Date dateEnd = DateUtils.getBeforeMinuteEnd(DateUtils.now(), 2, 0);
         SignRequestDto signRequestDto = new SignRequestDto();
         signRequestDto.setStartTime(dateStart);
         signRequestDto.setEndTime(dateEnd);
@@ -258,7 +258,7 @@ public class NoticeServiceImpl implements INoticeService {
         paramMap.put("first", "有人接受了你得邀请，快去小程序里确认吧~");
         paramMap.put("keyword1", approverResult.getValue().get(0).getNickname());
         paramMap.put("keyword2", approverResult.getValue().get(0).getMobile());
-        paramMap.put("keyword3", format.format(new Date()));
+        paramMap.put("keyword3", format.format(DateUtils.now()));
         paramMap.put("remark", "点击确认关系~>");
 
         Map<String, String> pathParamMap = new HashMap<>(16);
@@ -304,7 +304,7 @@ public class NoticeServiceImpl implements INoticeService {
         paramMap.put("keyword1", flagResult.getValue().get(0).getAchieveConfigType().getDesc()+"的flag凭证");
         paramMap.put("keyword2", userResult.getValue().get(0).getNickname());
         paramMap.put("keyword3", flagResult.getValue().get(0).getTitle());
-        paramMap.put("keyword4", format.format(new Date()));
+        paramMap.put("keyword4", format.format(DateUtils.now()));
         paramMap.put("remark", "快去帮他审核凭证吧>");
 
         Map<String, String> pathParamMap = new HashMap<>(16);

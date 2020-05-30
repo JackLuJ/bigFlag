@@ -14,40 +14,40 @@ public enum FlagStatusEnum implements KeyValueEnum<Integer> {
     /**
      * 未确认
      */
-    UNCONFIRMED(1, "unconfirmed", FlagCategoryEnum.UNCONFIRMED),
+    UNCONFIRMED(1, "unconfirmed", FlagStatusCategoryEnum.UNCONFIRMED),
 
     /**
      * 进行中
      */
-    IN_PROGRESS(2, "in progress", FlagCategoryEnum.IN_PROGRESS),
+    IN_PROGRESS(2, "in progress", FlagStatusCategoryEnum.IN_PROGRESS),
 
     /**
      * 已完成
      */
-    FINISHED(3, "finished", FlagCategoryEnum.IN_PROGRESS),
+    FINISHED(3, "finished", FlagStatusCategoryEnum.IN_PROGRESS),
 
     /**
      * 已过期
      */
-    OVER_DUE(4, "over due", FlagCategoryEnum.FINISHED),
+    OVER_DUE(4, "over due", FlagStatusCategoryEnum.FINISHED),
 
     /**
      * 用户认为达成
      */
-    ACHIEVE(5, "achieve", FlagCategoryEnum.FINISHED),
+    ACHIEVE(5, "achieve", FlagStatusCategoryEnum.FINISHED),
 
     /**
      * 用户认为未达成
      */
-    NOT_ACHIEVE(6, "not achieve", FlagCategoryEnum.FINISHED);
+    NOT_ACHIEVE(6, "not achieve", FlagStatusCategoryEnum.FINISHED);
 
     private Integer code;
 
     private String desc;
 
-    private FlagCategoryEnum category;
+    private FlagStatusCategoryEnum category;
 
-    FlagStatusEnum(Integer code, String desc, FlagCategoryEnum category) {
+    FlagStatusEnum(Integer code, String desc, FlagStatusCategoryEnum category) {
         this.code = code;
         this.desc = desc;
         this.category = category;
@@ -63,11 +63,11 @@ public enum FlagStatusEnum implements KeyValueEnum<Integer> {
         return desc;
     }
 
-    public FlagCategoryEnum getCategory() {
+    public FlagStatusCategoryEnum getCategory() {
         return category;
     }
 
-    public static List<FlagStatusEnum> getStatusListByCategory(FlagCategoryEnum category){
+    public static List<FlagStatusEnum> getStatusListByCategory(FlagStatusCategoryEnum category){
         List<FlagStatusEnum> resultList = new ArrayList<>();
         for (FlagStatusEnum statusEnum : FlagStatusEnum.values()){
             if (category == statusEnum.getCategory()){

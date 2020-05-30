@@ -4,6 +4,7 @@ import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.provider.dto.request.ApproveSignShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.CreateSignShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.DeleteSignRequestDto;
 import com.jackluan.bigflag.provider.dto.request.SignShareRequestDto;
 import com.jackluan.bigflag.provider.dto.response.CreateSignShareResponseDto;
 import com.jackluan.bigflag.provider.dto.response.SignShareResponseDto;
@@ -20,5 +21,5 @@ public interface ISignService {
 
     ResultBase<Void> approveSign(ApproveSignShareRequestDto approveSignShareRequestDto);
 
-    ResultBase<Void> delete(SignShareRequestDto signShareRequestDto);
+    ResultBase<Void> delete(DeleteSignRequestDto deleteSignRequestDto);
 }

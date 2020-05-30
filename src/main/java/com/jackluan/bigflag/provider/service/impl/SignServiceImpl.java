@@ -27,10 +27,7 @@ import com.jackluan.bigflag.domain.sign.handler.SignHandler;
 import com.jackluan.bigflag.provider.convert.FileShareConvert;
 import com.jackluan.bigflag.provider.convert.FlagShareConvert;
 import com.jackluan.bigflag.provider.convert.SignShareConvert;
-import com.jackluan.bigflag.provider.dto.request.ApproveSignShareRequestDto;
-import com.jackluan.bigflag.provider.dto.request.CreateSignShareRequestDto;
-import com.jackluan.bigflag.provider.dto.request.SignShareRequestDto;
-import com.jackluan.bigflag.provider.dto.request.UserShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.*;
 import com.jackluan.bigflag.provider.dto.request.notice.NoticeSignCreateRequestDto;
 import com.jackluan.bigflag.provider.dto.response.CreateSignShareResponseDto;
 import com.jackluan.bigflag.provider.dto.request.notice.NoticeSignFinishRequestDto;
@@ -233,16 +230,15 @@ public class SignServiceImpl implements ISignService {
             return new ResultBase<Void>().failed(signResult);
         }
 
-        if (signResult.getValue().getSignFinish()){
-            NoticeSignFinishRequestDto noticeSignFinish = new NoticeSignFinishRequestDto();
-            noticeSignFinish.setApproverId(approveSignShareRequestDto.getUserId());
-            noticeSignFinish.setFlagId(signResult.getValue().getFlagId());
-            noticeSignFinish.setUserId(signResult.getValue().getUserId());
-            noticeSignFinish.setResultType(approveSignShareRequestDto.getResultType());
-            noticeSignFinish.setStatus(signResult.getValue().getStatus());
-            noticeSignFinish.setSignId(approveSignShareRequestDto.getSignId());
-            noticeService.noticeSignFinish(noticeSignFinish);
-        }
+        //通知flag创建者 有人进行审核操作
+        NoticeSignFinishRequestDto noticeSignFinish = new NoticeSignFinishRequestDto();
+        noticeSignFinish.setApproverId(approveSignShareRequestDto.getUserId());
+        noticeSignFinish.setFlagId(signResult.getValue().getFlagId());
+        noticeSignFinish.setUserId(signResult.getValue().getUserId());
+        noticeSignFinish.setResultType(approveSignShareRequestDto.getResultType());
+        noticeSignFinish.setStatus(signResult.getValue().getStatus());
+        noticeSignFinish.setSignId(approveSignShareRequestDto.getSignId());
+        noticeService.noticeSignFinish(noticeSignFinish);
 
         FlagRequestDto queryFlagRequestDto = new FlagRequestDto();
         queryFlagRequestDto.setId(signResult.getValue().getFlagId());
@@ -269,9 +265,9 @@ public class SignServiceImpl implements ISignService {
     }
 
     @Override
-    public ResultBase<Void> delete(SignShareRequestDto signShareRequestDto) {
+    public ResultBase<Void> delete(DeleteSignRequestDto deleteSignRequestDto) {
         SignRequestDto signRequestDto = new SignRequestDto();
-        signRequestDto.setId(signShareRequestDto.getId());
+        signRequestDto.setId(deleteSignRequestDto.getId());
 
         //查询sign
         List<SignResponseDto> signResponseList = signHandler.queryList(signRequestDto);

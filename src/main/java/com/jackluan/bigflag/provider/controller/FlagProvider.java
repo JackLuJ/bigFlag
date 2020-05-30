@@ -5,7 +5,7 @@ import com.jackluan.bigflag.common.base.JsonConverter;
 import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
-import com.jackluan.bigflag.common.enums.flag.FlagCategoryEnum;
+import com.jackluan.bigflag.common.enums.flag.FlagStatusCategoryEnum;
 import com.jackluan.bigflag.common.enums.flag.FlagTypeEnum;
 import com.jackluan.bigflag.common.utils.ValidationUtils;
 import com.jackluan.bigflag.provider.dto.request.FlagListShareRequestDto;
@@ -48,8 +48,8 @@ public class FlagProvider implements IFlagShareService {
         }
 
         //TODO 等待前段发布正式版后删除这个兼容操作
-        if (null == flagListShareRequestDtoPage.getCondition().getFlagCategory()){
-            flagListShareRequestDtoPage.getCondition().setFlagCategory(FlagCategoryEnum.IN_PROGRESS);
+        if (null == flagListShareRequestDtoPage.getCondition().getFlagStatusCategory()){
+            flagListShareRequestDtoPage.getCondition().setFlagStatusCategory(FlagStatusCategoryEnum.IN_PROGRESS);
         }
         //TODO end
 

@@ -62,7 +62,7 @@
             <if test="isDelete != null  and isDelete != ''">and is_delete = #{isDelete}</if>
             <if test="createDate != null ">and create_date = #{createDate}</if>
             <if test="modifyDate != null ">and modify_date = #{modifyDate}</if>
-            <if test="statusList != null ">and status in
+            <if test="statusList != null and statusList.size > 0">and status in
                 <foreach collection="statusList" index="index" item="item" open="(" separator="," close=")">
                     #{item}
                 </foreach>

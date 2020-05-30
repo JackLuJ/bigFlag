@@ -6,8 +6,6 @@ import com.jackluan.bigflag.common.enums.flag.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * @Author: jack.luan
  * @Date: 2020/5/24 23:29
@@ -22,6 +20,6 @@ public class FlagListShareRequestDto extends BaseDto {
     private QueryTypeEnum queryType;
 
     @NotEmpty
-    private FlagCategoryEnum flagCategory;
+    private FlagStatusCategoryEnum flagStatusCategory;
 
 }

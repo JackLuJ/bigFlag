@@ -39,11 +39,11 @@ public class DateUtils {
     }
 
     public static Date getTodayStart(){
-        return getDayStart(new Date(), 0);
+        return getDayStart(now(), 0);
     }
 
     public static Date getTodayEnd(){
-        return getDayEnd(new Date());
+        return getDayEnd(now());
     }
 
     public static Date now(){

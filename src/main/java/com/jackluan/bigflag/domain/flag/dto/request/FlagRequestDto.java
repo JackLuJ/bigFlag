@@ -1,14 +1,11 @@
 package com.jackluan.bigflag.domain.flag.dto.request;
 
-import com.jackluan.bigflag.common.base.BaseDto;
 import com.jackluan.bigflag.common.enums.base.YesNoEnum;
 import com.jackluan.bigflag.common.enums.flag.*;
 import com.jackluan.bigflag.domain.flag.dto.base.FlagBaseDto;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,7 +30,7 @@ public class FlagRequestDto extends FlagBaseDto {
 
     private FlagStatusEnum flagStatus;
 
-    private FlagCategoryEnum flagCategory;
+    private FlagStatusCategoryEnum flagStatusCategory;
 
     private List<FlagStatusEnum> statusList;
 }

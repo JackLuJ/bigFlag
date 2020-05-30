@@ -6,9 +6,9 @@ import com.jackluan.bigflag.common.base.KeyValueEnum;
  * @Author: jack.luan
  * @Date: 2020/5/24 22:54
  */
-public enum FlagCategoryEnum implements KeyValueEnum<Integer> {
+public enum FlagStatusCategoryEnum implements KeyValueEnum<Integer> {
     /**
-     * 进行中
+     * 未确认
      */
     UNCONFIRMED(1, "UNCONFIRMED"),
 
@@ -27,7 +27,7 @@ public enum FlagCategoryEnum implements KeyValueEnum<Integer> {
 
     private String desc;
 
-    FlagCategoryEnum(Integer code, String desc) {
+    FlagStatusCategoryEnum(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }

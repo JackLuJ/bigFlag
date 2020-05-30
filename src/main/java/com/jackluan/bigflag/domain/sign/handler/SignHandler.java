@@ -50,6 +50,7 @@ public class SignHandler {
         String approverInfo = null;
         if (CollectionUtils.isEmpty(signRequestDto.getApproverList())) {
             signRequestDto.setStatus(SignStatusEnum.PASSED);
+            signRequestDto.setAchieveDate(DateUtils.now());
         } else {
             signRequestDto.setStatus(SignStatusEnum.UNDER_REVIEW);
             List<Long> approverUserId = signRequestDto.getApproverList().stream().map(SignApproverBaseDto::getApproverUserId).collect(Collectors.toList());
@@ -66,15 +67,6 @@ public class SignHandler {
         SignTraceRequestDto signTraceRequestDto = SignTraceConvert.INSTANCE.convert(signRequestDto);
         signTraceRequestDto.setSignId(signId);
         signTraceRequestDto.setApproverInfo(approverInfo);
-        if (CollectionUtils.isEmpty(signRequestDto.getApproverList())) {
-            signTraceRequestDto.setAchieveDate(new Date());
-            signTraceRequestDto.setStatus(SignStatusEnum.PASSED);
-        } else {
-            List<Long> approverUserId = signRequestDto.getApproverList().stream().map(SignApproverRequestDto::getApproverUserId).collect(Collectors.toList());
-            JsonConverter converter = new JsonConverter();
-            signTraceRequestDto.setStatus(SignStatusEnum.UNDER_REVIEW);
-            signTraceRequestDto.setApproverInfo(converter.objToJson(approverUserId));
-        }
         long signTraceId = signTraceLogic.createSignTrace(signTraceRequestDto);
         if (signTraceId < 1) {
             throw new BigFlagRuntimeException(ResultCodeConstant.CREATE_SIGN_TRACE_FAILED);
@@ -265,7 +257,7 @@ public class SignHandler {
             throw new BigFlagRuntimeException(ResultCodeConstant.CAN_NOT_FIND_SIGN);
         }
 
-        int achieveTimes = this.queryTodayAchieveTimes(signList.get(0).getFlagId(), signList.get(0).getAchieveDate());
+        int achieveTimes = this.queryTodayAchieveTimes(signList.get(0).getFlagId(), DateUtils.now());
         signResponseDto.setAlreadyAchieveTimes(achieveTimes);
         signResponseDto.setFlagId(signList.get(0).getFlagId());
         signResponseDto.setUserId(signList.get(0).getUserId());
@@ -275,7 +267,7 @@ public class SignHandler {
             signResponseDto.setPassCount(1);
             statusChange = true;
             signRequestDto.setStatus(SignStatusEnum.PASSED);
-            signRequestDto.setAchieveDate(new Date());
+            signRequestDto.setAchieveDate(DateUtils.now());
         } else if (allApprove.get()) {
             statusChange = true;
             signRequestDto.setStatus(SignStatusEnum.NO_PASS);
@@ -286,17 +278,17 @@ public class SignHandler {
             signLogic.update(signRequestDto);
         }
 
-        signResponseDto.setStatus(signRequestDto.getStatus());
+        signResponseDto.setStatus(signRequestDto.getStatus() == null ? signList.get(0).getStatus() : signRequestDto.getStatus());
         signResponseDto.setSignFinish(statusChange);
 
         return new ResultBase<SignResponseDto>().success(signResponseDto);
     }
 
-    public List<SignResponseDto> queryListByTimeRange(SignRequestDto signRequestDto){
+    public List<SignResponseDto> queryListByTimeRange(SignRequestDto signRequestDto) {
         return signLogic.selectSignListWithDate(signRequestDto);
     }
 
-    public int queryTodayAchieveTimes(Long flagId, Date date){
+    public int queryTodayAchieveTimes(Long flagId, Date date) {
         SignRequestDto checkRequestDto = new SignRequestDto();
         checkRequestDto.setFlagId(flagId);
         checkRequestDto.setStatus(SignStatusEnum.PASSED);
@@ -305,11 +297,11 @@ public class SignHandler {
         return signLogic.selectSignCountWithDate(checkRequestDto);
     }
 
-    public void delete(SignRequestDto signRequestDto){
+    public void delete(SignRequestDto signRequestDto) {
         signLogic.delete(signRequestDto);
     }
 
-    public List<SignResponseDto> queryList(SignRequestDto signRequestDto){
+    public List<SignResponseDto> queryList(SignRequestDto signRequestDto) {
         return signLogic.querySignList(signRequestDto);
     }
 }

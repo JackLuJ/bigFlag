@@ -4,6 +4,7 @@ import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.provider.dto.request.ApproveSignShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.CreateSignShareRequestDto;
+import com.jackluan.bigflag.provider.dto.request.DeleteSignRequestDto;
 import com.jackluan.bigflag.provider.dto.request.SignShareRequestDto;
 import com.jackluan.bigflag.provider.dto.response.CreateSignShareResponseDto;
 import com.jackluan.bigflag.provider.dto.response.SignShareResponseDto;
@@ -52,10 +53,10 @@ public interface ISignShareService {
 
     /**
      * 删除Sign
-     * @param signShareRequestDto
+     * @param deleteSignRequestDto
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    ResultBase<Void> delete(@RequestBody SignShareRequestDto signShareRequestDto);
+    ResultBase<Void> delete(@RequestBody DeleteSignRequestDto deleteSignRequestDto);
 
 }

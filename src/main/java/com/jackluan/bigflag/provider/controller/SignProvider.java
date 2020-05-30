@@ -7,6 +7,7 @@ import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.common.enums.sign.SignApproverResultEnum;
 import com.jackluan.bigflag.common.utils.ValidationUtils;
+import com.jackluan.bigflag.provider.dto.request.DeleteSignRequestDto;
 import com.jackluan.bigflag.share.ISignShareService;
 import com.jackluan.bigflag.provider.dto.request.ApproveSignShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.CreateSignShareRequestDto;
@@ -67,7 +68,7 @@ public class SignProvider implements ISignShareService {
     }
 
     @Override
-    public ResultBase<Void> delete(SignShareRequestDto signShareRequestDto) {
-        return signService.delete(signShareRequestDto);
+    public ResultBase<Void> delete(DeleteSignRequestDto deleteSignRequestDto) {
+        return signService.delete(deleteSignRequestDto);
     }
 }

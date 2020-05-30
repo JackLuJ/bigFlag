@@ -15,22 +15,22 @@ public enum WeChatNoticeTypeEnum implements KeyValueEnum<Integer> {
     /**
      * 凭证被审核
      */
-    SIGN_CHECKED(2,"bind success", "enzI9Yj1FTgj3p1P5DaBpm0Y0KeYT5P2d1KdCr4kpuI", "/pages/proof-detail/index?flagId=${flagId}&signId=${signId}"),
+    SIGN_CHECKED(2,"sign checked", "Y6QYNmW_lRqkVBrTrFTUMgYN67i_vHvUVZan0_O9gQs", "/pages/proof-detail/index?flagId=${flagId}&signId=${signId}"),
 
     /**
      * 凭证待审核提醒
      */
-    SERVER_STATUS(3,"bind success", "GXHcsyJ_SxYffm20wiADKOALUncT6hIt0-6HE6rmOW0", "/pages/proof-detail/index?flagId=${flagId}&signId=${signId}"),
+    SERVER_STATUS(3,"server status", "GXHcsyJ_SxYffm20wiADKOALUncT6hIt0-6HE6rmOW0", "/pages/proof-detail/index?flagId=${flagId}&signId=${signId}"),
 
     /**
      * 邀请监督人成功
      */
-    INVITE_SUCCESSFUL(4,"bind success", "86t1zRoF0Ogad-C1w2vDWUlCYyqBemN6PBDTC9LLz-c", "/pages/detail/index?flagId=${flagId}"),
+    INVITE_SUCCESSFUL(4,"invite successful", "86t1zRoF0Ogad-C1w2vDWUlCYyqBemN6PBDTC9LLz-c", "/pages/detail/index?flagId=${flagId}"),
 
     /**
      * 审核凭证提醒
      */
-    UNDER_APPROVE(5,"bind success", "jjlWZBcXqrpDJgzLTkJuTvx7hgE7QJukYPu5a0Ik6Qg", "/pages/proof-detail/index?flagId=${flagId}&signId=${signId}"),
+    UNDER_APPROVE(5,"under approve", "jjlWZBcXqrpDJgzLTkJuTvx7hgE7QJukYPu5a0Ik6Qg", "/pages/proof-detail/index?flagId=${flagId}&signId=${signId}"),
 
     /**
      * 监督者绑定成功

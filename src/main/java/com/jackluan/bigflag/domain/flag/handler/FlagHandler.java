@@ -6,10 +6,7 @@ import com.jackluan.bigflag.common.base.Page;
 import com.jackluan.bigflag.common.base.ResultBase;
 import com.jackluan.bigflag.common.constant.ResultCodeConstant;
 import com.jackluan.bigflag.common.enums.base.YesNoEnum;
-import com.jackluan.bigflag.common.enums.flag.ApproverStatusEnum;
-import com.jackluan.bigflag.common.enums.flag.FlagChangeTypeEnum;
-import com.jackluan.bigflag.common.enums.flag.FlagStatusEnum;
-import com.jackluan.bigflag.common.enums.flag.FlagTypeEnum;
+import com.jackluan.bigflag.common.enums.flag.*;
 import com.jackluan.bigflag.common.utils.DateUtils;
 import com.jackluan.bigflag.domain.flag.convert.FlagConvert;
 import com.jackluan.bigflag.domain.flag.convert.FlagTraceConvert;
@@ -87,7 +84,7 @@ public class FlagHandler {
         List<FlagResponseDto> responseList;
         switch (requestDto.getCondition().getQueryType()) {
             case OWN:
-                requestDto.getCondition().setStatusList(FlagStatusEnum.getStatusListByCategory(requestDto.getCondition().getFlagCategory()));
+                requestDto.getCondition().setStatusList(FlagStatusEnum.getStatusListByCategory(requestDto.getCondition().getFlagStatusCategory()));
                 responseList = queryOwnFlagList(requestDto);
                 break;
             case APPROVE:
@@ -127,7 +124,10 @@ public class FlagHandler {
         FlagRequestDto flagRequest = new FlagRequestDto();
         flagRequest.setId(flagRequestDto.getId());
         flagRequest.setUserId(flagRequestDto.getUserId());
-        flagRequest.setStatus(FlagStatusEnum.IN_PROGRESS);
+        //flag更新必须是进行中的flag
+        if(FlagUpdateTypeEnum.FLAG_UPDATE == flagRequestDto.getFlagUpdateType()){
+            flagRequest.setStatus(FlagStatusEnum.IN_PROGRESS);
+        }
         List<FlagResponseDto> flagList = flagLogic.queryFlagList(flagRequest);
         if (CollectionUtils.isEmpty(flagList)) {
             throw new BigFlagRuntimeException(ResultCodeConstant.FIND_FLAG_FAILED);
