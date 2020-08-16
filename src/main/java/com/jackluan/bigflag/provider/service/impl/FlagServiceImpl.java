@@ -73,6 +73,8 @@ public class FlagServiceImpl implements IFlagService {
 
     @Override
     public ResultBase<FlagShareResponseDto> createFlag(FlagCreateShareRequestDto flagCreateShareRequestDto) {
+
+        //微信文本校验
         StringBuilder sb = new StringBuilder();
         sb.append(flagCreateShareRequestDto.getTitle());
         sb.append(flagCreateShareRequestDto.getDescription());
@@ -81,17 +83,20 @@ public class FlagServiceImpl implements IFlagService {
             return new ResultBase<FlagShareResponseDto>().failed(ResultCodeConstant.MSG_CHECK_NOT_PASS);
         }
 
+        //设置如果用户输入了deadline，设置deadline为当天最后一秒
         flagCreateShareRequestDto.setUserId(UserUtils.getUser().getUserId());
         if (flagCreateShareRequestDto.getDeadline() != null){
             flagCreateShareRequestDto.setDeadline(DateUtils.getDayEnd(flagCreateShareRequestDto.getDeadline()));
         }
-        //1.调用notice领域 生成notice配置 并返回Id
+
+        //调用notice领域 生成notice配置 并返回Id
         NoticeConfigRequestDto noticeConfigRequestDto = NoticeShareConvert.INSTANCE.convertToNoticeConfig(flagCreateShareRequestDto);
         ResultBase<NoticeConfigResponseDto> noticeResult = noticeConfigHandler.createNoticeConfig(noticeConfigRequestDto);
         if (!noticeResult.isSuccess()) {
             return new ResultBase<FlagShareResponseDto>().failed(noticeResult);
         }
 
+        //上传图片背景图
         Long fileGroupId = null;
         if (!StringUtils.isEmpty(flagCreateShareRequestDto.getFileUniqueCode())){
             FileGroupRequestDto fileGroupRequestDto = new FileGroupRequestDto();
@@ -104,7 +109,7 @@ public class FlagServiceImpl implements IFlagService {
             fileGroupId = fileGroupResponse.getValue().getId();
         }
 
-        //2.调用Flag领域生成flag
+        //调用Flag领域生成flag
         FlagRequestDto flagRequestDto = FlagShareConvert.INSTANCE.convertToDomainDto(flagCreateShareRequestDto);
         flagRequestDto.setNoticeConfigId(noticeResult.getValue().getId());
         flagRequestDto.setStatus(FlagStatusEnum.IN_PROGRESS);

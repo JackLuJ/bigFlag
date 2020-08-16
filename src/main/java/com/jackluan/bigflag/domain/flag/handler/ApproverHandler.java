@@ -64,6 +64,7 @@ public class ApproverHandler {
     public ResultBase<ApproverResponseDto> confirmApprover(ApproverRequestDto approverRequestDto) {
         ApproverRequestDto requestDto = new ApproverRequestDto();
         requestDto.setId(approverRequestDto.getId());
+        requestDto.setStatus(ApproverStatusEnum.UNCONFIRMED);
         List<ApproverResponseDto> approverList = approverLogic.queryApproverList(requestDto);
         if (CollectionUtils.isEmpty(approverList)) {
             return new ResultBase<ApproverResponseDto>().failed(ResultCodeConstant.APPROVER_NOT_EXITS);

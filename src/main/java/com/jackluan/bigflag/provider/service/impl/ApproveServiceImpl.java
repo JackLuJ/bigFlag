@@ -71,6 +71,7 @@ public class ApproveServiceImpl implements IApproveService {
     public ResultBase<Void> createApprover(ApproverCreateShareRequestDto approverCreateShareRequestDto){
         approverCreateShareRequestDto.setUserId(UserUtils.getUserId());
 
+        //校验flag是否存在
         FlagRequestDto requestDto = new FlagRequestDto();
         requestDto.setId(approverCreateShareRequestDto.getFlagId());
         ResultBase<List<FlagResponseDto>> flagResultBase =  flagHandler.queryFlagList(requestDto);
@@ -78,16 +79,18 @@ public class ApproveServiceImpl implements IApproveService {
             return new ResultBase<Void>().failed(ResultCodeConstant.FLAG_NOT_EXIST_FAILED, "flag not exist");
         }
 
+        //创建审批人
         ApproverRequestDto approverRequestDto = ApproveShareConvert.INSTANCE.convertToDomainDto(approverCreateShareRequestDto);
         approverRequestDto.setStatus(ApproverStatusEnum.UNCONFIRMED);
         ResultBase<ApproverResponseDto> resultBase = approverHandler.createApprover(approverRequestDto);
+
+        //发送通知
         if (resultBase.isSuccess()){
             NoticeInviteSuccessRequestDto noticeInviteSuccess = new NoticeInviteSuccessRequestDto();
             noticeInviteSuccess.setInviteUserId(approverCreateShareRequestDto.getUserId());
             noticeInviteSuccess.setUserId(flagResultBase.getValue().get(0).getUserId());
             noticeInviteSuccess.setFlagId(approverCreateShareRequestDto.getFlagId());
             noticeService.noticeInviteSuccess(noticeInviteSuccess);
-
             return new ResultBase<Void>().success();
         }else {
             return new ResultBase<Void>().failed(resultBase);
@@ -96,23 +99,31 @@ public class ApproveServiceImpl implements IApproveService {
 
     @Override
     public ResultBase<Void> confirmApprover(ConfirmApproverShareRequestDto confirmApproverShareRequestDto) {
+
+        //确认审批人
         confirmApproverShareRequestDto.setFlagUserId(UserUtils.getUserId());
         ApproverRequestDto approverRequestDto = ApproveShareConvert.INSTANCE.convertToDomainDto(confirmApproverShareRequestDto);
         ResultBase<ApproverResponseDto> resultBase = approverHandler.confirmApprover(approverRequestDto);
         if (!resultBase.isSuccess()){
             return new ResultBase<Void>().failed(resultBase);
         }
-        NoticeBingSuccessRequestDto noticeBingSuccess = new NoticeBingSuccessRequestDto();
-        noticeBingSuccess.setFlagId(resultBase.getValue().getFlagId());
-        noticeBingSuccess.setUserId(confirmApproverShareRequestDto.getFlagUserId());
-        noticeBingSuccess.setApproverUserId(resultBase.getValue().getUserId());
-        noticeService.noticeBindSuccess(noticeBingSuccess);
+
+        //审批通过发送通知
+        if(YesNoEnum.YES == confirmApproverShareRequestDto.getDecision()){
+            NoticeBingSuccessRequestDto noticeBingSuccess = new NoticeBingSuccessRequestDto();
+            noticeBingSuccess.setFlagId(resultBase.getValue().getFlagId());
+            noticeBingSuccess.setUserId(confirmApproverShareRequestDto.getFlagUserId());
+            noticeBingSuccess.setApproverUserId(resultBase.getValue().getUserId());
+            noticeService.noticeBindSuccess(noticeBingSuccess);
+        }
 
         return new ResultBase<Void>().success();
     }
 
     @Override
     public ResultBase<Page<ApproverShareResponseDto>> queryList(Page<QueryApproverShareRequestDto> queryApproverShareRequestDto) {
+
+        //查询列表
         List<ApproverStatusEnum> statusList = new ArrayList<>();
         statusList.add(ApproverStatusEnum.UNCONFIRMED);
         statusList.add(ApproverStatusEnum.EFFECTIVE);
@@ -123,6 +134,7 @@ public class ApproveServiceImpl implements IApproveService {
             return new ResultBase<Page<ApproverShareResponseDto>>().failed(resultBase);
         }
 
+        //遍历审批人列表，封装用户信息
         Page<ApproverShareResponseDto> responseDtoPage = ApproveShareConvert.INSTANCE.convertToShareDto(resultBase.getValue());
         if (!CollectionUtils.isEmpty(responseDtoPage.getResults())){
             responseDtoPage.getResults().forEach(approver -> {
@@ -135,7 +147,6 @@ public class ApproveServiceImpl implements IApproveService {
                 if (!response.isSuccess() || response.isEmptyValue()) {
                     return;
                 }
-
                 approver.setNickname(response.getValue().getNickname());
                 approver.setUrl(response.getValue().getUrl());
             });
@@ -168,7 +179,7 @@ public class ApproveServiceImpl implements IApproveService {
             flagRequestDto.setUserId(userId);
         }
 
-        //校验apprver
+        //校验approver
         ResultBase<List<ApproverResponseDto>> approverResultBase = approverHandler.queryList(approverRequest);
         if (!approverResultBase.isSuccess() || CollectionUtils.isEmpty(approverResultBase.getValue())){
             return new ResultBase<Void>().failed(ResultCodeConstant.APPROVER_NOT_EXITS);

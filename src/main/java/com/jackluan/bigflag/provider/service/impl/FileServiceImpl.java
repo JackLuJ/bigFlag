@@ -75,16 +75,16 @@ public class FileServiceImpl implements IFileService {
 
     @Override
     public ResultBase<OperateFileShareResponseDto> uploadFile(OperateFileShareRequestDto requestDto) {
-        if (StringUtils.isEmpty(requestDto.getFileName())){
+        if (StringUtils.isEmpty(requestDto.getFileName())) {
             requestDto.setFileName(UUID.randomUUID().toString());
         }
 
         FileInfo fileInfo = new FileInfo(requestDto.getType(), requestDto.getBytes(), requestDto.getSuffix());
 
         //针对凭证做微信图片认证
-        if (requestDto.getType() == DirectoryEnum.SIGN){
+        if (requestDto.getType() == DirectoryEnum.SIGN) {
             SecCheckResponseDto secCheckResponseDto = weChatUtils.imgSecCheck(fileInfo.getContext(), requestDto.getFileName());
-            if (secCheckResponseDto.getErrcode() != 0){
+            if (secCheckResponseDto.getErrcode() != 0) {
                 return new ResultBase<OperateFileShareResponseDto>().failed(ResultCodeConstant.IMG_CHECK_NOT_PASS);
             }
         }
@@ -96,12 +96,12 @@ public class FileServiceImpl implements IFileService {
         fileRequestDto.setFileType(requestDto.getType());
         fileRequestDto.setSuffix(requestDto.getSuffix());
         ResultBase<FileResponseDto> resultBase = fileHandler.createFile(fileRequestDto);
-        if (!resultBase.isSuccess() || resultBase.isEmptyValue()){
+        if (!resultBase.isSuccess() || resultBase.isEmptyValue()) {
             return new ResultBase<OperateFileShareResponseDto>().failed(resultBase);
         }
 
         boolean putResult = ossUtils.putFile(SystemConstant.BUCKET_NAME, Collections.singletonList(fileInfo));
-        if (!putResult){
+        if (!putResult) {
             throw new BigFlagRuntimeException(ResultCodeConstant.OSS_PUT_FILE_FAILED);
         }
 
@@ -125,15 +125,12 @@ public class FileServiceImpl implements IFileService {
     }
 
     @Override
-    public void uploadWeChatAppFile(byte[] bytes, String fileName) {
+    public UploadAppFileResponseDto uploadWeChatAppFile(byte[] bytes, String fileName) {
         String uploadImgUrl = String.format(appUploadFileUrl, weChatUtils.getAccessToken(WeChatConstant.APP));
         String response = HttpUtils.post(uploadImgUrl, bytes, fileName);
         log.info("upload weChat app file response:{}", response);
         JsonConverter converter = new JsonConverter();
-        UploadAppFileResponseDto responseDto = converter.jsonToObj(response, UploadAppFileResponseDto.class);
-        if (null != responseDto && !StringUtils.isEmpty(responseDto.getMedia_id())){
-            CacheObject.weChatCache.put(SystemConstant.WE_CHAT_APP_FILE_ID_KEY, responseDto.getMedia_id());
-        }
+        return converter.jsonToObj(response, UploadAppFileResponseDto.class);
     }
 
     @Override
@@ -142,12 +139,15 @@ public class FileServiceImpl implements IFileService {
         InputStream inputStream = null;
         try {
             inputStream = resource.getInputStream();
-            this.uploadWeChatAppFile(FileCopyUtils.copyToByteArray(inputStream), resource.getFilename());
-        } catch (Exception e){
+            UploadAppFileResponseDto responseDto = this.uploadWeChatAppFile(FileCopyUtils.copyToByteArray(inputStream), resource.getFilename());
+            if (null != responseDto && !StringUtils.isEmpty(responseDto.getMedia_id())) {
+                CacheObject.weChatCache.put(SystemConstant.WE_CHAT_APP_FILE_ID_KEY, responseDto.getMedia_id());
+            }
+        } catch (Exception e) {
             log.error("upload weChat app picture failed, can not find file in resource");
             return;
         } finally {
-            if (inputStream!=null){
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {

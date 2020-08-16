@@ -5,6 +5,7 @@ import com.jackluan.bigflag.provider.dto.request.OperateFileShareRequestDto;
 import com.jackluan.bigflag.provider.dto.request.QueryFileListRequestDto;
 import com.jackluan.bigflag.provider.dto.response.OperateFileShareResponseDto;
 import com.jackluan.bigflag.provider.dto.response.QueryFileListResponseDto;
+import com.jackluan.bigflag.provider.dto.response.wechat.UploadAppFileResponseDto;
 
 /**
  * @Author: jack.luan
@@ -16,7 +17,7 @@ public interface IFileService {
 
     ResultBase<QueryFileListResponseDto> queryFileList(QueryFileListRequestDto requestDto);
 
-    void uploadWeChatAppFile(byte[] bytes, String fileName);
+    UploadAppFileResponseDto uploadWeChatAppFile(byte[] bytes, String fileName);
 
     void uploadAppPicture();
 

@@ -70,6 +70,8 @@ public class ResultCodeConstant {
 
     public static final String FLAG_NOT_EFFECTIVE = "FLAG000013";
 
+    public static final String APPROVER_HAD_PASS = "FLAG00014";
+
 
 
     public static final String CREATE_NOTICE_CONFIG_FAILED = "NOTICE00001";

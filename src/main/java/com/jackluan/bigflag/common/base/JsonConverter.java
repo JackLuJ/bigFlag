@@ -3,6 +3,7 @@ package com.jackluan.bigflag.common.base;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,12 +22,17 @@ public class JsonConverter {
 
     public JsonConverter(String datePattern) {
         this.datePattern = datePattern;
-        this.objectMapper = this.getObjectMapper(datePattern);
+        this.basicConfig();
     }
 
     public JsonConverter() {
-        this.datePattern = "yyyy-MM-dd HH:mm:ss";
+        this.datePattern = DATE_PATTERN;
+        this.basicConfig();
+    }
+
+    private void basicConfig(){
         this.objectMapper = this.getObjectMapper(this.datePattern);
+        this.objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     private ObjectMapper getObjectMapper(String pattern) {

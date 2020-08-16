@@ -125,7 +125,7 @@ public class FlagHandler {
         flagRequest.setId(flagRequestDto.getId());
         flagRequest.setUserId(flagRequestDto.getUserId());
         //flag更新必须是进行中的flag
-        if(FlagUpdateTypeEnum.FLAG_UPDATE == flagRequestDto.getFlagUpdateType()){
+        if (FlagUpdateTypeEnum.FLAG_UPDATE == flagRequestDto.getFlagUpdateType()) {
             flagRequest.setStatus(FlagStatusEnum.IN_PROGRESS);
         }
         List<FlagResponseDto> flagList = flagLogic.queryFlagList(flagRequest);
@@ -153,12 +153,12 @@ public class FlagHandler {
         return new ResultBase<UpdateFlagResponseDto>().success(updateFlagResponseDto);
     }
 
-    public List<Long> batchExpireFlag(){
+    public List<Long> batchExpireFlag() {
         Date now = DateUtils.getTodayStart();
         FlagRequestDto requestDto = new FlagRequestDto();
         requestDto.setDeadline(now);
         List<FlagResponseDto> responseList = flagLogic.selectByDeadline(requestDto);
-        if (responseList == null){
+        if (responseList == null) {
             return null;
         }
         List<Long> noticeConfigIds = responseList.stream().map(FlagBaseDto::getNoticeConfigId).collect(Collectors.toList());
@@ -206,9 +206,9 @@ public class FlagHandler {
         }
         if (flagRequestDto.getAchieve() != null) {
             changeTypes.add(FlagChangeTypeEnum.TERMINATION);
-            if (YesNoEnum.YES == flagRequestDto.getAchieve()){
+            if (YesNoEnum.YES == flagRequestDto.getAchieve()) {
                 flagTraceRequestDto.setStatus(FlagStatusEnum.ACHIEVE);
-            }else {
+            } else {
                 flagTraceRequestDto.setStatus(FlagStatusEnum.NOT_ACHIEVE);
             }
             checkFinish = false;
@@ -231,7 +231,7 @@ public class FlagHandler {
         createDto.setSequenceNo(oldFlag.getSequenceNo());
         //如果没变化触发事务回滚
         int count = flagLogic.queryCount(createDto);
-        if (count == 1 && !changeTypes.contains(FlagChangeTypeEnum.APPROVER)){
+        if (count == 1 && !changeTypes.contains(FlagChangeTypeEnum.APPROVER)) {
             throw new BigFlagRuntimeException(ResultCodeConstant.FLAG_NOT_CHANGE);
         }
 
@@ -241,7 +241,7 @@ public class FlagHandler {
         return changeTypes;
     }
 
-    private CreateSingInfoResponseDto getSignInfoBase(CreateSingInfoRequestDto createSingInfoRequestDto){
+    private CreateSingInfoResponseDto getSignInfoBase(CreateSingInfoRequestDto createSingInfoRequestDto) {
         FlagRequestDto requestDto = FlagConvert.INSTANCE.convert(createSingInfoRequestDto);
         requestDto.setStatus(FlagStatusEnum.IN_PROGRESS);
         List<FlagResponseDto> responseList = flagLogic.queryFlagList(requestDto);
@@ -268,7 +268,7 @@ public class FlagHandler {
         if (-1 != factor.intValue()) {
             threshold = sumScore.divide(factor, scale, roundingMode).intValue();
         }
-        if (threshold < 1){
+        if (threshold < 1) {
             threshold = 1;
         }
 
@@ -302,9 +302,7 @@ public class FlagHandler {
         //3.更新approver
         if (!CollectionUtils.isEmpty(flagRequestDto.getApproverList())) {
             flagRequestDto.getApproverList().forEach(approver -> {
-                if (null == approver.getAddApprover()) {
-                    return;
-                } else if (YesNoEnum.NO == approver.getAddApprover()) {
+                if (YesNoEnum.NO == approver.getAddApprover()) {
                     ApproverRequestDto approverUpdate = new ApproverRequestDto();
                     approverUpdate.setId(approver.getId());
                     approverUpdate.setStatus(ApproverStatusEnum.DISABLED);
