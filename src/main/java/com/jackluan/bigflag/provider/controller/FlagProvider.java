@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 23:27
  */
 @Slf4j

@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/3 23:00
  */
 public class ResultBase<T> implements Serializable {

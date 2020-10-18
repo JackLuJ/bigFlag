@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 23:27
  */
 @RequestMapping(value = "/flag")

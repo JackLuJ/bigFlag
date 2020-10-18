@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.flag;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/8 16:29
  */
 public enum ThresholdCalculationTypeEnum implements KeyValueEnum<Integer> {

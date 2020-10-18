@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 import java.util.Date;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/10 17:36
  */
 @Mapper

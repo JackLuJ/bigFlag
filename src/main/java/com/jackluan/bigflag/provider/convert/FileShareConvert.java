@@ -9,7 +9,7 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/17 11:39
  */
 @Mapper(uses = KeyValueEnumMapper.class)

@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.base;
 import java.util.List;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/1 17:45
  */
 public interface IBaseDao<T> {

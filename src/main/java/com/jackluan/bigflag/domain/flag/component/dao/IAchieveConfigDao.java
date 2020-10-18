@@ -5,7 +5,7 @@ import com.jackluan.bigflag.domain.flag.component.dataobject.AchieveConfigDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 18:46
  */
 @Mapper

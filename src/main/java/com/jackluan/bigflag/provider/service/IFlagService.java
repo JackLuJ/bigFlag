@@ -9,7 +9,7 @@ import com.jackluan.bigflag.provider.dto.request.FlagUpdateRequestDto;
 import com.jackluan.bigflag.provider.dto.response.FlagShareResponseDto;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/9 22:36
  */
 public interface IFlagService {

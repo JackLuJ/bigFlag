@@ -5,7 +5,7 @@ import com.jackluan.bigflag.domain.sign.component.dataobject.SignTraceDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 22:15
  */
 @Mapper

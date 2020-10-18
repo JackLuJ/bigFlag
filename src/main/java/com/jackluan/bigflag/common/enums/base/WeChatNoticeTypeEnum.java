@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.base;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/4/6 0:05
  */
 public enum WeChatNoticeTypeEnum implements KeyValueEnum<Integer> {

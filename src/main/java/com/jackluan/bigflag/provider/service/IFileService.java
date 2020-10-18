@@ -8,7 +8,7 @@ import com.jackluan.bigflag.provider.dto.response.QueryFileListResponseDto;
 import com.jackluan.bigflag.provider.dto.response.wechat.UploadAppFileResponseDto;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/21 22:12
  */
 public interface IFileService {

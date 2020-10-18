@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.flag;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/10 22:21
  */
 public enum ApproverTypeEnum implements KeyValueEnum<Integer> {

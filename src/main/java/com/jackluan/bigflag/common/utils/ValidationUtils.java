@@ -11,7 +11,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/6 23:07
  */
 public class ValidationUtils {

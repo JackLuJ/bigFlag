@@ -6,7 +6,7 @@ import com.jackluan.bigflag.provider.dto.request.UserShareRequestDto;
 import com.jackluan.bigflag.provider.dto.response.UserInfoShareResponseDto;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/3 23:17
  */
 public interface IUserService {

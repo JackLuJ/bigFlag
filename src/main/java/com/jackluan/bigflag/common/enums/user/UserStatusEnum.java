@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.user;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/1 17:21
  */
 public enum  UserStatusEnum implements KeyValueEnum<Integer> {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 23:32
  */
 public enum FlagStatusEnum implements KeyValueEnum<Integer> {

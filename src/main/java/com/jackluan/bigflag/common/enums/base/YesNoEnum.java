@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.base;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/1 17:04
  */
 public enum YesNoEnum implements KeyValueEnum<String> {

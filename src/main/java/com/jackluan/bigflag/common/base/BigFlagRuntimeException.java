@@ -1,7 +1,7 @@
 package com.jackluan.bigflag.common.base;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/8 18:44
  */
 public class BigFlagRuntimeException extends RuntimeException {

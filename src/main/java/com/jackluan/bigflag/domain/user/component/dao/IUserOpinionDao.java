@@ -5,7 +5,7 @@ import com.jackluan.bigflag.domain.user.component.dataobject.UserOpinionDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 16:45
  */
 @Mapper

@@ -7,7 +7,7 @@ import com.jackluan.bigflag.provider.dto.response.LoginShareResponseDto;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/22 20:18
  */
 public interface ILoginService {

@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.flag;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/5/24 22:54
  */
 public enum FlagStatusCategoryEnum implements KeyValueEnum<Integer> {

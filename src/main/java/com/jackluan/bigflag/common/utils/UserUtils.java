@@ -4,7 +4,7 @@ import com.jackluan.bigflag.common.base.UserInfoBaseDto;
 import org.springframework.core.NamedInheritableThreadLocal;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/23 0:12
  */
 public class UserUtils {

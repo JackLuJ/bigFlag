@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.TargetType;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/3 23:30
  */
 @Mapper

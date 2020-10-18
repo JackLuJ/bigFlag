@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/8 19:15
  */
 public enum AchieveConfigEnum implements KeyValueEnum<Integer> {

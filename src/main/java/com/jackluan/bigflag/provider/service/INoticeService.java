@@ -6,7 +6,7 @@ import com.jackluan.bigflag.provider.dto.request.notice.NoticeSignCreateRequestD
 import com.jackluan.bigflag.provider.dto.request.notice.NoticeSignFinishRequestDto;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/4/6 12:05
  */
 public interface INoticeService {

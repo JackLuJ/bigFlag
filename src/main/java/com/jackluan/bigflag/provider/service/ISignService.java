@@ -10,7 +10,7 @@ import com.jackluan.bigflag.provider.dto.response.CreateSignShareResponseDto;
 import com.jackluan.bigflag.provider.dto.response.SignShareResponseDto;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/14 17:48
  */
 public interface ISignService {

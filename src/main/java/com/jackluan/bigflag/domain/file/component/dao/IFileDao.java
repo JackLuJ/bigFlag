@@ -6,7 +6,7 @@ import com.jackluan.bigflag.domain.file.component.dataobject.extra.FileExtraDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 19:01
  */
 @Mapper

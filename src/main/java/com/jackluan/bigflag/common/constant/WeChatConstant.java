@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.constant;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/31 0:35
  */
 public class WeChatConstant {

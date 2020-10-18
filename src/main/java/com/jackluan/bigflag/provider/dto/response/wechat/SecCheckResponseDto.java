@@ -3,7 +3,7 @@ package com.jackluan.bigflag.provider.dto.response.wechat;
 import lombok.Data;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/4/25 15:35
  */
 @Data

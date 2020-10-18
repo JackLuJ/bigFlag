@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.file;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/16 23:30
  */
 public enum StoreTypeEnum implements KeyValueEnum<Integer> {

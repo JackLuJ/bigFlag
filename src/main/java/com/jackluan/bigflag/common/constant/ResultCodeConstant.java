@@ -1,7 +1,7 @@
 package com.jackluan.bigflag.common.constant;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/3 23:08
  */
 public class ResultCodeConstant {
@@ -29,6 +29,8 @@ public class ResultCodeConstant {
     public static final String IMG_CHECK_NOT_PASS = "SYS000010";
 
     public static final String MSG_CHECK_NOT_PASS = "SYS000011";
+
+    public static final String HTTP_GET_FILE_REQUEST_FAILED = "SYS000012";
 
 
 

@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.sign;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/4/1 17:15
  */
 public enum SignChangeType implements KeyValueEnum<Integer> {

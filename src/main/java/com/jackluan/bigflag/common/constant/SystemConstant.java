@@ -5,7 +5,7 @@ import com.jackluan.bigflag.domain.file.dto.response.FileGroupResponseDto;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/9 21:05
  */
 public class SystemConstant {

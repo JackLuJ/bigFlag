@@ -6,7 +6,7 @@ import com.jackluan.bigflag.common.utils.DateUtils;
 import java.util.Date;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/7 23:32
  */
 public enum FlagTypeEnum implements KeyValueEnum<Integer> {

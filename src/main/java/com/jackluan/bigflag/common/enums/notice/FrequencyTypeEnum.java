@@ -3,7 +3,7 @@ package com.jackluan.bigflag.common.enums.notice;
 import com.jackluan.bigflag.common.base.KeyValueEnum;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/9 22:16
  */
 public enum FrequencyTypeEnum implements KeyValueEnum {

@@ -6,7 +6,7 @@ import com.jackluan.bigflag.provider.dto.request.*;
 import com.jackluan.bigflag.provider.dto.response.ApproverShareResponseDto;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/10 22:14
  */
 public interface IApproveService {

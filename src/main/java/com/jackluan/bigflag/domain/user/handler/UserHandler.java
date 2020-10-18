@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/3 23:21
  */
 @Component

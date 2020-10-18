@@ -11,7 +11,7 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
- * @Author: jack.luan
+ * @Author: jeffery.luan
  * @Date: 2020/3/14 17:25
  */
 @Mapper(uses = KeyValueEnumMapper.class)
