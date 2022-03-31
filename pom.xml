@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <springboot.version>2.2.4.RELEASE</springboot.version>
+        <springboot.version>2.5.12</springboot.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
         <mybatis-springboot-starter.version>2.1.1</mybatis-springboot-starter.version>
         <aliyun-sso.version>3.8.1</aliyun-sso.version>
